@@ -44,8 +44,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
     }
 
     public void bind(Customer customer) {
-      binding.txtName.setText("Diego Armando Torre Macetas");
-      binding.txtDNI.setText("76496558");
+      binding.txtName.setText(customer.getNombres());
+      binding.txtDNI.setText(customer.getDni());
     }
 
   }
