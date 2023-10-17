@@ -16,9 +16,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.jennifer.easyorder.Fragments.CashierFragment;
 import com.jennifer.easyorder.Fragments.CategoryFragment;
 import com.jennifer.easyorder.Fragments.CustomerFragment;
-import com.jennifer.easyorder.Fragments.HomeFragment;
 import com.jennifer.easyorder.Fragments.PrintFragment;
 import com.jennifer.easyorder.Fragments.ProductFragment;
 import com.jennifer.easyorder.Fragments.TablesFragment;
@@ -49,14 +49,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.bottomNavigation.setBackground(null);
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.bottom_home) {
-                openFragment(new HomeFragment());
-            } else if (itemId == R.id.bottom_home) {
-                openFragment(new HomeFragment());
+            if (itemId == R.id.bottom_category) {
+                openFragment(new CategoryFragment());
             } else if (itemId == R.id.bottom_table) {
                 openFragment(new TablesFragment());
-            } else if (itemId == R.id.bottom_product) {
+            } else if (itemId == R.id.bottom_menu) {
                 openFragment(new ProductFragment());
+            }else if (itemId == R.id.bottom_cashier) {
+                openFragment(new CashierFragment());
             }
             return true;
         });
@@ -72,9 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.nav_home) {
-            openFragment(new HomeFragment());
-        } else if (itemId == R.id.nav_category) {
+        if (itemId == R.id.nav_category) {
             openFragment(new CategoryFragment());
         } else if (itemId == R.id.nav_customer) {
             openFragment(new CustomerFragment());

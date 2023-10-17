@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyOrder</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+
+    <string name="menu">Menú</string>
+    <string name="table">Mesas</string>
+    <string name="cashier">Pagos</string>
+    <string name="customer">Clientes</string>
+    <string name="print">Imprimir</string>
+    <string name="category">Categoria</string>
+    <string name="logout">Salir</string>
+    <string name="worker">Personal</string>
+    <string name="order">Comanda</string>
+
+</resources>

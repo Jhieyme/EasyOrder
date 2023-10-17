@@ -2,6 +2,15 @@
     <string name="app_name">EasyOrder</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu">Menu</string>
+    <string name="table">Tables</string>
+    <string name="cashier">Cashier</string>
+    <string name="customer">Customer</string>
+    <string name="print">Print</string>
+    <string name="category">Category</string>
+    <string name="logout">Logout</string>
+    <string name="worker">Worker</string>
+    <string name="order">Order</string>
+
 </resources>
