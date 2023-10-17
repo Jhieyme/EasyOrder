@@ -45,7 +45,7 @@ public class ProductFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.rv_product);
-        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 1);
         binding.rvProduct.setLayoutManager(layoutManager);
 
         RestaurantInterface productInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);

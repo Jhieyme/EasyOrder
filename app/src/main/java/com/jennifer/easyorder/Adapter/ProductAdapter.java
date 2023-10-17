@@ -45,9 +45,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
 
         public void bind(Product product) {
             binding.txtName.setText(product.getNombre());
+            binding.txtDescription.setText(product.getDescripcion());
             binding.txtPrecio.setText(String.format("S/. %.2f", product.getPrecio()));
             Glide.with(itemView.getContext()).load(product.getUrlImagen()).into(binding.imgProduct);
         }
-
     }
 }
