@@ -118,11 +118,11 @@
                 <ImageButton
                     android:id="@+id/btn_minus"
                     style="@style/Widget.Material3.Button.Icon"
-                    android:layout_width="33dp"
-                    android:layout_height="22dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
                     android:layout_alignBottom="@+id/txt_description"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginBottom="26dp"
                     android:layout_toEndOf="@+id/txt_description"
                     android:contentDescription="@null"
                     android:scaleType="centerCrop"
@@ -132,8 +132,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignTop="@+id/btn_minus"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="26dp"
+                    android:layout_marginStart="23dp"
+                    android:layout_marginTop="21dp"
                     android:layout_toEndOf="@+id/txt_description" />
 
                 <ImageButton
@@ -148,8 +148,6 @@
                     android:contentDescription="@null"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_add_circle" />
-
-
 
             </RelativeLayout>
 

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.jennifer.easyorder.Fragments.CashierFragment;
 import com.jennifer.easyorder.Fragments.CategoryFragment;
 import com.jennifer.easyorder.Fragments.CustomerFragment;
 import com.jennifer.easyorder.Fragments.HomeFragment;
@@ -52,11 +53,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (itemId == R.id.bottom_home) {
                 openFragment(new HomeFragment());
             } else if (itemId == R.id.bottom_home) {
-                openFragment(new HomeFragment());
+                openFragment(new CategoryFragment());
             } else if (itemId == R.id.bottom_table) {
                 openFragment(new TablesFragment());
-            } else if (itemId == R.id.bottom_product) {
+            } else if (itemId == R.id.bottom_menu) {
                 openFragment(new ProductFragment());
+            }else if (itemId == R.id.bottom_cashier) {
+                openFragment(new CashierFragment());
             }
             return true;
         });

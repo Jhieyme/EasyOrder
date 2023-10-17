@@ -3,12 +3,12 @@
     <item
         android:id="@+id/bottom_home"
         android:icon="@drawable/ic_home"
-        android:title="Home"
-        />
+        android:title="@string/home" />
+
     <item
-        android:id="@+id/bottom_product"
+        android:id="@+id/bottom_menu"
         android:icon="@drawable/ic_restaurant"
-        android:title="Product"/>
+        android:title="@string/menu"/>
 
     <item
         android:id="@+id/bottom_fab"
@@ -18,9 +18,10 @@
     <item
         android:id="@+id/bottom_table"
         android:icon="@drawable/ic_table"
-        android:title="Tables"/>
+        android:title="@string/table"/>
+
     <item
-        android:id="@+id/bottom_print"
-        android:icon="@drawable/ic_print"
-        android:title="Print"/>
+        android:id="@+id/bottom_cashier"
+        android:icon="@drawable/ic_point"
+        android:title="@string/cashier"/>
 </menu>
