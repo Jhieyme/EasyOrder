@@ -33,7 +33,6 @@ public class CustomerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentCustomerBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -43,7 +42,7 @@ public class CustomerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.rv_customer);
-        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 1);
         binding.rvCustomer.setLayoutManager(layoutManager);
 
         RestaurantInterface customerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
@@ -60,7 +59,6 @@ public class CustomerFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Customer>> call, Throwable t) {
-
             }
         });
     }
