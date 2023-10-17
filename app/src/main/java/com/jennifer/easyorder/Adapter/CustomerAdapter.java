@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.jennifer.easyorder.databinding.ItemCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
 
@@ -21,13 +20,13 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
 
   @NonNull
   @Override
-  public CustomerAdapter.ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     ItemCustomerBinding binding = ItemCustomerBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-    return new CustomerAdapter.ShowViewHolder(binding);
+    return new ShowViewHolder(binding);
   }
 
   @Override
-  public void onBindViewHolder(@NonNull CustomerAdapter.ShowViewHolder holder, int position) {
+  public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
     holder.bind(customers.get(position));
   }
 

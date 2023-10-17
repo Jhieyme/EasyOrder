@@ -12,14 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jennifer.easyorder.Adapter.CategoryAdapter;
 import com.jennifer.easyorder.Adapter.CustomerAdapter;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
-import com.jennifer.easyorder.databinding.FragmentCategoryBinding;
 import com.jennifer.easyorder.databinding.FragmentCustomerBinding;
-import com.jennifer.easyorder.model.Category;
 import com.jennifer.easyorder.model.Customer;
 
 import java.util.List;

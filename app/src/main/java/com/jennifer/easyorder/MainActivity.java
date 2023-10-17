@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         fragmentManager = getSupportFragmentManager();
-        openFragment(new HomeFragment());
+        openFragment(new CategoryFragment());
 
         binding.fab.setOnClickListener(view ->
                 Toast.makeText(this, "Agregar a comanda", Toast.LENGTH_SHORT).show()
