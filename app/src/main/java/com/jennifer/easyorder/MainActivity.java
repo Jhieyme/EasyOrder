@@ -19,9 +19,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.jennifer.easyorder.Fragments.CashierFragment;
 import com.jennifer.easyorder.Fragments.CategoryFragment;
 import com.jennifer.easyorder.Fragments.CustomerFragment;
+import com.jennifer.easyorder.Fragments.OrderFragment;
 import com.jennifer.easyorder.Fragments.PrintFragment;
 import com.jennifer.easyorder.Fragments.ProductFragment;
 import com.jennifer.easyorder.Fragments.TablesFragment;
+import com.jennifer.easyorder.Fragments.WorkerFragment;
 import com.jennifer.easyorder.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -76,12 +78,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             openFragment(new CategoryFragment());
         } else if (itemId == R.id.nav_customer) {
             openFragment(new CustomerFragment());
+        } else if (itemId == R.id.nav_worker) {
+            openFragment(new WorkerFragment());
+        } else if (itemId == R.id.nav_order) {
+            openFragment(new OrderFragment());
         } else if (itemId == R.id.nav_print) {
             openFragment(new PrintFragment());
         } else if (itemId == R.id.nav_logout) {
             showDialog();
         }
-
         binding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
