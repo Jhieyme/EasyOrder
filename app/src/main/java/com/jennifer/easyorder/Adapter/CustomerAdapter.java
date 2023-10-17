@@ -44,7 +44,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
 
     public void bind(Customer customer) {
       binding.txtName.setText(customer.getNombres());
-      binding.txtDNI.setText(customer.getDni());
+//      binding.txtDNI.setText(customer.getDni());
     }
 
   }
