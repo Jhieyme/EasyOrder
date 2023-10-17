@@ -7,7 +7,6 @@
     android:layout_height="wrap_content">
 
 
-
     <LinearLayout
         android:id="@+id/row1"
         android:layout_width="412dp"

@@ -12,5 +12,7 @@
     <string name="logout">Logout</string>
     <string name="worker">Worker</string>
     <string name="order">Order</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
