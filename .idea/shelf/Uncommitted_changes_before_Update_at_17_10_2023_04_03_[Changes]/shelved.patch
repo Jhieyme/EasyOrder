@@ -1,0 +1,19 @@
+Index: app/src/main/java/com/jennifer/easyorder/Adapter/CustomerAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.jennifer.easyorder.Adapter;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.jennifer.easyorder.databinding.ItemCustomerBinding;\r\nimport com.jennifer.easyorder.model.Customer;\r\n\r\n\r\nimport java.util.List;\r\n\r\npublic class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowViewHolder> {\r\n  private List<Customer> customers;\r\n  public CustomerAdapter(List<Customer> customers) {\r\n    this.customers = customers;\r\n  }\r\n\r\n  @NonNull\r\n  @Override\r\n  public ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n    ItemCustomerBinding binding = ItemCustomerBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);\r\n    return new ShowViewHolder(binding);\r\n  }\r\n\r\n  @Override\r\n  public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {\r\n    holder.bind(customers.get(position));\r\n  }\r\n\r\n  @Override\r\n  public int getItemCount() {\r\n    return customers.size();\r\n  }\r\n\r\n  public class ShowViewHolder extends RecyclerView.ViewHolder {\r\n    private ItemCustomerBinding binding;\r\n    public ShowViewHolder(@NonNull ItemCustomerBinding binding) {\r\n      super(binding.getRoot());\r\n      this.binding = binding;\r\n    }\r\n\r\n    public void bind(Customer customer) {\r\n      binding.txtName.setText(customer.getNombres());\r\n      binding.txtDNI.setText(customer.getDni());\r\n    }\r\n\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/jennifer/easyorder/Adapter/CustomerAdapter.java b/app/src/main/java/com/jennifer/easyorder/Adapter/CustomerAdapter.java
+--- a/app/src/main/java/com/jennifer/easyorder/Adapter/CustomerAdapter.java	(revision 987ad97c0c45c8f1746fb67abe8bc683cc61987e)
++++ b/app/src/main/java/com/jennifer/easyorder/Adapter/CustomerAdapter.java	(date 1697533380783)
+@@ -44,7 +44,7 @@
+ 
+     public void bind(Customer customer) {
+       binding.txtName.setText(customer.getNombres());
+-      binding.txtDNI.setText(customer.getDni());
++//      binding.txtDNI.setText(customer.getDni());
+     }
+ 
+   }
