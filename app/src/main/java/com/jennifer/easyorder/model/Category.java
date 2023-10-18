@@ -5,9 +5,12 @@ public class Category {
     private int idCategoria;
     private String descripcion;
 
-    public Category(int idCategoria, String descripcion) {
+    private String urlImagen;
+
+    public Category(int idCategoria, String descripcion, String urlImagen) {
         this.idCategoria = idCategoria;
         this.descripcion = descripcion;
+        this.urlImagen = urlImagen;
     }
 
     public int getIdCategoria() {
@@ -24,5 +27,13 @@ public class Category {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
     }
 }
