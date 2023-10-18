@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -46,7 +47,7 @@ public class WorkerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.rv_worker);
-        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 1);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         binding.rvWorker.setLayoutManager(layoutManager);
 
         RestaurantInterface workerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
