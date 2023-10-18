@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
-  >
+    android:padding="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,6 +23,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#EDF1FF"
             android:gravity="center">
 
             <ImageView
@@ -45,11 +45,11 @@
 
             <TextView
                 android:id="@+id/txt_name"
-                android:layout_width="154dp"
-                android:layout_height="27dp"
+                android:layout_width="142dp"
+                android:layout_height="28dp"
                 android:layout_below="@+id/img_product"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="-100dp"
+                android:layout_marginTop="-97dp"
                 android:layout_toEndOf="@+id/img_product"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"
@@ -66,11 +66,11 @@
 
             <TextView
                 android:id="@+id/txt_lastname"
-                android:layout_width="153dp"
-                android:layout_height="29dp"
+                android:layout_width="140dp"
+                android:layout_height="27dp"
                 android:layout_below="@+id/img_product"
                 android:layout_marginStart="13dp"
-                android:layout_marginTop="-74dp"
+                android:layout_marginTop="-70dp"
                 android:layout_toEndOf="@+id/img_product"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_product"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="-45dp"
+                android:layout_marginTop="-43dp"
                 android:layout_toEndOf="@+id/img_product"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"
@@ -107,11 +107,11 @@
 
             <RadioButton
                 android:id="@+id/radioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="58dp"
+                android:layout_width="59dp"
+                android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/txt_name"
                 android:layout_centerInParent="true"
-                android:layout_marginStart="11dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="9dp"
                 android:layout_marginBottom="6dp"
                 android:layout_toEndOf="@+id/txt_name"
