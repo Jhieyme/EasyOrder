@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.jennifer.easyorder.databinding.ItemProduct2Binding;
 import com.jennifer.easyorder.databinding.ItemProductBinding;
 import com.jennifer.easyorder.model.Product;
 
@@ -22,7 +23,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
     @NonNull
     @Override
     public ProductAdapter.ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemProductBinding binding = ItemProductBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemProduct2Binding binding = ItemProduct2Binding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductAdapter.ShowViewHolder(binding);
     }
 
@@ -37,8 +38,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
     }
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {
-        private ItemProductBinding binding;
-        public ShowViewHolder(@NonNull ItemProductBinding binding) {
+        private ItemProduct2Binding binding;
+        public ShowViewHolder(@NonNull ItemProduct2Binding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
