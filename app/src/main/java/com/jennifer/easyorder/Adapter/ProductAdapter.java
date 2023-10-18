@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.jennifer.easyorder.databinding.ItemProduct2Binding;
-import com.jennifer.easyorder.databinding.ItemProductBinding;
 import com.jennifer.easyorder.model.Product;
 
 import java.util.List;
