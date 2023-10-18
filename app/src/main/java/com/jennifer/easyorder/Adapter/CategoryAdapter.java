@@ -51,10 +51,11 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.ShowV
 
         public void bind(Category category) {
             binding.txtDescription.setText(category.getDescripcion());
-            if (category.getDescripcion() != null && !category.getDescripcion().isEmpty()) {
+            Glide.with(itemView.getContext()).load(category.getUrlImagen()).into(binding.imgCategory);
+            /*if (category.getDescripcion() != null && !category.getDescripcion().isEmpty()) {
                 Bitmap image = generateImage(category.getDescripcion());
                 binding.imgCategory.setImageBitmap(image);
-            }
+            }*/
         }
 
     }
