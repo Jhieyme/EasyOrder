@@ -1,6 +1,7 @@
 package com.jennifer.easyorder.Adapter;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -10,19 +11,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.jennifer.easyorder.databinding.ItemProduct2Binding;
+import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Product;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowViewHolder> {
 
 
   private List<Product> products;
+  private List<NewProduct> listProduct = new ArrayList<>();
 
   public ProductAdapter(List<Product> products) {
     this.products = products;
 
+
   }
+
 
   @NonNull
   @Override
@@ -36,10 +43,36 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
   public void onBindViewHolder(@NonNull ProductAdapter.ShowViewHolder holder, int position) {
     holder.bind(products.get(position));
 
+
     holder.binding.imgProduct2.setOnClickListener(view -> {
-      Toast.makeText(view.getContext(), "¡Seleccionaste la imagen", Toast.LENGTH_SHORT).show();
+      String currentQuantity = (String) holder.binding.txtCnt.getText().toString();
+      Product product = products.get(position);
+      NewProduct newProduct = new NewProduct(product, Integer.parseInt(currentQuantity));
+
+      boolean pExists = false;
+
+      for (NewProduct np : listProduct) {
+        if (np.getProduct().equals(newProduct.getProduct())) {
+          pExists = true;
+          break;
+        }
+      }
+
+
+      if (!pExists) {
+        listProduct.add(newProduct);
+        Toast.makeText(view.getContext(), "¡Seleccionaste un platillo!", Toast.LENGTH_SHORT).show();
+      } else {
+        Toast.makeText(view.getContext(), "Este platillo ya está en la lista.", Toast.LENGTH_SHORT).show();
+      }
+
+
+
+
 
     });
+
+
     holder.binding.btnAdd.setOnClickListener(view -> {
       String currentQuantity = (String) holder.binding.txtCnt.getText().toString();
       int newQnt = Integer.parseInt(currentQuantity) + 1;

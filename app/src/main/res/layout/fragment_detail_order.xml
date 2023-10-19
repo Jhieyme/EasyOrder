@@ -4,6 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.DetailOrderFragment">
+
+
+    <TextView
+        android:id="@+id/txtTest"
+        android:layout_width="111dp"
+        android:layout_height="161dp"
+        android:textColor="@color/black"
+        />
     
 
 </FrameLayout>

@@ -6,6 +6,9 @@ public class Product {
     private String nombre;
     private String descripcion;
     private double precio;
+
+
+
     private String urlImagen;
 
     public Product(int idProducto, String nombre, String descripcion, double precio, String urlImagen) {
@@ -55,4 +58,6 @@ public class Product {
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
     }
+
+
 }
