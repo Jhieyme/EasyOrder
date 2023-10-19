@@ -22,7 +22,6 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             app:cardCornerRadius="20dp"
-
             tools:ignore="MissingConstraints">
 
             <RelativeLayout

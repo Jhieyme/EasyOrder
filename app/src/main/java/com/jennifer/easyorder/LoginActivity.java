@@ -7,7 +7,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.jennifer.easyorder.data.RestaurantInterface;
+import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ActivityLoginBinding;
+import com.jennifer.easyorder.model.Product;
+import com.jennifer.easyorder.model.Role;
+import com.jennifer.easyorder.model.User;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,13 +50,33 @@ public class LoginActivity extends AppCompatActivity {
             String codigo = binding.txtCodigo.getText().toString();
             String contra = binding.txtContra.getText().toString();
 
-            if (codigo.equals("admin") && contra.equals("1234")) {
-                Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
-                intent.putExtra(MainActivity.EMAIL, binding.txtCodigo.getText().toString());
-                startActivity(intent);
-            } else {
-                Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
-            }
+            RestaurantInterface loginInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+            Call<List<User>> call = loginInterface.getShowUser();
+
+            call.enqueue(new Callback<List<User>>() {
+                @Override
+                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                    List<User> items = response.body();
+                    for (User user : items) {
+                        if (user.getNombre().equals(codigo) && user.getContra().equals(contra)) {
+                            Role role = user.getIdRolNavigation();
+                            if (role.getIdRol() == 2) {
+                                Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
+                                intent.putExtra(MainActivity.EMAIL, codigo);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<User>> call, Throwable t) {
+                }
+            });
+
         });
     }
 }
