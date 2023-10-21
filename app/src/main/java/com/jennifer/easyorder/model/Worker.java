@@ -4,7 +4,6 @@ public class Worker {
     private int idPersonal;
     private String nombres;
     private String apellidos;
-
     private Gender idGeneroNavigation;
 
     public Worker(int idPersonal, String nombres, String apellidos, Gender idGeneroNavigation) {
