@@ -7,5 +7,4 @@ public class Order {
     private int idComanda;
     private Date fechaHora;
     private String estado;
-
 }

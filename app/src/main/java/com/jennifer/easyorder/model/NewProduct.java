@@ -2,7 +2,8 @@ package com.jennifer.easyorder.model;
 
 import java.io.Serializable;
 
-public class NewProduct {
+public class NewProduct implements Serializable {
+
 
     private Product product;
     private int quantity;
@@ -28,9 +29,8 @@ public class NewProduct {
         this.quantity = quantity;
     }
 
-
     @Override
     public String toString() {
-        return "Desde el metodo toString: " + this.product.getNombre() + "\nLa cantidad es: " + this.quantity;
+        return "Nombre: " + this.product.getNombre() + "\nCantidad: " + this.quantity;
     }
 }

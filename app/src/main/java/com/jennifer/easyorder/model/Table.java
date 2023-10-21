@@ -1,6 +1,8 @@
 package com.jennifer.easyorder.model;
 
-public class Table {
+import java.io.Serializable;
+
+public class Table implements Serializable {
 
     private int idMesa;
     private int nroMesa;

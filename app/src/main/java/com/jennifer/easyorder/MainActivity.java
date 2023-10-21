@@ -1,10 +1,23 @@
 package com.jennifer.easyorder;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -18,124 +31,255 @@ import com.google.android.material.navigation.NavigationView;
 import com.jennifer.easyorder.Fragments.CashierFragment;
 import com.jennifer.easyorder.Fragments.CategoryFragment;
 import com.jennifer.easyorder.Fragments.CustomerFragment;
+import com.jennifer.easyorder.Fragments.DetailOrderFragment;
 import com.jennifer.easyorder.Fragments.OrderFragment;
 import com.jennifer.easyorder.Fragments.PrintFragment;
 import com.jennifer.easyorder.Fragments.ProductFragment;
 import com.jennifer.easyorder.Fragments.TablesFragment;
 import com.jennifer.easyorder.Fragments.WorkerFragment;
+import com.jennifer.easyorder.data.RestaurantInterface;
+import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ActivityMainBinding;
-import com.jennifer.easyorder.databinding.ItemProduct2Binding;
+import com.jennifer.easyorder.databinding.ModallayoutBinding;
 import com.jennifer.easyorder.model.NewProduct;
+import com.jennifer.easyorder.model.Order;
+import com.jennifer.easyorder.model.Table;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-  private ActivityMainBinding binding;
-  private ItemProduct2Binding bindingProduct;
-  private SharedPreferences sharedPreferences;
-  public static String EMAIL = "EMAIL";
-  private FragmentManager fragmentManager;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProductFragment.OnProductSelectedListener, TablesFragment.OnMesaSelectedListener {
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    binding = ActivityMainBinding.inflate(getLayoutInflater());
-    sharedPreferences = getSharedPreferences(LoginActivity.SESSION_PREFERENCE, MODE_PRIVATE);
-    setContentView(binding.getRoot());
+    private ActivityMainBinding binding;
+    private ModallayoutBinding bindingModal;
+    private SharedPreferences sharedPreferences;
+    public static String EMAIL = "EMAIL";
+    private FragmentManager fragmentManager;
+    private List<NewProduct> listProduct = new ArrayList<>();
+    private Table table = new Table(1, 1);
 
-    setSupportActionBar(binding.toolbar);
+    private DetailOrderFragment detailOrderFragment = new DetailOrderFragment();
 
-    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.open_nav, R.string.close_nav);
-    binding.drawerLayout.addDrawerListener(toggle);
-    toggle.syncState();
 
-    binding.navigationDrawer.setNavigationItemSelectedListener(this);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        sharedPreferences = getSharedPreferences(LoginActivity.SESSION_PREFERENCE, MODE_PRIVATE);
+        setContentView(binding.getRoot());
 
-    binding.bottomNavigation.setBackground(null);
-    binding.bottomNavigation.setOnItemSelectedListener(item -> {
-      int itemId = item.getItemId();
-      if (itemId == R.id.bottom_category) {
+        setSupportActionBar(binding.toolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.open_nav, R.string.close_nav);
+        binding.drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+
+        binding.navigationDrawer.setNavigationItemSelectedListener(this);
+        binding.bottomNavigation.setBackground(null);
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.bottom_category) {
+                openFragment(new CategoryFragment());
+            } else if (itemId == R.id.bottom_table) {
+                openFragment(new TablesFragment());
+            } else if (itemId == R.id.bottom_menu) {
+                openFragment(new ProductFragment());
+            } else if (itemId == R.id.bottom_cashier) {
+                openFragment(new CashierFragment());
+            }
+            return true;
+        });
+
+        fragmentManager = getSupportFragmentManager();
         openFragment(new CategoryFragment());
-      } else if (itemId == R.id.bottom_table) {
-        openFragment(new TablesFragment());
-      } else if (itemId == R.id.bottom_menu) {
-        openFragment(new ProductFragment());
-      } else if (itemId == R.id.bottom_cashier) {
-        openFragment(new CashierFragment());
-      }
-      return true;
-    });
 
-    fragmentManager = getSupportFragmentManager();
-    openFragment(new CategoryFragment());
+        binding.fab.setOnClickListener(view -> {
 
-    binding.fab.setOnClickListener(view -> {
+            showBottomDialog();
+
+        });
 
 
-    });
-
-
-  }
-
-  @Override
-  public boolean onNavigationItemSelected(MenuItem item) {
-    int itemId = item.getItemId();
-    if (itemId == R.id.nav_category) {
-      openFragment(new CategoryFragment());
-    } else if (itemId == R.id.nav_customer) {
-      openFragment(new CustomerFragment());
-    } else if (itemId == R.id.nav_worker) {
-      openFragment(new WorkerFragment());
-    } else if (itemId == R.id.nav_order) {
-      openFragment(new OrderFragment());
-    } else if (itemId == R.id.nav_print) {
-      openFragment(new PrintFragment());
-    } else if (itemId == R.id.nav_logout) {
-      showDialog();
     }
-    binding.drawerLayout.closeDrawer(GravityCompat.START);
-    return true;
-  }
 
-  @Override
-  public void onBackPressed() {
-    if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-      binding.drawerLayout.closeDrawer(GravityCompat.START);
-    } else {
-      super.onBackPressed();
+
+    private void showBottomDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.modallayout);
+        bindingModal = ModallayoutBinding.inflate(LayoutInflater.from(this));
+        dialog.setContentView(bindingModal.getRoot());
+        LinearLayout linearProduct = dialog.findViewById(R.id.linearProduct);
+
+        for (NewProduct np : listProduct) {
+            View productView = getLayoutInflater().inflate(R.layout.view_product, null);
+            TextView txtNameProduct = productView.findViewById(R.id.txtNameProduct);
+            TextView txtQuantity = productView.findViewById(R.id.txtQuantity);
+            ImageButton removeProduct = productView.findViewById(R.id.btnRemoveProduct);
+            ImageButton addQuantity = productView.findViewById(R.id.btnAddQt);
+            ImageButton minusQuantity = productView.findViewById(R.id.btnMinusQt);
+
+            removeProduct.setOnClickListener(view -> {
+                int index = -1;
+                for (int i = 0; i < listProduct.size(); i++) {
+                    if (listProduct.get(i).getProduct().getNombre().equals(np.getProduct().getNombre())) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index != -1) {
+                    listProduct.remove(index);
+                    Toast.makeText(view.getContext(), "Quitaste este platillo!", Toast.LENGTH_SHORT).show();
+                    linearProduct.removeView(productView);
+
+                }
+
+            });
+            addQuantity.setOnClickListener(view -> {
+                String currentQuantity = (String) txtQuantity.getText().toString();
+                int newQnt = Integer.parseInt(currentQuantity) + 1;
+                if (newQnt > 10) {
+                    Toast.makeText(view.getContext(), "¡No puedes seleccionar más de 10 platillos", Toast.LENGTH_SHORT).show();
+                } else {
+                    np.setQuantity(newQnt);
+                    txtQuantity.setText(String.valueOf(newQnt));
+                }
+            });
+
+            minusQuantity.setOnClickListener(view -> {
+                String currentQuantity = (String) txtQuantity.getText().toString();
+                int newQnt = Integer.parseInt(currentQuantity) - 1;
+                if (newQnt <= 0) {
+                    np.setQuantity(1);
+                    txtQuantity.setText(String.valueOf(1));
+                    Toast.makeText(view.getContext(), "¡No puedes seleccionaar 0 en todo caso eliminalo xd", Toast.LENGTH_SHORT).show();
+                } else {
+                    np.setQuantity(newQnt);
+                    txtQuantity.setText(String.valueOf(newQnt));
+                }
+            });
+            txtNameProduct.setText(np.getProduct().getNombre());
+            txtQuantity.setText(String.valueOf(np.getQuantity()));
+            linearProduct.addView(productView);
+        }
+
+        //Table
+
+        int numberTable = table.getNroMesa();
+        TextView txtTable = dialog.findViewById(R.id.txtNumberTable);
+        txtTable.setText(String.valueOf(numberTable));
+
+
+        // Generar Comanda;
+        Button btnComanda = dialog.findViewById(R.id.btnGenerarComanda);
+        btnComanda.setOnClickListener(v -> {
+
+            // Aqui estoy enviando los datos al Fragment DetailOrderFragment
+            Bundle data = new Bundle();
+            data.putSerializable("LIST", (Serializable) listProduct);
+            data.putInt("NRO_MESA", numberTable);
+            detailOrderFragment.putArgs(data);
+            openFragment(detailOrderFragment);
+            dialog.cancel();
+
+
+            RetrofitHelper.getInstance().create(RestaurantInterface.class).addOrder().enqueue(new Callback<Order>() {
+                @Override
+                public void onResponse(Call<Order> call, Response<Order> response) {
+                    // aqui hago mi post
+                }
+
+                @Override
+                public void onFailure(Call<Order> call, Throwable t) {
+
+                }
+            });
+        });
+
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
-  }
 
-  private void openFragment(Fragment fragment) {
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.replace(R.id.fcv_main, fragment);
-    fragmentTransaction.commit();
-  }
+    @Override
+    public void onProductSelected(List<NewProduct> selectedProducts) {
+        listProduct = selectedProducts;
+    }
 
-  private void showDialog() {
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle("Cerrar Sesión");
-    builder.setMessage("¿Estás seguro que deseas cerrar sesión?");
-    builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        logout();
-      }
-    });
-    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        dialog.dismiss();
-      }
-    });
-    builder.show();
-  }
+    @Override
+    public void onTableSelected(Table tableSelected) {
+        table = tableSelected;
+    }
 
-  private void logout() {
-    sharedPreferences.edit().clear().apply();
-    Intent intent = new Intent(this, LoginActivity.class);
-    startActivity(intent);
-    finish();
-  }
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.nav_category) {
+            openFragment(new CategoryFragment());
+        } else if (itemId == R.id.nav_customer) {
+            openFragment(new CustomerFragment());
+        } else if (itemId == R.id.nav_worker) {
+            openFragment(new WorkerFragment());
+        } else if (itemId == R.id.nav_order) {
+            openFragment(new OrderFragment());
+        } else if (itemId == R.id.nav_print) {
+            openFragment(new PrintFragment());
+        } else if (itemId == R.id.nav_logout) {
+            showDialog();
+        }
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fcv_main, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cerrar Sesión");
+        builder.setMessage("¿Estás seguro que deseas cerrar sesión?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    private void logout() {
+        sharedPreferences.edit().clear().apply();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 }

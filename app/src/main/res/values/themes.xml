@@ -21,4 +21,9 @@
     </style>
 
     <style name="Theme.EasyOrder2" parent="Base.Theme.EasyOrder2" />
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
 </resources>

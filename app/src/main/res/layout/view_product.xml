@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageButton
+        android:id="@+id/btnRemoveProduct"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@android:drawable/ic_delete"
+        android:contentDescription="Eliminar producto" />
+
+
+    <TextView
+        android:id="@+id/txtNameProduct"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="Ceviche Mixto"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <ImageButton
+        android:id="@+id/btnMinusQt"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_minus" />
+
+    <TextView
+        android:id="@+id/txtQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="5"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <ImageButton
+        android:id="@+id/btnAddQt"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+        android:src="@drawable/ic_add" />
+
+
+</LinearLayout>
