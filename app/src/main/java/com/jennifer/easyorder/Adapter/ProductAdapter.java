@@ -18,7 +18,6 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowViewHolder> {
 
-
     private List<Product> products;
     private List<NewProduct> listProduct = new ArrayList<>();
     private selectedProducts listener;
@@ -38,7 +37,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
         return new ProductAdapter.ShowViewHolder(binding);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
         holder.bind(products.get(position));
@@ -57,7 +55,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
             if (!pExists && newProduct.getQuantity() > 0) {
                 listProduct.add(newProduct);
                 listener.onClickSelectedProducts(listProduct);
-                Toast.makeText(view.getContext(), "¡Seleccionaste un platilloa!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "¡Seleccionaste un platillo!", Toast.LENGTH_SHORT).show();
             } else {
                 if (newProduct.getQuantity() == 0) {
                     Toast.makeText(view.getContext(), "La cantidad minima es 1.", Toast.LENGTH_SHORT).show();
@@ -87,10 +85,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
             } else {
                 holder.binding.txtCnt.setText(String.valueOf(newQnt));
             }
-
         });
-
-
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +16,7 @@ import com.jennifer.easyorder.Adapter.CustomerAdapter;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
+import com.jennifer.easyorder.data.RetrofitReniec;
 import com.jennifer.easyorder.databinding.FragmentCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
 
@@ -34,7 +34,6 @@ public class CustomerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentCustomerBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -48,7 +47,29 @@ public class CustomerFragment extends Fragment {
         binding.rvCustomer.setLayoutManager(layoutManager);
 
         RestaurantInterface customerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+        RestaurantInterface dniInterface = RetrofitReniec.getInstance().create(RestaurantInterface.class);
         Call<List<Customer>> call = customerInterface.getShowCustomer();
+
+
+        binding.btnSearch.setOnClickListener(v -> {
+            String txtdni = binding.txtDni.getText().toString();
+            if(txtdni != null){
+                Call<Customer> dni = dniInterface.getCustomer(txtdni);
+                dni.enqueue(new Callback<Customer>() {
+                    @Override
+                    public void onResponse(Call<Customer> call, Response<Customer> response) {
+                        Customer customer = response.body();
+                        binding.txtName.setText(customer.getNombres());
+                        binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
+                    }
+
+                    @Override
+                    public void onFailure(Call<Customer> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
 
         call.enqueue(new Callback<List<Customer>>() {
 

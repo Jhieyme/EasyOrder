@@ -8,6 +8,47 @@
     android:background="@color/white"
     tools:context=".Fragments.CustomerFragment">
 
+    <EditText
+        android:id="@+id/txt_dni"
+        android:layout_width="248dp"
+        android:layout_height="43dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="247dp"
+        android:layout_height="31dp"
+        android:background="#C1D4EF"
+        app:layout_constraintBottom_toTopOf="@+id/rv_customer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_dni"
+        app:layout_constraintVertical_bias="0.117" />
+
+    <TextView
+        android:id="@+id/txt_apellido"
+        android:layout_width="245dp"
+        android:layout_height="28dp"
+        android:background="#BBD1F2"
+        app:layout_constraintBottom_toTopOf="@+id/rv_customer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_dni"
+        app:layout_constraintVertical_bias="0.849" />
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="68dp"
+        android:layout_height="30dp"
+        android:text="Buscar"
+        android:textSize="6sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_dni"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
@@ -23,15 +64,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_customer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
         </LinearLayout>
 
     </ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_customer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/txt_dni"
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

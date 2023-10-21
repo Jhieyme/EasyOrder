@@ -6,17 +6,17 @@ public class Product {
     private String nombre;
     private String descripcion;
     private double precio;
-
-
-
     private String urlImagen;
 
-    public Product(int idProducto, String nombre, String descripcion, double precio, String urlImagen) {
+    private Category idCategoriaNavigation;
+
+    public Product(int idProducto, String nombre, String descripcion, double precio, String urlImagen, Category idCategoriaNavigation) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.urlImagen = urlImagen;
+        this.idCategoriaNavigation = idCategoriaNavigation;
     }
 
     public int getIdProducto() {
@@ -59,5 +59,11 @@ public class Product {
         this.urlImagen = urlImagen;
     }
 
+    public Category getIdCategoriaNavigation() {
+        return idCategoriaNavigation;
+    }
 
+    public void setIdCategoriaNavigation(Category idCategoriaNavigation) {
+        this.idCategoriaNavigation = idCategoriaNavigation;
+    }
 }

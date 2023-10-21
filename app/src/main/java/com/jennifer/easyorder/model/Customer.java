@@ -5,12 +5,17 @@ public class Customer {
     private int idCliente;
     private String nombres;
     private String apellidos;
+
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String dni;
 
-    public Customer(int idCliente, String nombres, String apellidos, String dni) {
+    public Customer(int idCliente, String nombres, String apellidos, String apellidoPaterno, String apellidoMaterno, String dni) {
         this.idCliente = idCliente;
         this.nombres = nombres;
         this.apellidos = apellidos;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
         this.dni = dni;
     }
 
@@ -36,6 +41,22 @@ public class Customer {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 
     public String getDni() {

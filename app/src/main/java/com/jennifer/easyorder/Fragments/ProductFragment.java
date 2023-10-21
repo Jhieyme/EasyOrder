@@ -28,7 +28,6 @@ import retrofit2.Response;
 
 public class ProductFragment extends Fragment implements ProductAdapter.selectedProducts {
 
-
     private FragmentProductBinding binding;
     private RecyclerView recyclerView;
 
@@ -76,12 +75,6 @@ public class ProductFragment extends Fragment implements ProductAdapter.selected
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // condiconar que solo se muestren los items con el id seleccionado <----
-
-
-
-
-
                     List<Product> items = response.body();
                     ProductAdapter adapter = new ProductAdapter(items, ProductFragment.this);
                     recyclerView.setAdapter(adapter);

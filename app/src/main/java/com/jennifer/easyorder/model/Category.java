@@ -4,7 +4,6 @@ public class Category {
 
     private int idCategoria;
     private String descripcion;
-
     private String urlImagen;
 
     public Category(int idCategoria, String descripcion, String urlImagen) {

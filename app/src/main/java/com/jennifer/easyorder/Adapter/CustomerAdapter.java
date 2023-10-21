@@ -14,6 +14,7 @@ import java.util.List;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowViewHolder> {
   private List<Customer> customers;
+
   public CustomerAdapter(List<Customer> customers) {
     this.customers = customers;
   }
