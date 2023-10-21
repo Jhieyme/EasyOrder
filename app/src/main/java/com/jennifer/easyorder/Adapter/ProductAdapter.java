@@ -57,7 +57,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
             if (!pExists && newProduct.getQuantity() > 0) {
                 listProduct.add(newProduct);
                 listener.onClickSelectedProducts(listProduct);
-                Toast.makeText(view.getContext(), "¡Seleccionaste un platillo!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "¡Seleccionaste un platilloa!", Toast.LENGTH_SHORT).show();
             } else {
                 if (newProduct.getQuantity() == 0) {
                     Toast.makeText(view.getContext(), "La cantidad minima es 1.", Toast.LENGTH_SHORT).show();
