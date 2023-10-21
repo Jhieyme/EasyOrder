@@ -6,8 +6,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.jennifer.easyorder.databinding.ItemCustomerBinding;
 import com.jennifer.easyorder.databinding.ItemWorkerBinding;
+import com.jennifer.easyorder.model.Gender;
 import com.jennifer.easyorder.model.Worker;
 import java.util.List;
 
@@ -44,6 +46,14 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowViewHo
         public void bind(Worker worker) {
             binding.txtName.setText(worker.getNombres());
             binding.txtLastname.setText(worker.getApellidos());
+
+            //Imagen por genero
+            Gender gender = worker.getIdGeneroNavigation();
+            if(gender.getIdGenero() == 1){
+                Glide.with(itemView.getContext()).load("https://cdn-icons-png.flaticon.com/512/236/236831.png").into(binding.imgWorker);
+            } else{
+                Glide.with(itemView.getContext()).load("https://cdn-icons-png.flaticon.com/512/6997/6997662.png").into(binding.imgWorker);
+            }
         }
     }
 }
