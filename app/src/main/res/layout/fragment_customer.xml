@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,45 +7,157 @@
     android:background="@color/white"
     tools:context=".Fragments.CustomerFragment">
 
-    <EditText
-        android:id="@+id/txt_dni"
-        android:layout_width="248dp"
-        android:layout_height="43dp"
+    <ImageView
+        android:id="@+id/ic_addCustomer"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="6dp"
+        android:src="@drawable/add_customer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/overbox"/>
+
+    <LinearLayout
+        android:id="@+id/mykonten"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="204dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_konten"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/overbox">
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btn_close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="266dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/ic_close"
+                android:contentDescription="close modal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/txt_dni"
+                android:layout_width="183dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="24dp"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btn_searchDni"
+                android:layout_width="37dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="30dp"
+                android:backgroundTint="#000000"
+                android:drawableTop="@drawable/ic_search" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="193dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="#51545A"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/txt_apellido"
+            android:layout_width="193dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="#51545A" />
+
+        <Button
+            android:id="@+id/btn_add_customer"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#24C440"
+            android:gravity="center"
+            android:text="Agregar" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/overbox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/overbox"
+        android:elevation="3dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/txt_search"
+        android:layout_width="172dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.648"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txt_name"
-        android:layout_width="247dp"
-        android:layout_height="31dp"
-        android:background="#C1D4EF"
-        app:layout_constraintBottom_toTopOf="@+id/rv_customer"
+    <Button
+        android:id="@+id/btn_searchCustomer"
+        android:layout_width="37dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="100dp"
+        android:drawableTop="@drawable/ic_search"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_dni"
-        app:layout_constraintVertical_bias="0.117" />
-
-    <TextView
-        android:id="@+id/txt_apellido"
-        android:layout_width="245dp"
-        android:layout_height="28dp"
-        android:background="#BBD1F2"
-        app:layout_constraintBottom_toTopOf="@+id/rv_customer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_dni"
-        app:layout_constraintVertical_bias="0.849" />
+        app:layout_constraintHorizontal_bias="0.244"
+        app:layout_constraintStart_toEndOf="@+id/txt_search"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_search"
-        android:layout_width="68dp"
-        android:layout_height="30dp"
-        android:text="Buscar"
-        android:textSize="6sp"
+        android:id="@+id/btn_viewModel"
+        android:layout_width="118dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="@color/black"
+        android:drawableLeft="@drawable/ic_add_circle"
+        android:text="Agregar"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txt_dni"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
@@ -72,10 +183,10 @@
         android:id="@+id/rv_customer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/txt_dni"
+        app:layout_constraintTop_toBottomOf="@+id/txt_search"
         tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
