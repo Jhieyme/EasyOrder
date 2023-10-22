@@ -21,7 +21,7 @@ import java.util.List;
 public class DetailOrderFragment extends Fragment {
 
 
-    public FragmentDetailOrderBinding binding;
+    private FragmentDetailOrderBinding binding;
 
     private List<NewProduct> listFragment = new ArrayList<>();
     private int numberTable;
@@ -31,7 +31,8 @@ public class DetailOrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_detail_order, container, false);
+        binding = FragmentDetailOrderBinding.inflate(inflater, container, false);
+        return binding.getRoot();
 
 
     }
@@ -41,23 +42,36 @@ public class DetailOrderFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        // Ya tengo la lista de los productos
+        double subTotal = 0.0;
+        double total = 0.0;
+
+        TextView txtSubTotal = binding.txtSubTotalDetail.findViewById(R.id.txtSubTotalDetail);
+        TextView txtTotal = binding.txtTotalDetailOrder.findViewById(R.id.txtTotalDetailOrder);
+
+        binding.txtSubTotalDetail.setText("S/. " + String.valueOf(0));
+        binding.txtTotalDetailOrder.setText("S/. " + String.valueOf(0));
+
+
         LinearLayout linearDetailProduct = view.findViewById(R.id.linearDetail);
         for (NewProduct newProduct : listFragment) {
+
+            // Aqui se peude cambiar por un ScrollView
             View detailProduct = getLayoutInflater().inflate(R.layout.detail_product_row, null);
             TextView txtDetailName = detailProduct.findViewById(R.id.txtNameDetail);
             TextView txtDetailQnt = detailProduct.findViewById(R.id.txtQntDetail);
             TextView txtDetailPrice = detailProduct.findViewById(R.id.txtPriceDetail);
+            txtDetailName.setText(newProduct.getProduct().getNombre());
+            txtDetailQnt.setText(String.valueOf(newProduct.getQuantity()));
+            txtDetailPrice.setText(String.valueOf(newProduct.getProduct().getPrecio()));
             double price = newProduct.getProduct().getPrecio();
             int quantity = newProduct.getQuantity();
             double pricexQuantity = price * quantity;
-
-            txtDetailName.setText(newProduct.getProduct().getNombre());
-            txtDetailQnt.setText(String.valueOf(newProduct.getQuantity()));
-            txtDetailPrice.setText(String.valueOf(pricexQuantity));
+            subTotal += pricexQuantity;
             linearDetailProduct.addView(detailProduct);
         }
 
+        txtSubTotal.setText("S/. " + String.valueOf(subTotal));
+        txtTotal.setText("S/. " + String.valueOf(subTotal + 1));
 
     }
 
