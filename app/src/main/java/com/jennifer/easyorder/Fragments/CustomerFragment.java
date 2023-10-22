@@ -1,9 +1,11 @@
 package com.jennifer.easyorder.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jennifer.easyorder.Adapter.CustomerAdapter;
 import com.jennifer.easyorder.R;
@@ -50,8 +58,49 @@ public class CustomerFragment extends Fragment {
         RestaurantInterface dniInterface = RetrofitReniec.getInstance().create(RestaurantInterface.class);
         Call<List<Customer>> call = customerInterface.getShowCustomer();
 
+        //Animacion del modal
 
-        binding.btnSearch.setOnClickListener(v -> {
+        Button btnSearchDni = binding.btnSearchDni;
+        ImageView icCustomer = binding.icAddCustomer;
+        LinearLayout myKonten = binding.mykonten;
+        LinearLayout overbox = binding.overbox;
+        Context context = getActivity();
+        Animation fromsmall = AnimationUtils.loadAnimation(context, R.anim.fromsmall);
+        Animation fromnothing = AnimationUtils.loadAnimation(context, R.anim.fromnothing);
+        Animation foricon = AnimationUtils.loadAnimation(context, R.anim.foricon);
+        Animation togo = AnimationUtils.loadAnimation(context, R.anim.togo);
+
+        myKonten.setAlpha(0);
+        overbox.setAlpha(0);
+        icCustomer.setVisibility(View.GONE);
+
+        // Abrir modal
+        binding.btnViewModel.setOnClickListener(v -> {
+            icCustomer.setVisibility(View.VISIBLE);
+            icCustomer.startAnimation(foricon);
+            overbox.setAlpha(1);
+            overbox.startAnimation(fromnothing);
+            myKonten.setAlpha(1);
+            myKonten.startAnimation(fromsmall);
+
+        });
+
+        // Cerrar modal
+
+        binding.btnClose.setOnClickListener(v -> {
+            overbox.startAnimation(togo);
+            myKonten.startAnimation(togo);
+            icCustomer.startAnimation(togo);
+            icCustomer.setVisibility(View.GONE);
+
+            ViewCompat.animate(myKonten).setStartDelay(1000).alpha(0).start();
+            ViewCompat.animate(overbox).setStartDelay(1000).alpha(0).start();
+
+        });
+
+        // Buscar dni desde la api - Reniec
+
+        binding.btnSearchDni.setOnClickListener(v -> {
             String txtdni = binding.txtDni.getText().toString();
             if(txtdni != null){
                 Call<Customer> dni = dniInterface.getCustomer(txtdni);
