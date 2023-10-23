@@ -24,6 +24,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -81,17 +82,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
         binding.navigationDrawer.setNavigationItemSelectedListener(this);
         binding.bottomNavigation.setBackground(null);
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.bottom_category) {
                 openFragment(new CategoryFragment());
+                binding.toolbar.setTitle("Categorias");
             } else if (itemId == R.id.bottom_table) {
                 openFragment(new TablesFragment());
+                binding.toolbar.setTitle("Mesas");
             } else if (itemId == R.id.bottom_menu) {
                 openFragment(new ProductFragment());
+                binding.toolbar.setTitle("Menú");
             } else if (itemId == R.id.bottom_cashier) {
                 openFragment(new CashierFragment());
             }
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
+    // Modal de DetalleProducto
     private void showBottomDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -226,14 +229,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.nav_category) {
-
             openFragment(new CategoryFragment());
+            binding.toolbar.setTitle("Categorias");
         } else if (itemId == R.id.nav_customer) {
             openFragment(new CustomerFragment());
+            binding.toolbar.setTitle("Clientes");
         } else if (itemId == R.id.nav_worker) {
             openFragment(new WorkerFragment());
+            binding.toolbar.setTitle("Personal");
         } else if (itemId == R.id.nav_order) {
             openFragment(new OrderFragment());
+            binding.toolbar.setTitle("Comandas");
         } else if (itemId == R.id.nav_print) {
             openFragment(new PrintFragment());
         } else if (itemId == R.id.nav_logout) {
