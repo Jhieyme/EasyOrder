@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/toolbar"
+            app:title="Categorias"
             android:background="@drawable/header_background"
             android:elevation="4dp"
             android:padding="10dp"

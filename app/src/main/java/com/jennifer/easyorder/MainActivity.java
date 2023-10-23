@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -36,14 +40,21 @@ import com.jennifer.easyorder.Fragments.PrintFragment;
 import com.jennifer.easyorder.Fragments.ProductFragment;
 import com.jennifer.easyorder.Fragments.TablesFragment;
 import com.jennifer.easyorder.Fragments.WorkerFragment;
+import com.jennifer.easyorder.data.RestaurantInterface;
+import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ActivityMainBinding;
 import com.jennifer.easyorder.databinding.ModallayoutBinding;
 import com.jennifer.easyorder.model.NewProduct;
+import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProductFragment.OnProductSelectedListener, TablesFragment.OnMesaSelectedListener {
 
@@ -71,17 +82,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
         binding.navigationDrawer.setNavigationItemSelectedListener(this);
         binding.bottomNavigation.setBackground(null);
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.bottom_category) {
                 openFragment(new CategoryFragment());
+                binding.toolbar.setTitle("Categorias");
             } else if (itemId == R.id.bottom_table) {
                 openFragment(new TablesFragment());
+                binding.toolbar.setTitle("Mesas");
             } else if (itemId == R.id.bottom_menu) {
                 openFragment(new ProductFragment());
+                binding.toolbar.setTitle("Menú");
             } else if (itemId == R.id.bottom_cashier) {
                 openFragment(new CashierFragment());
             }
@@ -100,10 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-    // Funcion para mostrar el modal de DetalleComanda en el menú inferior
+    // Modal de DetalleProducto
     private void showBottomDialog() {
-        //  Inicializando las variables necesarias para la vista
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.modallayout);
@@ -111,64 +122,60 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.setContentView(bindingModal.getRoot());
         LinearLayout linearProduct = dialog.findViewById(R.id.linearProduct);
 
-
-        // Recorriendo el listProduct (en memoria) que obtengo de ProductAdapter
         for (NewProduct np : listProduct) {
+            View productView = getLayoutInflater().inflate(R.layout.view_product, null);
+            TextView txtNameProduct = productView.findViewById(R.id.txtNameProduct);
+            TextView txtQuantity = productView.findViewById(R.id.txtQuantity);
+            ImageButton removeProduct = productView.findViewById(R.id.btnRemoveProduct);
+            ImageButton addQuantity = productView.findViewById(R.id.btnAddQt);
+            ImageButton minusQuantity = productView.findViewById(R.id.btnMinusQt);
 
-//            View productView = getLayoutInflater().inflate(R.layout.view_product, null);
-//            TextView txtNameProduct = productView.findViewById(R.id.txtNameProduct);
-//            TextView txtQuantity = productView.findViewById(R.id.txtQuantity);
+            removeProduct.setOnClickListener(view -> {
+                int index = -1;
+                for (int i = 0; i < listProduct.size(); i++) {
+                    if (listProduct.get(i).getProduct().getNombre().equals(np.getProduct().getNombre())) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index != -1) {
+                    listProduct.remove(index);
+                    Toast.makeText(view.getContext(), "Quitaste este platillo!", Toast.LENGTH_SHORT).show();
+                    linearProduct.removeView(productView);
 
-//            ImageButton removeProduct = productView.findViewById(R.id.btnRemoveProduct);
-//            ImageButton addQuantity = productView.findViewById(R.id.btnAddQt);
-//            ImageButton minusQuantity = productView.findViewById(R.id.btnMinusQt);
-//
-//            removeProduct.setOnClickListener(view -> {
-//                int index = -1;
-//                for (int i = 0; i < listProduct.size(); i++) {
-//                    if (listProduct.get(i).getProduct().getNombre().equals(np.getProduct().getNombre())) {
-//                        index = i;
-//                        break;
-//                    }
-//                }
-//                if (index != -1) {
-//                    listProduct.remove(index);
-//                    Toast.makeText(view.getContext(), "Quitaste este platillo!", Toast.LENGTH_SHORT).show();
-//                    linearProduct.removeView(productView);
-//
-//                }
-//
-//            });
-//            addQuantity.setOnClickListener(view -> {
-//                String currentQuantity = (String) txtQuantity.getText().toString();
-//                int newQnt = Integer.parseInt(currentQuantity) + 1;
-//                if (newQnt > 10) {
-//                    Toast.makeText(view.getContext(), "¡No puedes seleccionar más de 10 platillos", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    np.setQuantity(newQnt);
-//                    txtQuantity.setText(String.valueOf(newQnt));
-//                }
-//            });
-//
-//            minusQuantity.setOnClickListener(view -> {
-//                String currentQuantity = (String) txtQuantity.getText().toString();
-//                int newQnt = Integer.parseInt(currentQuantity) - 1;
-//                if (newQnt <= 0) {
-//                    np.setQuantity(1);
-//                    txtQuantity.setText(String.valueOf(1));
-//                    Toast.makeText(view.getContext(), "¡No puedes seleccionaar 0 en todo caso eliminalo xd", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    np.setQuantity(newQnt);
-//                    txtQuantity.setText(String.valueOf(newQnt));
-//                }
-//            });
-//            txtNameProduct.setText(np.getProduct().getNombre());
-//            txtQuantity.setText(String.valueOf(np.getQuantity()));
-//            linearProduct.addView(productView);
+                }
+
+            });
+            addQuantity.setOnClickListener(view -> {
+                String currentQuantity = (String) txtQuantity.getText().toString();
+                int newQnt = Integer.parseInt(currentQuantity) + 1;
+                if (newQnt > 10) {
+                    Toast.makeText(view.getContext(), "¡No puedes seleccionar más de 10 platillos", Toast.LENGTH_SHORT).show();
+                } else {
+                    np.setQuantity(newQnt);
+                    txtQuantity.setText(String.valueOf(newQnt));
+                }
+            });
+
+            minusQuantity.setOnClickListener(view -> {
+                String currentQuantity = (String) txtQuantity.getText().toString();
+                int newQnt = Integer.parseInt(currentQuantity) - 1;
+                if (newQnt <= 0) {
+                    np.setQuantity(1);
+                    txtQuantity.setText(String.valueOf(1));
+                    Toast.makeText(view.getContext(), "¡No puedes seleccionaar 0 en todo caso eliminalo xd", Toast.LENGTH_SHORT).show();
+                } else {
+                    np.setQuantity(newQnt);
+                    txtQuantity.setText(String.valueOf(newQnt));
+                }
+            });
+            txtNameProduct.setText(np.getProduct().getNombre());
+            txtQuantity.setText(String.valueOf(np.getQuantity()));
+            linearProduct.addView(productView);
         }
 
-
         //Table
+
         int numberTable = table.getNroMesa();
         TextView txtTable = dialog.findViewById(R.id.txtNumberTable);
         txtTable.setText(String.valueOf(numberTable));
@@ -185,10 +192,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             detailOrderFragment.putArgs(data);
             openFragment(detailOrderFragment);
             dialog.cancel();
+
+
+            RetrofitHelper.getInstance().create(RestaurantInterface.class).addOrder().enqueue(new Callback<Order>() {
+                @Override
+                public void onResponse(Call<Order> call, Response<Order> response) {
+                    // aqui hago mi post
+                }
+
+                @Override
+                public void onFailure(Call<Order> call, Throwable t) {
+
+                }
+            });
         });
 
 
-        // Asignando propiedades de vista al modal
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -196,8 +215,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
-
-    // Funcion para obtener la lista de NewProduct desde ProductFragment
     @Override
     public void onProductSelected(List<NewProduct> selectedProducts) {
         listProduct = selectedProducts;
@@ -212,14 +229,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.nav_category) {
-
             openFragment(new CategoryFragment());
+            binding.toolbar.setTitle("Categorias");
         } else if (itemId == R.id.nav_customer) {
             openFragment(new CustomerFragment());
+            binding.toolbar.setTitle("Clientes");
         } else if (itemId == R.id.nav_worker) {
             openFragment(new WorkerFragment());
+            binding.toolbar.setTitle("Personal");
         } else if (itemId == R.id.nav_order) {
             openFragment(new OrderFragment());
+            binding.toolbar.setTitle("Comandas");
         } else if (itemId == R.id.nav_print) {
             openFragment(new PrintFragment());
         } else if (itemId == R.id.nav_logout) {

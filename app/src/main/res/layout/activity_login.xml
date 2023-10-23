@@ -1,96 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/login"
+    android:background="@drawable/header_login"
     tools:context=".LoginActivity">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="350dp"
-        android:layout_height="500dp"
-        android:layout_margin="30dp"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="20dp">
 
-        <LinearLayout
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="410dp"
+        android:layout_height="179dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="292dp"
+        android:orientation="vertical"
+        android:padding="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/loginText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="40dp">
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_extra_bold"
+            android:text="Bienvenido"
+            android:textAlignment="center"
+            android:textColor="@color/blue_500"
+            android:textSize="50sp"
+            android:textStyle="bold"></TextView>
 
-            <TextView
-                android:id="@+id/loginText"
-                android:fontFamily="@font/noto_extra_bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Iniciar Sesión"
-                android:textColor="@color/blue_500"
-                android:layout_marginTop="20dp"
-                android:textSize="40sp"
-                android:textStyle="bold"></TextView>
+        <TextView
+            android:layout_width="330dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="5dp"
+            android:alpha="0.7"
+            android:text="Por favor inicia sesión con tu información."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.7"
-                android:layout_marginTop="10dp"
-                android:text="Por favor inicia sesión con tu información." />
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="320dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="-50dp"
+        android:background="@drawable/login_background"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.086"
+        tools:ignore="MissingConstraints">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.7"
-                android:layout_marginTop="40dp"
-                android:text="Codigo"
-                android:textColor="@color/black"
-                android:fontFamily="@font/noto_extra_bold"
-                android:textStyle="bold" />
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="49dp"
+            android:background="@drawable/ic_login_background"
+            android:padding="6dp"
+            android:src="@drawable/ic_codigo"
+            app:tint="#FFFFFF" />
 
-            <EditText
-                android:id="@+id/txtCodigo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:drawableEnd="@drawable/ic_codigo"
-                />
+        <EditText
+            android:id="@+id/txtCodigo"
+            android:layout_width="288dp"
+            android:layout_height="49dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="Codigo"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="20dp" />
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.7"
-                android:fontFamily="@font/noto_extra_bold"
-                android:textColor="@color/black"
-                android:text="Contraseña"
-                android:textStyle="bold" />
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="320dp"
+        android:layout_height="49dp"
+        android:background="@drawable/login_background"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintVertical_bias="0.099"
+        tools:ignore="MissingConstraints">
 
-            <EditText
-                android:id="@+id/txtContra"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:drawableEnd="@drawable/ic_lock"
-                android:inputType="textPassword" />
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="49dp"
+            android:background="@drawable/ic_login_background"
+            android:padding="6dp"
+            android:src="@drawable/ic_lock"
+            app:tint="#FFFFFF" />
 
-            <Button
-                android:id="@+id/loginButton"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="40dp"
-                android:backgroundTint="#4D6FFF"
-                android:text="Ingresar"
-                android:textSize="18sp"
-                app:cornerRadius="20dp">
-            </Button>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        <EditText
+            android:id="@+id/txtContra"
+            android:layout_width="288dp"
+            android:layout_height="49dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:layout_editor_absoluteX="78dp"
+            tools:layout_editor_absoluteY="519dp" />
+    </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="102dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="#5DA0F2"
+            android:text="INGRESAR"
+            android:textSize="14sp"
+            app:cornerRadius="20dp"></Button>
+    </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
