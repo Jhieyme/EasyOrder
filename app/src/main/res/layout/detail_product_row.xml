@@ -50,7 +50,7 @@
 
             <TextView
                 android:id="@+id/txtNameDetail"
-                android:layout_width="156dp"
+                android:layout_width="175dp"
                 android:layout_height="wrap_content"
 
 
@@ -86,13 +86,13 @@
 
             <TextView
                 android:id="@+id/txtPriceDetail"
-                android:layout_width="115dp"
-                android:layout_height="wrap_content"
+                android:layout_width="116dp"
+                android:layout_height="28dp"
                 android:layout_below="@+id/txtNameDetail"
                 android:layout_alignStart="@+id/txtNameDetail"
                 android:layout_alignBottom="@+id/img_product"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginBottom="4dp"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"

@@ -226,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.nav_category) {
+
             openFragment(new CategoryFragment());
         } else if (itemId == R.id.nav_customer) {
             openFragment(new CustomerFragment());

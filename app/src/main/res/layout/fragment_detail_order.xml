@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F4F6FA"
     tools:context=".Fragments.DetailOrderFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,77 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--        <androidx.cardview.widget.CardView-->
-        <!--            android:id="@+id/cardView"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="400dp"-->
-        <!--            android:layout_margin="30dp"-->
-        <!--            android:layout_weight="1"-->
-        <!--            app:cardCornerRadius="20dp"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            tools:ignore="MissingConstraints">-->
-
-        <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-        <!--                android:id="@+id/test2"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent">-->
-
-        <!--                <LinearLayout-->
-        <!--                    android:id="@+id/linearInside"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:gravity="center"-->
-        <!--                    android:orientation="horizontal"-->
-
-
-        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                    app:layout_constraintStart_toStartOf="parent"-->
-        <!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-        <!--                    <TextView-->
-        <!--                        android:layout_width="100dp"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:text="Nombre"-->
-        <!--                        android:textAlignment="center" />-->
-
-        <!--                    <TextView-->
-        <!--                        android:layout_width="100dp"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:text="Cantidad"-->
-        <!--                        android:textAlignment="center" />-->
-
-        <!--                    <TextView-->
-        <!--                        android:layout_width="100dp"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:text="Precio"-->
-        <!--                        android:textAlignment="center" />-->
-
-
-        <!--                </LinearLayout>-->
-
-        <!--                <LinearLayout-->
-        <!--                    android:id="@+id/linearDetail"-->
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="0dp"-->
-        <!--                    android:orientation="vertical"-->
-
-        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                    app:layout_constraintStart_toStartOf="parent"-->
-        <!--                    app:layout_constraintTop_toBottomOf="@+id/linearInside">-->
-
-        <!--                </LinearLayout>-->
-        <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-        <!--        </androidx.cardview.widget.CardView>-->
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="430dp"
+            android:layout_height="380dp"
+            android:layout_marginTop="50dp"
             android:background="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/cardView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -111,11 +47,10 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             app:cardCornerRadius="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
 
-            app:layout_constraintVertical_bias="0.73"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
             tools:ignore="MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.databinding.FragmentDetailOrderBinding;
 import com.jennifer.easyorder.model.NewProduct;
@@ -60,6 +62,9 @@ public class DetailOrderFragment extends Fragment {
             TextView txtDetailName = detailProduct.findViewById(R.id.txtNameDetail);
             TextView txtDetailQnt = detailProduct.findViewById(R.id.txtQntDetail);
             TextView txtDetailPrice = detailProduct.findViewById(R.id.txtPriceDetail);
+            ImageView img = detailProduct.findViewById(R.id.imgProduct2);
+            Glide.with(img.getContext()).load(newProduct.getProduct().getUrlImagen()).load(img);
+
             txtDetailName.setText(newProduct.getProduct().getNombre());
             txtDetailQnt.setText(String.valueOf(newProduct.getQuantity()));
             txtDetailPrice.setText(String.valueOf(newProduct.getProduct().getPrecio()));
