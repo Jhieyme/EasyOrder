@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.jennifer.easyorder.Adapter.CustomerAdapter;
 import com.jennifer.easyorder.R;
@@ -26,6 +29,7 @@ import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.data.RetrofitReniec;
 import com.jennifer.easyorder.databinding.FragmentCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
+import com.jennifer.easyorder.model.NewCustomer;
 
 import java.util.List;
 
@@ -37,6 +41,8 @@ public class CustomerFragment extends Fragment {
 
     private FragmentCustomerBinding binding;
     private RecyclerView recyclerView;
+
+    //private FragmentManager fragmentManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +63,44 @@ public class CustomerFragment extends Fragment {
         RestaurantInterface dniInterface = RetrofitReniec.getInstance().create(RestaurantInterface.class);
         Call<List<Customer>> call = customerInterface.getShowCustomer();
 
-        //Animacion del modal
+        // Buscar dni desde la api - Reniec
+
+        binding.btnSearchDni.setOnClickListener(v -> {
+            String txtdni = binding.txtDni.getText().toString();
+            if(txtdni != null){
+                Call<NewCustomer> dni = dniInterface.getCustomer(txtdni);
+                dni.enqueue(new Callback<NewCustomer>() {
+                    @Override
+                    public void onResponse(Call<NewCustomer> call, Response<NewCustomer> response) {
+                        NewCustomer customer = response.body();
+                        binding.txtName.setText(customer.getNombres());
+                        binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
+                    }
+
+                    @Override
+                    public void onFailure(Call<NewCustomer> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+        call.enqueue(new Callback<List<Customer>>() {
+
+            @Override
+            public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
+                List<Customer> items = response.body();
+                System.out.println(items + "desde fragment");
+                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items);
+                recyclerView.setAdapter(rvCustomerAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Customer>> call, Throwable t) {
+
+            }
+        });
+
+        //Animacion del modal -------------------------------------------------------------------
 
         Button btnSearchDni = binding.btnSearchDni;
         ImageView icCustomer = binding.icAddCustomer;
@@ -97,40 +140,43 @@ public class CustomerFragment extends Fragment {
 
         });
 
-        // Buscar dni desde la api - Reniec
+        //Aqui hago la solicitud POST
 
-        binding.btnSearchDni.setOnClickListener(v -> {
-            String txtdni = binding.txtDni.getText().toString();
-            if(txtdni != null){
-                Call<Customer> dni = dniInterface.getCustomer(txtdni);
-                dni.enqueue(new Callback<Customer>() {
+        binding.btnAddCustomer.setOnClickListener(v -> {
+
+            String nombres = binding.txtName.getText().toString();
+            String apellidos = binding.txtApellido.getText().toString();
+            String dni = binding.txtDni.getText().toString();
+
+            if (nombres!= null && apellidos!= null && dni!=null){
+                Customer newCustomer = new Customer(
+                        dni,nombres,apellidos,true);
+
+                Call<Customer> add = customerInterface.addCustomer(newCustomer);
+                add.enqueue(new Callback<Customer>() {
                     @Override
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
-                        Customer customer = response.body();
-                        binding.txtName.setText(customer.getNombres());
-                        binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
-                    }
+                        if (response.isSuccessful()){
+                            System.out.println(response.code());
+                            Toast.makeText(view.getContext(),"Cliente agregado", Toast.LENGTH_SHORT).show();
+                            /*overbox.startAnimation(togo);
+                            myKonten.startAnimation(togo);
+                            icCustomer.startAnimation(togo);
+                            icCustomer.setVisibility(View.GONE);
 
+                            ViewCompat.animate(myKonten).setStartDelay(1000).alpha(0).start();
+                            ViewCompat.animate(overbox).setStartDelay(1000).alpha(0).start();
+
+                            CustomerFragment customerFragment = new CustomerFragment();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.fcv_main, customerFragment);
+                            fragmentTransaction.commit();*/
+                        }
+                    }
                     @Override
                     public void onFailure(Call<Customer> call, Throwable t) {
-
                     }
                 });
-            }
-        });
-
-        call.enqueue(new Callback<List<Customer>>() {
-
-            @Override
-            public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
-                List<Customer> items = response.body();
-                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items);
-                recyclerView.setAdapter(rvCustomerAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Customer>> call, Throwable t) {
-
             }
         });
     }

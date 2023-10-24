@@ -29,6 +29,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
       holder.bind(customers.get(position));
+      System.out.println(customers);
     }
 
     @Override

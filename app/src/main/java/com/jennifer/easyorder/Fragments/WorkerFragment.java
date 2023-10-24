@@ -34,7 +34,6 @@ public class WorkerFragment extends Fragment {
     private FragmentWorkerBinding binding;
     private RecyclerView recyclerView;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

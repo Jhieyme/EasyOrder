@@ -2,29 +2,24 @@ package com.jennifer.easyorder.model;
 
 public class Customer {
 
-    private int idCliente;
+    private String dni;
     private String nombres;
     private String apellidos;
+    private boolean activo;
 
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private String dni;
-
-    public Customer(int idCliente, String nombres, String apellidos, String apellidoPaterno, String apellidoMaterno, String dni) {
-        this.idCliente = idCliente;
+    public Customer(String dni, String nombres, String apellidos, boolean activo) {
+        this.dni = dni;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
+        this.activo = activo;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
         this.dni = dni;
-    }
-
-    public int getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
     }
 
     public String getNombres() {
@@ -43,27 +38,11 @@ public class Customer {
         this.apellidos = apellidos;
     }
 
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }
