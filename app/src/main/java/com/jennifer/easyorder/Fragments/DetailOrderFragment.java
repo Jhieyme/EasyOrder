@@ -109,7 +109,7 @@ public class DetailOrderFragment extends Fragment {
 
 
         txtSubTotal.setText("S/. " + String.valueOf(subTotal));
-        txtTotal.setText("S/. " + String.valueOf(subTotal + 1));
+        txtTotal.setText("S/. " + String.valueOf(subTotal + 2));
 
 
     }
