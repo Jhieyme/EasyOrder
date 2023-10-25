@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/overbox"
-        android:elevation="1dp"
-        >
+        android:elevation="1dp">
 
     </LinearLayout>
 
@@ -39,7 +38,7 @@
             android:fontFamily="@font/plex_sans_semibold"
             android:text="Bienvenido"
             android:textAlignment="center"
-            android:textColor="@color/blue_500"
+            android:textColor="@color/white"
             android:textSize="50sp"
             android:textStyle="bold"></TextView>
 
@@ -51,7 +50,7 @@
             android:alpha="0.7"
             android:text="Por favor inicia sesión con tu información."
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="13sp" />
     </LinearLayout>
 
