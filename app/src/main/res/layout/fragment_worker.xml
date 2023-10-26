@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.069"
         tools:ignore="MissingConstraints">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/et_search"
             android:layout_width="288dp"
             android:layout_height="43dp"

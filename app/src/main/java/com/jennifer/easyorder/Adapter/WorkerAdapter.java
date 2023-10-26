@@ -14,9 +14,9 @@ import com.jennifer.easyorder.model.Worker;
 import java.util.List;
 
 public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowViewHolder>{
-    private List<Worker> workers;
-    public WorkerAdapter(List<Worker> workers) {
-        this.workers = workers;
+    private List<Worker> workersList;
+    public WorkerAdapter(List<Worker> workersList) {
+        this.workersList = workersList;
     }
 
     @NonNull
@@ -28,12 +28,12 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
-        holder.bind(workers.get(position));
+        holder.bind(workersList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return workers.size();
+        return workersList.size();
     }
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {

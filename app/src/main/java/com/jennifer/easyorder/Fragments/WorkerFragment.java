@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import com.jennifer.easyorder.Adapter.CustomerAdapter;
 import com.jennifer.easyorder.Adapter.WorkerAdapter;
@@ -23,6 +26,8 @@ import com.jennifer.easyorder.databinding.FragmentWorkerBinding;
 import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.Worker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,6 +53,14 @@ public class WorkerFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_worker);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         binding.rvWorker.setLayoutManager(layoutManager);
+
+        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.et_search);
+        List<String> suggestions = Arrays.asList("Luis", "Banana", "Cereza", "Dátil", "Uva"); // Lista de sugerencias
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
+        autoCompleteTextView.setAdapter(adapter);
+
+
 
         RestaurantInterface workerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Worker>> call = workerInterface.getShowWorker();

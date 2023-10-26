@@ -65,6 +65,7 @@ public class ProductFragment extends Fragment implements ProductAdapter.selected
 
         recyclerView = view.findViewById(R.id.rv_product);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
+
         binding.rvProduct.setLayoutManager(layoutManager);
 
         RestaurantInterface productInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);

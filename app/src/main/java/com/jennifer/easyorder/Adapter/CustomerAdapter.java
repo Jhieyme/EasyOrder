@@ -1,7 +1,9 @@
 package com.jennifer.easyorder.Adapter;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,10 +15,10 @@ import com.jennifer.easyorder.model.Customer;
 import java.util.List;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowViewHolder> {
-  private List<Customer> customers;
+  private List<Customer> customersList;
 
-  public CustomerAdapter(List<Customer> customers) {
-    this.customers = customers;
+  public CustomerAdapter(List<Customer> customersList) {
+    this.customersList = customersList;
   }
 
     @NonNull
@@ -28,13 +30,12 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
 
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
-      holder.bind(customers.get(position));
-      System.out.println(customers);
+      holder.bind(customersList.get(position));
     }
 
     @Override
     public int getItemCount() {
-      return customers.size();
+      return customersList.size();
     }
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {

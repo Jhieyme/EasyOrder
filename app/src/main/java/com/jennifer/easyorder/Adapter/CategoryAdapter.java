@@ -20,9 +20,9 @@ import java.util.List;
 
 public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.ShowViewHolder> {
 
-    private List<Category> category;
-    public CategoryAdapter(List<Category> category) {
-        this.category = category;
+    private List<Category> categoryList;
+    public CategoryAdapter(List<Category> categoryList) {
+        this.categoryList = categoryList;
     }
 
     @NonNull
@@ -34,13 +34,16 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.ShowV
 
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
-        holder.bind(category.get(position));
+        holder.bind(categoryList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return category.size();
+        return categoryList.size();
     }
+
+
+
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {
         private ItemCategoryBinding binding;
