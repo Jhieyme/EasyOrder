@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
 import com.jennifer.easyorder.Fragments.CashierFragment;
 import com.jennifer.easyorder.Fragments.CategoryFragment;
+import com.jennifer.easyorder.Fragments.CustomerFragment;
 import com.jennifer.easyorder.Fragments.DetailOrderFragment;
 import com.jennifer.easyorder.Fragments.OrderFragment;
 import com.jennifer.easyorder.Fragments.PrintFragment;
@@ -208,8 +209,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             openFragment(new CategoryFragment());
             binding.toolbar.setTitle("Categorias");
         } else if (itemId == R.id.nav_customer) {
-//            openFragment(new CustomerFragment());
-            showNotify();
+            openFragment(new CustomerFragment());
+            //showNotify();
             binding.toolbar.setTitle("Clientes");
         } else if (itemId == R.id.nav_worker) {
             openFragment(new WorkerFragment());
