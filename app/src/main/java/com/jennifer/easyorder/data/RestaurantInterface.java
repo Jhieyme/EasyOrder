@@ -12,8 +12,10 @@ import com.jennifer.easyorder.model.Worker;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -46,6 +48,12 @@ public interface RestaurantInterface {
 
     @POST("Cliente")
     Call<Customer> addCustomer(@Body Customer customer);
+
+    @PUT("Cliente/{id}")
+    Call<Customer> putCustomer(@Body Customer customer, @Path("id") Integer id);
+
+    @DELETE("Cliente/{id}")
+    Call<Customer> deleteCustomer(@Path("id") Integer id);
 
     //-------------------------------------------------
     @GET("{dni}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFuZHJlc3BhcmphdEBnbWFpbC5jb20ifQ.A4kk76bROCy44OoQZZqfLo27rG3rqg1HK6GXZUcjvuI")

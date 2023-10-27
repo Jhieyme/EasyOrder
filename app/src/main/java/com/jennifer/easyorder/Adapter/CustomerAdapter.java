@@ -2,6 +2,7 @@ package com.jennifer.easyorder.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,8 @@ import com.jennifer.easyorder.model.Customer;
 
 
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowViewHolder> {
   private List<Customer> customers;
@@ -28,8 +31,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
 
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
-      holder.bind(customers.get(position));
-      System.out.println(customers);
+        holder.bind(customers.get(position));
+        holder.itemView.setOnLongClickListener(v -> {
+          Toast.makeText(v.getContext(), "Cliente eliminado", Toast.LENGTH_SHORT).show();
+          return true;
+        });
     }
 
     @Override
