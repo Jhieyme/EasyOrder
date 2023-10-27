@@ -14,8 +14,6 @@ import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentPrintBinding;
 import com.jennifer.easyorder.model.Voucher;
 
-import java.util.Date;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,7 +22,6 @@ public class PrintFragment extends Fragment {
 
 
     private FragmentPrintBinding binding;
-
 
 
     @Override
@@ -43,14 +40,16 @@ public class PrintFragment extends Fragment {
 
 
         RestaurantInterface voucherInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
-        Call<Voucher> call = voucherInterface.getVoucher(2);
-
-
+        Call<Voucher> call = voucherInterface.getVoucher(1);
 
 
         call.enqueue(new Callback<Voucher>() {
+
+
             @Override
             public void onResponse(Call<Voucher> call, Response<Voucher> response) {
+
+
                 if (response.isSuccessful() && response.body() != null) {
                     Voucher voucher = response.body();
                     setBinding(voucher);
@@ -59,15 +58,14 @@ public class PrintFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Voucher> call, Throwable t) {
-                System.out.println(t.getMessage());
+                System.out.println(t.getCause());
             }
         });
 
     }
 
     public void setBinding(Voucher voucher) {
-        binding.txtDni.setText(voucher.getIdCliente().getDni());
-        binding.txtFecha.setText((CharSequence) voucher.getFechaHora());
+        binding.txtDni.setText(voucher.getIdClienteNavigation().getDni());
 
 
     }
