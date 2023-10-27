@@ -22,8 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¡Vive una experiencia inigualable!"
-        android:textColor="@color/white"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:layout_marginBottom="16dp"/>
+
+
+
 
 </LinearLayout>

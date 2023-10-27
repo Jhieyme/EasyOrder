@@ -42,7 +42,6 @@ public class CustomerFragment extends Fragment {
     private FragmentCustomerBinding binding;
     private RecyclerView recyclerView;
 
-    //private FragmentManager fragmentManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

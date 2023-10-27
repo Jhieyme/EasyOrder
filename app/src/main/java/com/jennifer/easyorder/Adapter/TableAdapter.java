@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHolder> {
 
-    private List<Table> tables;
+    private List<Table> tablesList;
     private selectedTable listener;
 
     public interface selectedTable {
@@ -23,8 +23,8 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
         void onClickSelectedMesa(Table table);
     }
 
-    public TableAdapter(List<Table> tables, selectedTable listener) {
-        this.tables = tables;
+    public TableAdapter(List<Table> tablesList, selectedTable listener) {
+        this.tablesList = tablesList;
         this.listener = listener;
     }
 
@@ -37,17 +37,17 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
 
     @Override
     public void onBindViewHolder(@NonNull TableAdapter.ShowViewHolder holder, int position) {
-        holder.bind(tables.get(position));
+        holder.bind(tablesList.get(position));
 
         holder.itemView.setOnClickListener(v -> {
-            Table tableSelected = tables.get(position);
+            Table tableSelected = tablesList.get(position);
             listener.onClickSelectedMesa(tableSelected);
         });
     }
 
     @Override
     public int getItemCount() {
-        return tables.size();
+        return tablesList.size();
     }
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {

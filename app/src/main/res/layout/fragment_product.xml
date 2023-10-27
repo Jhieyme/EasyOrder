@@ -1,48 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F4F6FA"
+
     tools:context=".Fragments.ProductFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="344dp"
-        android:layout_height="42dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/rectangle_background"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:layout_width="288dp"
-            android:layout_height="43dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="Buscar"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
 
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="42dp"
-            android:background="@drawable/ic_search_background"
-            android:padding="6dp"
-            android:src="@drawable/ic_search"
-            app:tint="@color/white" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_background"
+            android:orientation="horizontal"
 
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="43dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Buscar"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="42dp"
+                android:background="@drawable/ic_search_background"
+                android:padding="6dp"
+                android:src="@drawable/ic_search"
+                app:tint="@color/white" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -50,8 +61,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:textAlignment="center"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -59,17 +72,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                app:layout_constraintVertical_bias="0.07999998"
+                tools:layout_editor_absoluteX="17dp" />
+
         </LinearLayout>
 
     </ScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_product"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="17dp" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

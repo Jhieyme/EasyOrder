@@ -1,7 +1,6 @@
 package com.jennifer.easyorder;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -13,8 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -24,7 +21,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -33,28 +29,20 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
 import com.jennifer.easyorder.Fragments.CashierFragment;
 import com.jennifer.easyorder.Fragments.CategoryFragment;
-import com.jennifer.easyorder.Fragments.CustomerFragment;
 import com.jennifer.easyorder.Fragments.DetailOrderFragment;
 import com.jennifer.easyorder.Fragments.OrderFragment;
 import com.jennifer.easyorder.Fragments.PrintFragment;
 import com.jennifer.easyorder.Fragments.ProductFragment;
 import com.jennifer.easyorder.Fragments.TablesFragment;
 import com.jennifer.easyorder.Fragments.WorkerFragment;
-import com.jennifer.easyorder.data.RestaurantInterface;
-import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ActivityMainBinding;
 import com.jennifer.easyorder.databinding.ModallayoutBinding;
 import com.jennifer.easyorder.model.NewProduct;
-import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProductFragment.OnProductSelectedListener, TablesFragment.OnMesaSelectedListener {
 
@@ -193,18 +181,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             openFragment(detailOrderFragment);
             dialog.cancel();
 
-
-            RetrofitHelper.getInstance().create(RestaurantInterface.class).addOrder().enqueue(new Callback<Order>() {
-                @Override
-                public void onResponse(Call<Order> call, Response<Order> response) {
-                    // aqui hago mi post
-                }
-
-                @Override
-                public void onFailure(Call<Order> call, Throwable t) {
-
-                }
-            });
         });
 
 
@@ -232,7 +208,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             openFragment(new CategoryFragment());
             binding.toolbar.setTitle("Categorias");
         } else if (itemId == R.id.nav_customer) {
-            openFragment(new CustomerFragment());
+//            openFragment(new CustomerFragment());
+            showNotify();
             binding.toolbar.setTitle("Clientes");
         } else if (itemId == R.id.nav_worker) {
             openFragment(new WorkerFragment());
@@ -264,22 +241,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
     }
 
+
+
+    private void showNotify() {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_message,
+                (ViewGroup) findViewById(R.id.custom_toast_layout));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.TOP  | Gravity.START, 0, 90);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+
+
+    }
+
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Cerrar Sesión");
-        builder.setMessage("¿Estás seguro que deseas cerrar sesión?");
-        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                logout();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View customDialogView = inflater.inflate(R.layout.custom_dialog, null);
+
+        builder.setView(customDialogView);
+
+
+//        builder.setTitle("Cerrar Sesión");
+//        builder.setMessage("¿Estás seguro que deseas cerrar sesión?");
+//        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                logout();
+//            }
+//        });
+//        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+
+
         builder.show();
     }
 

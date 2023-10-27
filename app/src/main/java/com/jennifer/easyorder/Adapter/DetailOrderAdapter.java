@@ -32,9 +32,6 @@ public class DetailOrderAdapter extends RecyclerView.Adapter<DetailOrderAdapter.
     @Override
     public void onBindViewHolder(@NonNull DetailOrderAdapter.ShowViewHolder holder, int position) {
         holder.bind(productList.get(position));
-
-        System.out.println(productList);
-        System.out.println("desde adapter");
     }
 
     @Override
@@ -53,8 +50,7 @@ public class DetailOrderAdapter extends RecyclerView.Adapter<DetailOrderAdapter.
 
         public void bind(NewProduct newProduct) {
             binding.txtNameDetail.setText(newProduct.getProduct().getNombre());
-            binding.txtPriceDetail.setText("S/. " + String.valueOf(newProduct.getProduct().getPrecio()));
-            binding.txtQntDetail.setText(String.valueOf(newProduct.getQuantity()));
+
             Glide.with(itemView.getContext()).load(newProduct.getProduct().getUrlImagen()).into(binding.imgProduct2);
         }
 
