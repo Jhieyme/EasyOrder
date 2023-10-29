@@ -11,32 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="125dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/clothingCard"
-        android:layout_width="match_parent"
-        android:layout_height="115dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        app:cardCornerRadius="20dp"
-        tools:ignore="MissingConstraints">
-
         <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/img_product"
-                android:layout_width="83dp"
-                android:layout_height="match_parent"
+                android:layout_width="61dp"
+                android:layout_height="84dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="33dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="-2dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="14dp"
                 android:contentDescription="@null"
-                android:src="@drawable/happy"
+                android:src="@drawable/back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.246"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,11 +36,11 @@
 
             <TextView
                 android:id="@+id/txt_name"
-                android:layout_width="171dp"
-                android:layout_height="29dp"
+                android:layout_width="194dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/img_product"
-                android:layout_marginStart="-1dp"
-                android:layout_marginTop="-97dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="-99dp"
                 android:layout_toEndOf="@+id/img_product"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"
@@ -65,11 +57,13 @@
 
             <TextView
                 android:id="@+id/txt_lastname"
-                android:layout_width="168dp"
-                android:layout_height="29dp"
-                android:layout_below="@+id/img_product"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="-74dp"
+                android:layout_width="194dp"
+                android:layout_height="0dp"
+                android:layout_above="@+id/txt_dni"
+                android:layout_below="@+id/txt_name"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="-2dp"
+                android:layout_marginBottom="38dp"
                 android:layout_toEndOf="@+id/img_product"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"
@@ -89,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_product"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="-46dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="-33dp"
                 android:layout_toEndOf="@+id/img_product"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"
@@ -104,19 +98,42 @@
                 app:layout_constraintTop_toBottomOf="@+id/img_product"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="59dp"
+            <TextView
+                android:id="@+id/txt_status"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/txt_name"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginBottom="6dp"
-                android:layout_toEndOf="@+id/txt_name"
-                android:gravity="center" />
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="117dp"
+                android:layout_marginBottom="18dp"
+                android:layout_toEndOf="@+id/txt_dni"
+
+                android:text="Habilitado"></TextView>
+
+            <ImageButton
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_above="@+id/txt_status"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="41dp"
+                android:layout_marginBottom="12dp"
+                android:layout_toEndOf="@+id/txt_lastname"
+                android:background="#00FFFFFF"
+                android:src="@drawable/ic_edit"
+                app:tint="#2036C9"></ImageButton>
+
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:alpha="0.3"
+            android:background="#2B2B2B"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

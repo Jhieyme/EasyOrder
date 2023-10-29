@@ -12,6 +12,7 @@
         android:layout_width="344dp"
         android:layout_height="42dp"
         android:layout_marginTop="40dp"
+        android:elevation="2dp"
         android:background="@drawable/rectangle_background"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,7 +43,7 @@
             android:background="@drawable/ic_search_background"
             android:padding="6dp"
             android:src="@drawable/ic_search"
-            app:tint="@color/white" />
+            app:tint="#909090" />
 
     </LinearLayout>
 
@@ -70,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="160dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
         </LinearLayout>

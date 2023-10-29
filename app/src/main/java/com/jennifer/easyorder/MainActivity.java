@@ -1,11 +1,13 @@
 package com.jennifer.easyorder;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 if (index != -1) {
                     listProduct.remove(index);
-                    Toast.makeText(view.getContext(), "Quitaste este platillo!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(view.getContext(), "Quitaste este platillo!", Toast.LENGTH_SHORT).show();
+                    showNotify();
                     linearProduct.removeView(productView);
 
                 }
@@ -221,6 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemId == R.id.nav_print) {
             openFragment(new PrintFragment());
         } else if (itemId == R.id.nav_logout) {
+            //showNotify();
             showDialog();
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -242,45 +247,77 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
     }
 
-
-
     private void showNotify() {
-
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_message,
-                (ViewGroup) findViewById(R.id.custom_toast_layout));
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.TOP  | Gravity.START, 0, 90);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
-        toast.show();
-
-
+        View layout = inflater.inflate(R.layout.custom_message, null);
+        final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popup.setAnimationStyle(R.style.PopupAnimation);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 330);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        popup.dismiss();
+                    }
+                }, 2000);
+            }
+        }, 100);
+        TextView message = layout.findViewById(R.id.txt_message);
+        message.setText("¡Quitaste este platillo!");
     }
+
+
+//    private void showNotify() {
+//
+//        LayoutInflater inflater = getLayoutInflater();
+//        View layout = inflater.inflate(R.layout.custom_message,
+//                (ViewGroup) findViewById(R.id.custom_toast_layout));
+//        Toast toast = new Toast(getApplicationContext());
+//        toast.setGravity(Gravity.TOP  | Gravity.START, 0, 100);
+//        toast.setDuration(Toast.LENGTH_SHORT);
+//        toast.setView(layout);
+//        toast.show();
+//
+////        new Handler().postDelayed(new Runnable() {
+////            @Override
+////            public void run() {
+////                layout.animate()
+////                .translationX(-layout.getWidth()*10)
+////                .setDuration(1000)
+////                .withEndAction(new Runnable() {
+////                    @Override
+////                    public void run() {
+////                        toast.cancel();
+////                    }
+////                  })
+////                  .start();
+////            }
+////        }, 2000);
+//    }
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View customDialogView = inflater.inflate(R.layout.custom_dialog, null);
+//        LayoutInflater inflater = LayoutInflater.from(this);
+//        View customDialogView = inflater.inflate(R.layout.custom_dialog, null);
+//        builder.setView(customDialogView);
 
-        builder.setView(customDialogView);
-
-
-//        builder.setTitle("Cerrar Sesión");
-//        builder.setMessage("¿Estás seguro que deseas cerrar sesión?");
-//        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                logout();
-//            }
-//        });
-//        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        });
+        builder.setTitle("Cerrar Sesión");
+        builder.setMessage("¿Estás seguro que deseas cerrar sesión?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
 
 
         builder.show();

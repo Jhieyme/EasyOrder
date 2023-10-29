@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jennifer.easyorder.Adapter.CustomerAdapter;
@@ -101,7 +105,6 @@ public class CustomerFragment extends Fragment {
 
         //Animacion del modal -------------------------------------------------------------------
 
-        Button btnSearchDni = binding.btnSearchDni;
         ImageView icCustomer = binding.icAddCustomer;
         LinearLayout myKonten = binding.mykonten;
         LinearLayout overbox = binding.overbox;
@@ -157,7 +160,8 @@ public class CustomerFragment extends Fragment {
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
                         if (response.isSuccessful()){
                             System.out.println(response.code());
-                            Toast.makeText(view.getContext(),"Cliente agregado", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(view.getContext(),"Cliente agregado", Toast.LENGTH_SHORT).show();
+                            showNotify();
                             /*overbox.startAnimation(togo);
                             myKonten.startAnimation(togo);
                             icCustomer.startAnimation(togo);
@@ -178,5 +182,26 @@ public class CustomerFragment extends Fragment {
                 });
             }
         });
+    }
+
+    private void showNotify() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_message, null);
+        final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popup.setAnimationStyle(R.style.PopupAnimation);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 330);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        popup.dismiss();
+                    }
+                }, 2000);
+            }
+        }, 100);
+        TextView message = layout.findViewById(R.id.txt_message);
+        message.setText("Cliente agregado exitosamente");
     }
 }

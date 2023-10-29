@@ -132,9 +132,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint"
         android:layout_width="414dp"
-        android:layout_height="126dp"
+        android:layout_height="112dp"
+        android:layout_marginTop="10dp"
         android:background="#F4F6FA"
-        android:elevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -192,7 +192,7 @@
                 android:background="@drawable/ic_search_background"
                 android:padding="6dp"
                 android:src="@drawable/ic_search"
-                app:tint="@color/white"
+                app:tint="#909090"
                 tools:layout_editor_absoluteX="353dp"
                 tools:layout_editor_absoluteY="97dp" />
 
@@ -205,26 +205,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="30dp"
-        android:elevation="1dp"
-        android:layout_marginBottom="45dp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraint"
+        app:layout_constraintVertical_bias="0.025"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginTop="65dp"
-            android:layout_marginBottom="90dp"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_customer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="160dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"

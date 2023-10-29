@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="250dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/customDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,26 +18,77 @@
 
         <TextView
             android:id="@+id/dialog_title"
-            android:layout_width="match_parent"
+            android:layout_width="211dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:padding="16dp"
-            android:text="Custom Dialog Title"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:text="Método de pago"
+            android:textColor="#8C8C8C"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/edit_text"
+
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter something" />
+            android:layout_height="39dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_credit_card" />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:alpha="0.3"
+        android:background="#2B2B2B"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customDialog"
+        app:layout_constraintVertical_bias="0.046" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2">
 
         <Button
             android:id="@+id/dialog_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OK" />
+            android:layout_width="138dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="#D7B7A2"
+            android:text="Efectivo"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:layout_width="138dp"
+            android:layout_height="80dp"
+            android:backgroundTint="#DDC4A9"
+            android:text="Tarjeta"
+            android:textSize="15sp" />
+
     </LinearLayout>
+
+    <ImageButton
+        android:layout_width="68dp"
+        android:layout_height="46dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout18" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

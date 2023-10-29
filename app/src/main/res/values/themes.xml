@@ -13,6 +13,10 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="buttonBg" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="color">@color/buttonBg</item>
+
+    </style>
 
     <style name="ThemeOverlay.AppCompat.navTheme">
         <item name="colorPrimary">@color/white</item>
@@ -24,4 +28,10 @@
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
+
+    <style name="PopupAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+
 </resources>
