@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/img_product"
+                android:id="@+id/img_customer"
                 android:layout_width="61dp"
                 android:layout_height="84dp"
                 android:layout_alignParentStart="true"
@@ -28,7 +28,7 @@
                 android:layout_marginTop="17dp"
                 android:layout_marginBottom="14dp"
                 android:contentDescription="@null"
-                android:src="@drawable/back"
+                android:src="@drawable/customerimg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.246"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,66 +36,64 @@
 
             <TextView
                 android:id="@+id/txt_name"
-                android:layout_width="194dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/img_product"
+                android:layout_below="@+id/img_customer"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="-99dp"
-                android:layout_toEndOf="@+id/img_product"
+                android:layout_toEndOf="@+id/img_customer"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"
                 android:text="Carla Stefany"
-                android:textColor="@color/black"
+                android:textColor="#6F6F6F"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.266"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_product"
+                app:layout_constraintTop_toBottomOf="@+id/img_customer"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/txt_lastname"
-                android:layout_width="194dp"
-                android:layout_height="0dp"
-                android:layout_above="@+id/txt_dni"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_name"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="-2dp"
-                android:layout_marginBottom="38dp"
-                android:layout_toEndOf="@+id/img_product"
+                android:layout_toEndOf="@+id/img_customer"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"
                 android:text="Martinez Perez"
-                android:textColor="@color/black"
+                android:textColor="#6F6F6F"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.266"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_product"
+                app:layout_constraintTop_toBottomOf="@+id/img_customer"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/txt_dni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/img_product"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="-33dp"
-                android:layout_toEndOf="@+id/img_product"
+                android:layout_below="@+id/txt_lastname"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/img_customer"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="6dp"
                 android:text="75487548"
-                android:textColor="@color/black"
+                android:textColor="#8C8C8C"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.266"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_product"
+                app:layout_constraintTop_toBottomOf="@+id/img_customer"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -103,24 +101,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="117dp"
+                android:layout_marginStart="141dp"
                 android:layout_marginBottom="18dp"
                 android:layout_toEndOf="@+id/txt_dni"
-
+                android:enabled="false"
                 android:text="Habilitado"></TextView>
 
             <ImageButton
-                android:layout_width="38dp"
-                android:layout_height="50dp"
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
                 android:layout_above="@+id/txt_status"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="41dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="13dp"
                 android:layout_toEndOf="@+id/txt_lastname"
                 android:background="#00FFFFFF"
                 android:src="@drawable/ic_edit"
-                app:tint="#2036C9"></ImageButton>
+                app:tint="#31C920"></ImageButton>
 
         </RelativeLayout>
 

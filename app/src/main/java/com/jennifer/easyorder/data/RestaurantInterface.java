@@ -20,7 +20,6 @@ import retrofit2.http.Path;
 
 public interface RestaurantInterface {
 
-
     // ------------------ Usuarios ------------------ //
     @GET("Usuario")
     Call<List<User>> getShowUser();
@@ -28,7 +27,6 @@ public interface RestaurantInterface {
     // ------------------ Categorias ------------------ //
     @GET("Categoria")
     Call<List<Category>> getShowCategory();
-
 
     // ------------------ Productos ------------------ //
     @GET("Producto")
@@ -40,7 +38,6 @@ public interface RestaurantInterface {
 
     @POST("Comanda")
     Call<Order> addOrder(@Body Order orderBody);
-
 
     // ------------------ Mesas ------------------ //
     @GET("Mesa")
@@ -59,7 +56,6 @@ public interface RestaurantInterface {
 
     @POST("Cliente")
     Call<Customer> addCustomer(@Body Customer customerBody);
-
 
     // ------------------ Boleta ---------------  //
     @GET("Boleta/{id}")

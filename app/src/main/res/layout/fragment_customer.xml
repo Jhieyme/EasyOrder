@@ -48,7 +48,8 @@
                 android:layout_marginLeft="266dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/ic_close"
-                android:contentDescription="close modal" />
+                android:contentDescription="close modal"
+                app:tint="@color/black" />
 
         </LinearLayout>
 
@@ -56,8 +57,7 @@
             android:layout_width="290dp"
             android:layout_height="70dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:background="@drawable/rectangle_background">
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/txt_dni"
@@ -68,13 +68,13 @@
                 android:hint="Ingresar DNI"
                 android:singleLine="true"
                 android:textAlignment="center"
-                android:textColor="@color/black" />
+                android:textColor="#323232" />
 
             <Button
                 android:id="@+id/btn_searchDni"
                 android:layout_width="37dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="25dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
                 android:backgroundTint="#000000"
                 android:drawableTop="@drawable/ic_search" />
@@ -88,9 +88,10 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="15dp"
-            android:background="#CDF8E7"
+            android:background="#FFFFFF"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:gravity="center"
+            android:enabled="false"
             android:textSize="14sp"/>
 
         <TextView
@@ -100,9 +101,10 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="15dp"
-            android:background="#CDF8E7"
+            android:background="#FFFFFF"
+            android:enabled="false"
+            android:gravity="center"
             android:textAlignment="center"
-            android:textColor="@color/black"
             android:textSize="14sp"/>
 
         <Button
@@ -113,7 +115,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="50dp"
-            android:backgroundTint="#24B23D"
+            android:backgroundTint="@color/lavender"
             android:textSize="15sp"
             android:gravity="center"
             android:text="Agregar" />
@@ -146,7 +148,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="60dp"
             android:layout_marginBottom="5dp"
-            android:backgroundTint="@color/lavender"
+            android:backgroundTint="#323541"
             android:drawableLeft="@drawable/ic_add_circle"
             android:elevation="2dp"
             android:text="Agregar"

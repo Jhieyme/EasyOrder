@@ -57,9 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager fragmentManager;
     private List<NewProduct> listProduct = new ArrayList<>();
     private Table table = new Table(1, 1);
-
     private DetailOrderFragment detailOrderFragment = new DetailOrderFragment();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.fab.setOnClickListener(view -> {
 
             showBottomDialog();
-
         });
-
-
     }
 
     // Modal de DetalleProducto
@@ -135,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     //Toast.makeText(view.getContext(), "Quitaste este platillo!", Toast.LENGTH_SHORT).show();
                     showNotify();
                     linearProduct.removeView(productView);
-
                 }
 
             });
@@ -168,11 +162,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         //Table
-
         int numberTable = table.getNroMesa();
         TextView txtTable = dialog.findViewById(R.id.txtNumberTable);
         txtTable.setText(String.valueOf(numberTable));
-
 
         // Generar Comanda;
         Button btnComanda = dialog.findViewById(R.id.btnGenerarComanda);
@@ -187,8 +179,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             dialog.cancel();
 
         });
-
-
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -214,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             binding.toolbar.setTitle("Categorias");
         } else if (itemId == R.id.nav_customer) {
             openFragment(new CustomerFragment());
-            //showNotify();
             binding.toolbar.setTitle("Clientes");
         } else if (itemId == R.id.nav_worker) {
             openFragment(new WorkerFragment());
@@ -225,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemId == R.id.nav_print) {
             openFragment(new PrintFragment());
         } else if (itemId == R.id.nav_logout) {
-            //showNotify();
             showDialog();
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -268,42 +256,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         message.setText("¡Quitaste este platillo!");
     }
 
-
-//    private void showNotify() {
-//
-//        LayoutInflater inflater = getLayoutInflater();
-//        View layout = inflater.inflate(R.layout.custom_message,
-//                (ViewGroup) findViewById(R.id.custom_toast_layout));
-//        Toast toast = new Toast(getApplicationContext());
-//        toast.setGravity(Gravity.TOP  | Gravity.START, 0, 100);
-//        toast.setDuration(Toast.LENGTH_SHORT);
-//        toast.setView(layout);
-//        toast.show();
-//
-////        new Handler().postDelayed(new Runnable() {
-////            @Override
-////            public void run() {
-////                layout.animate()
-////                .translationX(-layout.getWidth()*10)
-////                .setDuration(1000)
-////                .withEndAction(new Runnable() {
-////                    @Override
-////                    public void run() {
-////                        toast.cancel();
-////                    }
-////                  })
-////                  .start();
-////            }
-////        }, 2000);
-//    }
-
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-//        LayoutInflater inflater = LayoutInflater.from(this);
-//        View customDialogView = inflater.inflate(R.layout.custom_dialog, null);
-//        builder.setView(customDialogView);
-
         builder.setTitle("Cerrar Sesión");
         builder.setMessage("¿Estás seguro que deseas cerrar sesión?");
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
@@ -318,8 +272,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dialog.dismiss();
             }
         });
-
-
         builder.show();
     }
 
@@ -329,6 +281,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
     }
-
-
 }

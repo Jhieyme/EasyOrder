@@ -7,7 +7,7 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">#FF8848</item>
+        <item name="android:statusBarColor">#323541</item>
     </style>
     <style name="RoundedFAB">
         <item name="cornerSize">50%</item>

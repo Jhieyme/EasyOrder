@@ -7,7 +7,6 @@
     android:background="#F4F6FA"
     tools:context=".Fragments.OrderFragment">
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="250dp"
@@ -71,13 +70,12 @@
                 android:id="@+id/rv_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginBottom="150dp"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2" />
         </LinearLayout>
 
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

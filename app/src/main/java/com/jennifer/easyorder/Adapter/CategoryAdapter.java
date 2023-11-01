@@ -42,9 +42,6 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.ShowV
         return categoryList.size();
     }
 
-
-
-
     public class ShowViewHolder extends RecyclerView.ViewHolder {
         private ItemCategoryBinding binding;
         public ShowViewHolder(@NonNull ItemCategoryBinding binding) {
@@ -55,30 +52,6 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.ShowV
         public void bind(Category category) {
             binding.txtDescription.setText(category.getDescripcion());
             Glide.with(itemView.getContext()).load(category.getUrlImagen()).into(binding.imgCategory);
-            /*if (category.getDescripcion() != null && !category.getDescripcion().isEmpty()) {
-                Bitmap image = generateImage(category.getDescripcion());
-                binding.imgCategory.setImageBitmap(image);
-            }*/
         }
-
     }
-
-    // Generar imagen con inicial
-    private Bitmap generateImage(String text) {
-        int width = 100;
-        int height = 100;
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        canvas.drawColor(Color.TRANSPARENT);
-        Paint paint = new Paint();
-        paint.setColor(Color.LTGRAY);
-        paint.setAntiAlias(true);
-        canvas.drawCircle(width / 2f, height / 2f, width / 2f, paint);
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(40);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawText(text.substring(0, 1), 40, 60, paint);
-        return bitmap;
-    }
-
 }

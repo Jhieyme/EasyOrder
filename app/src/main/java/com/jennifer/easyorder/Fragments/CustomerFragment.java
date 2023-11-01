@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +49,6 @@ public class CustomerFragment extends Fragment {
     private FragmentCustomerBinding binding;
     private RecyclerView recyclerView;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,9 +70,41 @@ public class CustomerFragment extends Fragment {
 
         // Buscar dni desde la api - Reniec
 
+        binding.txtDni.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //System.out.println("algo xd");
+//                String text = s.toString();
+//                boolean valid = validDni(binding.txtDni.getText().toString());
+//                if (valid != true){
+//                    //binding.txtDni.setText(text.replaceAll());
+//                    Toast.makeText(getContext(), "sasa", Toast.LENGTH_SHORT).show();
+//                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         binding.btnSearchDni.setOnClickListener(v -> {
             String txtdni = binding.txtDni.getText().toString();
-            if(txtdni != null){
+//            txtdni = txtdni.replaceAll("[^0-9]", "");
+//
+//            if (txtdni.length() > 8){
+//                txtdni = txtdni.substring(0, 8);
+//            }
+//            binding.txtDni.setText(txtdni);
+//            Boolean valid = validDni(txtdni);
+//            System.out.println(valid);
+
+            if(validDni(txtdni)){
                 Call<NewCustomer> dni = dniInterface.getCustomer(txtdni);
                 dni.enqueue(new Callback<NewCustomer>() {
                     @Override
@@ -79,12 +113,13 @@ public class CustomerFragment extends Fragment {
                         binding.txtName.setText(customer.getNombres());
                         binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
                     }
-
                     @Override
                     public void onFailure(Call<NewCustomer> call, Throwable t) {
 
                     }
                 });
+            }else {
+                Toast.makeText(getContext(), "El DNI debe tener 8 digitos", Toast.LENGTH_SHORT).show();
             }
         });
         call.enqueue(new Callback<List<Customer>>() {
@@ -102,6 +137,7 @@ public class CustomerFragment extends Fragment {
 
             }
         });
+
 
         //Animacion del modal -------------------------------------------------------------------
 
@@ -160,20 +196,10 @@ public class CustomerFragment extends Fragment {
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
                         if (response.isSuccessful()){
                             System.out.println(response.code());
-                            //Toast.makeText(view.getContext(),"Cliente agregado", Toast.LENGTH_SHORT).show();
                             showNotify();
-                            /*overbox.startAnimation(togo);
-                            myKonten.startAnimation(togo);
-                            icCustomer.startAnimation(togo);
-                            icCustomer.setVisibility(View.GONE);
-
-                            ViewCompat.animate(myKonten).setStartDelay(1000).alpha(0).start();
-                            ViewCompat.animate(overbox).setStartDelay(1000).alpha(0).start();
-
-                            CustomerFragment customerFragment = new CustomerFragment();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.fcv_main, customerFragment);
-                            fragmentTransaction.commit();*/
+                            binding.txtName.setText("");
+                            binding.txtApellido.setText("");
+                            binding.txtDni.setText("");
                         }
                     }
                     @Override
@@ -184,6 +210,17 @@ public class CustomerFragment extends Fragment {
         });
     }
 
+    // Método para validar 8 digitos
+    private boolean validDni(String dni){
+        if (dni != null && dni.length() == 8 && TextUtils.isDigitsOnly(dni)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
+    // Método para mostrar mensaje de exito
     private void showNotify() {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_message, null);
@@ -198,7 +235,7 @@ public class CustomerFragment extends Fragment {
                     public void run() {
                         popup.dismiss();
                     }
-                }, 2000);
+                }, 4000);
             }
         }, 100);
         TextView message = layout.findViewById(R.id.txt_message);
