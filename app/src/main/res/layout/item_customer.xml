@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -101,14 +100,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="141dp"
+                android:layout_marginStart="136dp"
                 android:layout_marginBottom="18dp"
                 android:layout_toEndOf="@+id/txt_dni"
                 android:enabled="false"
                 android:text="Habilitado"></TextView>
 
             <ImageButton
-                android:layout_width="133dp"
+                android:id="@+id/btn_edit"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/txt_status"
                 android:layout_alignParentEnd="true"
@@ -118,7 +118,7 @@
                 android:layout_toEndOf="@+id/txt_lastname"
                 android:background="#00FFFFFF"
                 android:src="@drawable/ic_edit"
-                app:tint="#31C920"></ImageButton>
+                app:tint="#34A927"></ImageButton>
 
         </RelativeLayout>
 

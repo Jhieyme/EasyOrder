@@ -45,8 +45,8 @@ public class OrderFragment extends Fragment {
         binding.rvOrder.setLayoutManager(gridLayout);
 
         RestaurantInterface orderInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+        RestaurantInterface detailInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Order>> call = orderInterface.getShowOrder();
-
         call.enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {

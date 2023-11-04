@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else if (itemId == R.id.bottom_menu) {
                 openFragment(new ProductFragment());
                 binding.toolbar.setTitle("Menú");
-            } else if (itemId == R.id.bottom_cashier) {
-                openFragment(new CashierFragment());
+            } else if (itemId == R.id.bottom_order) {
+                openFragment(new OrderFragment());
             }
             return true;
         });

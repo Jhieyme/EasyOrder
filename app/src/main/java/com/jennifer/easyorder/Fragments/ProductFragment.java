@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +19,6 @@ import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentProductBinding;
 import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Product;
-import com.jennifer.easyorder.viewmodel.ProductViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,25 +27,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductFragment extends Fragment  {
+public class ProductFragment extends Fragment implements ProductAdapter.selectedProducts {
 
     private FragmentProductBinding binding;
     private RecyclerView recyclerView;
 
-    private ProductViewModel productViewModel;
+    public interface OnProductSelectedListener {
+        void onProductSelected(List<NewProduct> selectedProducts);
+    }
 
+    private OnProductSelectedListener callback;
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            callback = (OnProductSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnProductSelectedListener");
+        }
+    }
 
-
+    @Override
+    public void onClickSelectedProducts(List<NewProduct> listNewProducts) {
+        callback.onProductSelected(listNewProducts);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProductBinding.inflate(inflater, container, false);
-        productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
+
         return binding.getRoot();
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -73,8 +85,7 @@ public class ProductFragment extends Fragment  {
                             itemsToAdapter.add(product);
                         }
                     }
-
-                    ProductAdapter adapter = new ProductAdapter(itemsToAdapter, productViewModel);
+                    ProductAdapter adapter = new ProductAdapter(itemsToAdapter, ProductFragment.this);
                     recyclerView.setAdapter(adapter);
                 }
             }
