@@ -8,14 +8,17 @@ public class Product {
     private double precio;
     private String urlImagen;
 
+    private boolean activo;
+
     private Category idCategoriaNavigation;
 
-    public Product(int idProducto, String nombre, String descripcion, double precio, String urlImagen, Category idCategoriaNavigation) {
+    public Product(int idProducto, String nombre, String descripcion, double precio, String urlImagen, boolean activo, Category idCategoriaNavigation) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.urlImagen = urlImagen;
+        this.activo = activo;
         this.idCategoriaNavigation = idCategoriaNavigation;
     }
 
@@ -57,6 +60,14 @@ public class Product {
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public Category getIdCategoriaNavigation() {

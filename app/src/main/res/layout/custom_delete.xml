@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="220dp"
     android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/customDialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,21 +18,14 @@
 
         <TextView
             android:id="@+id/dialog_title"
-            android:layout_width="310dp"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Método de pago"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:gravity="center"
+            android:text="¿Desea eliminar al cliente?"
+            android:textAlignment="center"
             android:textColor="#8C8C8C"
-            android:textSize="18sp"
+            android:textSize="21sp"
             android:textStyle="bold" />
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="-100dp"
-            android:src="@drawable/ic_credit_card" />
 
     </LinearLayout>
 
@@ -50,47 +43,36 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customDialog"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:id="@+id/linearLayout18"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="144dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2">
+        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintVertical_bias="0.0">
 
         <Button
-            android:id="@+id/dialog_button"
-            android:layout_width="138dp"
-            android:layout_height="80dp"
+            android:id="@+id/btn_yes"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
             android:layout_marginEnd="20dp"
-            android:backgroundTint="#9BD5F2"
-            android:text="Efectivo"
-            android:textSize="15sp"
+            android:backgroundTint="#99CD7E"
+            android:text="SI"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
-            android:layout_width="138dp"
-            android:layout_height="80dp"
-            android:backgroundTint="#9BD5F2"
-            android:text="Tarjeta"
-            android:textSize="15sp" />
+            android:id="@+id/btn_no"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:backgroundTint="#CD7575"
+            android:text="NO"
+            android:textSize="18sp" />
 
     </LinearLayout>
-
-    <ImageButton
-        android:layout_width="68dp"
-        android:layout_height="46dp"
-        android:background="@color/white"
-        android:src="@drawable/ic_arrow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout18"
-        app:layout_constraintVertical_bias="0.0" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

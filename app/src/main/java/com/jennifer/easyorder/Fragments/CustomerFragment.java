@@ -70,41 +70,10 @@ public class CustomerFragment extends Fragment {
 
         // Buscar dni desde la api - Reniec
 
-        binding.txtDni.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //System.out.println("algo xd");
-//                String text = s.toString();
-//                boolean valid = validDni(binding.txtDni.getText().toString());
-//                if (valid != true){
-//                    //binding.txtDni.setText(text.replaceAll());
-//                    Toast.makeText(getContext(), "sasa", Toast.LENGTH_SHORT).show();
-//                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
         binding.btnSearchDni.setOnClickListener(v -> {
             String txtdni = binding.txtDni.getText().toString();
-//            txtdni = txtdni.replaceAll("[^0-9]", "");
-//
-//            if (txtdni.length() > 8){
-//                txtdni = txtdni.substring(0, 8);
-//            }
-//            binding.txtDni.setText(txtdni);
-//            Boolean valid = validDni(txtdni);
-//            System.out.println(valid);
 
-            if(validDni(txtdni)){
+            if(txtdni != null){
                 Call<NewCustomer> dni = dniInterface.getCustomer(txtdni);
                 dni.enqueue(new Callback<NewCustomer>() {
                     @Override
@@ -122,12 +91,14 @@ public class CustomerFragment extends Fragment {
                 Toast.makeText(getContext(), "El DNI debe tener 8 digitos", Toast.LENGTH_SHORT).show();
             }
         });
+
+        //Lista de todos los CLientes
         call.enqueue(new Callback<List<Customer>>() {
 
             @Override
             public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
                 List<Customer> items = response.body();
-                System.out.println(items + "desde fragment");
+
                 CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items);
                 recyclerView.setAdapter(rvCustomerAdapter);
             }
@@ -209,16 +180,6 @@ public class CustomerFragment extends Fragment {
             }
         });
     }
-
-    // Método para validar 8 digitos
-    private boolean validDni(String dni){
-        if (dni != null && dni.length() == 8 && TextUtils.isDigitsOnly(dni)) {
-            return true;
-        }else {
-            return false;
-        }
-    }
-
 
     // Método para mostrar mensaje de exito
     private void showNotify() {

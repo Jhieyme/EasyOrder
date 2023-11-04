@@ -20,6 +20,7 @@ import com.jennifer.easyorder.databinding.FragmentProductBinding;
 import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,6 +35,7 @@ public class ProductFragment extends Fragment implements ProductAdapter.selected
     public interface OnProductSelectedListener {
         void onProductSelected(List<NewProduct> selectedProducts);
     }
+
     private OnProductSelectedListener callback;
 
     @Override
@@ -77,10 +79,17 @@ public class ProductFragment extends Fragment implements ProductAdapter.selected
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Product> items = response.body();
-                    ProductAdapter adapter = new ProductAdapter(items, ProductFragment.this);
+                    List<Product> itemsToAdapter = new ArrayList<>();
+                    for (Product product : items) {
+                        if (product.isActivo()) {
+                            itemsToAdapter.add(product);
+                        }
+                    }
+                    ProductAdapter adapter = new ProductAdapter(itemsToAdapter, ProductFragment.this);
                     recyclerView.setAdapter(adapter);
                 }
             }
+
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
             }

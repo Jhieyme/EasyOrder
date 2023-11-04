@@ -8,5 +8,4 @@ public class DetailOrder {
     private double total;
 
     private Customer customer;
-
 }

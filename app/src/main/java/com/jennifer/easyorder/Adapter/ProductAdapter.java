@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
 import com.jennifer.easyorder.databinding.ItemProduct2Binding;
 import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Product;
@@ -49,7 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
         holder.bind(productsList.get(position));
 
-        holder.binding.imgProduct2.setOnClickListener(view -> {
+        holder.binding.imgProduct.setOnClickListener(view -> {
             // Añadir productos con cantidad a lista para el detalle de orden
             addProductToList(holder, position, view);
         });
@@ -83,7 +84,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
             binding.txtName.setText(product.getNombre());
             binding.txtDescription.setText(product.getDescripcion());
             binding.txtPrecio.setText(String.format("S/. %.2f", product.getPrecio()));
-            Glide.with(itemView.getContext()).load(product.getUrlImagen()).into(binding.imgProduct2);
+            Glide.with(itemView.getContext()).load(product.getUrlImagen()).into(binding.imgProduct);
         }
     }
 

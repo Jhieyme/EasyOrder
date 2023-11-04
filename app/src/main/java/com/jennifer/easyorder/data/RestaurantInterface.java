@@ -2,6 +2,7 @@ package com.jennifer.easyorder.data;
 
 import com.jennifer.easyorder.model.Category;
 import com.jennifer.easyorder.model.Customer;
+import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.NewCustomer;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Product;
@@ -14,8 +15,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RestaurantInterface {
@@ -35,6 +38,10 @@ public interface RestaurantInterface {
     // ------------------ Comandas ------------------ //
     @GET("Comanda")
     Call<List<Order>> getShowOrder();
+
+    // ------------------ Detalle Comanda ------------
+    @GET("DetalleComanda")
+    Call<List<DetailOrder>> getShowDetail();
 
     @POST("Comanda")
     Call<Order> addOrder(@Body Order orderBody);
@@ -56,6 +63,11 @@ public interface RestaurantInterface {
 
     @POST("Cliente")
     Call<Customer> addCustomer(@Body Customer customerBody);
+
+    @PUT("Cliente/{id}")
+    Call<Customer> putCustormer(@Path("id") int id, @Body Customer customer);
+
+    @DELETE("Ciente/{id}")
 
     // ------------------ Boleta ---------------  //
     @GET("Boleta/{id}")
