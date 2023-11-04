@@ -1,6 +1,5 @@
 package com.jennifer.easyorder.Adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,23 +8,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifer.easyorder.databinding.ItemTableBinding;
 import com.jennifer.easyorder.model.Table;
+import com.jennifer.easyorder.viewmodel.TableViewModel;
 
 import java.util.List;
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHolder> {
 
     private List<Table> tablesList;
-    private selectedTable listener;
+    private TableViewModel tableViewModel;
 
-    public interface selectedTable {
-        void onAttach(@NonNull Context context);
 
-        void onClickSelectedMesa(Table table);
-    }
-
-    public TableAdapter(List<Table> tablesList, selectedTable listener) {
+    public TableAdapter(List<Table> tablesList, TableViewModel tableViewModel) {
         this.tablesList = tablesList;
-        this.listener = listener;
+        this.tableViewModel = tableViewModel;
     }
 
     @NonNull
@@ -40,8 +35,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
         holder.bind(tablesList.get(position));
 
         holder.itemView.setOnClickListener(v -> {
-            Table tableSelected = tablesList.get(position);
-            listener.onClickSelectedMesa(tableSelected);
+            tableViewModel.setSelectedTable(tablesList.get(position));
         });
     }
 
@@ -52,6 +46,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {
         private ItemTableBinding binding;
+
         public ShowViewHolder(@NonNull ItemTableBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

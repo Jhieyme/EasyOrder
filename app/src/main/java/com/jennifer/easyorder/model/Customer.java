@@ -2,16 +2,28 @@ package com.jennifer.easyorder.model;
 
 public class Customer {
 
+
+    private int idCliente;
     private String dni;
     private String nombres;
     private String apellidos;
     private boolean activo;
+
 
     public Customer(String dni, String nombres, String apellidos, boolean activo) {
         this.dni = dni;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.activo = activo;
+    }
+
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getDni() {

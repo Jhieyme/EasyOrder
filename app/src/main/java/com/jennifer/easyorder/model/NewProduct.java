@@ -1,6 +1,7 @@
 package com.jennifer.easyorder.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class NewProduct implements Serializable {
 
@@ -29,8 +30,19 @@ public class NewProduct implements Serializable {
         this.quantity = quantity;
     }
 
+
     @Override
-    public String toString() {
-        return "Nombre: " + this.product.getNombre() + "\nCantidad: " + this.quantity;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NewProduct that = (NewProduct) o;
+        return Objects.equals(product.getIdProducto(), that.product.getIdProducto());
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(product.getIdProducto());
+    }
+
+
 }

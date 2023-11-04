@@ -1,6 +1,5 @@
 package com.jennifer.easyorder.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +18,7 @@ import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentTablesBinding;
 import com.jennifer.easyorder.model.Table;
+import com.jennifer.easyorder.viewmodel.TableViewModel;
 
 import java.util.List;
 
@@ -25,37 +26,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TablesFragment extends Fragment implements TableAdapter.selectedTable {
+public class TablesFragment extends Fragment {
 
     private FragmentTablesBinding binding;
     private RecyclerView recyclerView;
 
-    public interface OnMesaSelectedListener {
-        void onTableSelected(Table tableSelected);
-    }
-
-    private OnMesaSelectedListener callback;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            callback = (OnMesaSelectedListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnProductSelectedListener");
-        }
-    }
-
-    @Override
-    public void onClickSelectedMesa(Table table) {
-        callback.onTableSelected(table);
-    }
+    private TableViewModel tableViewModel;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentTablesBinding.inflate(inflater, container, false);
+
+        tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
         return binding.getRoot();
     }
 
@@ -75,7 +59,7 @@ public class TablesFragment extends Fragment implements TableAdapter.selectedTab
             public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Table> items = response.body();
-                    TableAdapter rvTableAdapter = new TableAdapter(items, TablesFragment.this);
+                    TableAdapter rvTableAdapter = new TableAdapter(items, tableViewModel);
                     recyclerView.setAdapter(rvTableAdapter);
                 }
             }

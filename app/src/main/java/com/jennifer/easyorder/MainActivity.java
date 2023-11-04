@@ -28,6 +28,7 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.navigation.NavigationView;
 import com.jennifer.easyorder.Fragments.CashierFragment;
@@ -35,29 +36,36 @@ import com.jennifer.easyorder.Fragments.CategoryFragment;
 import com.jennifer.easyorder.Fragments.CustomerFragment;
 import com.jennifer.easyorder.Fragments.DetailOrderFragment;
 import com.jennifer.easyorder.Fragments.OrderFragment;
-import com.jennifer.easyorder.Fragments.PrintFragment;
 import com.jennifer.easyorder.Fragments.ProductFragment;
 import com.jennifer.easyorder.Fragments.TablesFragment;
+import com.jennifer.easyorder.Fragments.VoucherFragment;
 import com.jennifer.easyorder.Fragments.WorkerFragment;
 import com.jennifer.easyorder.databinding.ActivityMainBinding;
 import com.jennifer.easyorder.databinding.ModallayoutBinding;
 import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Table;
+import com.jennifer.easyorder.viewmodel.ProductViewModel;
+import com.jennifer.easyorder.viewmodel.TableViewModel;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProductFragment.OnProductSelectedListener, TablesFragment.OnMesaSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
     private ModallayoutBinding bindingModal;
     private SharedPreferences sharedPreferences;
     public static String EMAIL = "EMAIL";
     private FragmentManager fragmentManager;
-    private List<NewProduct> listProduct = new ArrayList<>();
-    private Table table = new Table(1, 1);
+
     private DetailOrderFragment detailOrderFragment = new DetailOrderFragment();
+
+    // ViewModel
+    private HashSet<NewProduct> listProduct = new HashSet<>();
+    private Table tableSelected;
+    private ProductViewModel productViewModel;
+    private TableViewModel tableViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         sharedPreferences = getSharedPreferences(LoginActivity.SESSION_PREFERENCE, MODE_PRIVATE);
         setContentView(binding.getRoot());
-
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+        tableViewModel = new ViewModelProvider(this).get(TableViewModel.class);
         setSupportActionBar(binding.toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.open_nav, R.string.close_nav);
@@ -93,12 +102,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fragmentManager = getSupportFragmentManager();
         openFragment(new CategoryFragment());
-
         binding.fab.setOnClickListener(view -> {
-
             showBottomDialog();
         });
     }
+
 
     // Modal de DetalleProducto
     private void showBottomDialog() {
@@ -109,6 +117,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.setContentView(bindingModal.getRoot());
         LinearLayout linearProduct = dialog.findViewById(R.id.linearProduct);
 
+
+        productViewModel.getSelectedListNewProduct().observe(this, list -> {
+            listProduct = list;
+        });
+
+        tableViewModel.getSelectedTable().observe(this, table -> {
+            tableSelected = table;
+        });
+
+
         for (NewProduct np : listProduct) {
             View productView = getLayoutInflater().inflate(R.layout.view_product, null);
             TextView txtNameProduct = productView.findViewById(R.id.txtNameProduct);
@@ -118,21 +136,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ImageButton minusQuantity = productView.findViewById(R.id.btnMinusQt);
 
             removeProduct.setOnClickListener(view -> {
-                int index = -1;
-                for (int i = 0; i < listProduct.size(); i++) {
-                    if (listProduct.get(i).getProduct().getNombre().equals(np.getProduct().getNombre())) {
-                        index = i;
-                        break;
-                    }
-                }
-                if (index != -1) {
-                    listProduct.remove(index);
-                    //Toast.makeText(view.getContext(), "Quitaste este platillo!", Toast.LENGTH_SHORT).show();
-                    showNotify();
-                    linearProduct.removeView(productView);
-                }
-
+                listProduct.remove(np);
+                linearProduct.removeView(productView);
+                showNotify();
             });
+
             addQuantity.setOnClickListener(view -> {
                 String currentQuantity = (String) txtQuantity.getText().toString();
                 int newQnt = Integer.parseInt(currentQuantity) + 1;
@@ -162,9 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         //Table
-        int numberTable = table.getNroMesa();
-        TextView txtTable = dialog.findViewById(R.id.txtNumberTable);
-        txtTable.setText(String.valueOf(numberTable));
+
 
         // Generar Comanda;
         Button btnComanda = dialog.findViewById(R.id.btnGenerarComanda);
@@ -173,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Aqui estoy enviando los datos al Fragment DetailOrderFragment
             Bundle data = new Bundle();
             data.putSerializable("LIST", (Serializable) listProduct);
-            data.putInt("NRO_MESA", numberTable);
+            data.putSerializable("MESA", (Serializable) tableSelected);
             detailOrderFragment.putArgs(data);
             openFragment(detailOrderFragment);
             dialog.cancel();
@@ -186,15 +192,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
-    @Override
-    public void onProductSelected(List<NewProduct> selectedProducts) {
-        listProduct = selectedProducts;
-    }
-
-    @Override
-    public void onTableSelected(Table tableSelected) {
-        table = tableSelected;
-    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -212,7 +209,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             openFragment(new OrderFragment());
             binding.toolbar.setTitle("Comandas");
         } else if (itemId == R.id.nav_print) {
-            openFragment(new PrintFragment());
+            openFragment(new VoucherFragment());
+
         } else if (itemId == R.id.nav_logout) {
             showDialog();
         }
@@ -228,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
+
 
     private void openFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
