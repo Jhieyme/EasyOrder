@@ -1,49 +1,54 @@
 package com.jennifer.easyorder.Adapter;
 
 
+import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
 import com.jennifer.easyorder.databinding.ItemProduct2Binding;
 import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Product;
-import com.jennifer.easyorder.viewmodel.ProductViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowViewHolder> {
 
     private List<Product> productsList;
+    private List<NewProduct> listNewProducts = new ArrayList<>();
+    private selectedProducts listener;
 
-    private ProductViewModel productViewModel;
+    public interface selectedProducts {
+        void onAttach(@NonNull Context context);
 
+        void onClickSelectedProducts(List<NewProduct> listNewProducts);
+    }
 
-    private List<NewProduct> listNewProduct;
-
-    public ProductAdapter(List<Product> productsList, ProductViewModel productViewModel) {
+    public ProductAdapter(List<Product> productsList, selectedProducts listener) {
         this.productsList = productsList;
-        this.productViewModel = productViewModel;
-
-
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ProductAdapter.ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemProduct2Binding binding = ItemProduct2Binding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+
         return new ProductAdapter.ShowViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
         holder.bind(productsList.get(position));
-
 
         holder.binding.imgProduct.setOnClickListener(view -> {
             // Añadir productos con cantidad a lista para el detalle de orden
@@ -67,7 +72,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
         return productsList.size();
     }
 
-
     public class ShowViewHolder extends RecyclerView.ViewHolder {
         private ItemProduct2Binding binding;
 
@@ -77,12 +81,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
         }
 
         public void bind(Product product) {
-            if (product.isActivo()) {
-                binding.txtName.setText(product.getNombre());
-                binding.txtDescription.setText(product.getDescripcion());
-                binding.txtPrecio.setText(String.format("S/. %.2f", product.getPrecio()));
-                Glide.with(itemView.getContext()).load(product.getUrlImagen()).into(binding.imgProduct);
-            }
+            binding.txtName.setText(product.getNombre());
+            binding.txtDescription.setText(product.getDescripcion());
+            binding.txtPrecio.setText(String.format("S/. %.2f", product.getPrecio()));
+            Glide.with(itemView.getContext()).load(product.getUrlImagen()).into(binding.imgProduct);
         }
     }
 
@@ -90,11 +92,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
         String currentQuantity = (String) holder.binding.txtCnt.getText().toString();
         Product product = productsList.get(position);
         NewProduct newProduct = new NewProduct(product, Integer.parseInt(currentQuantity));
-
-        if (newProduct.getQuantity() <= 0) {
-            Toast.makeText(view.getContext(), "La cantidad minima es 1.", Toast.LENGTH_SHORT).show();
+        boolean pExists = false;
+        for (NewProduct np : listNewProducts) {
+            if (np.getProduct().equals(newProduct.getProduct())) {
+                pExists = true;
+                break;
+            }
+        }
+        if (!pExists && newProduct.getQuantity() > 0) {
+            listNewProducts.add(newProduct);
+            listener.onClickSelectedProducts(listNewProducts);
+            Toast.makeText(view.getContext(), "¡Seleccionaste un platillo!", Toast.LENGTH_SHORT).show();
         } else {
-            productViewModel.addProduct(newProduct, view);
+            if (newProduct.getQuantity() == 0) {
+                Toast.makeText(view.getContext(), "La cantidad minima es 1.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(view.getContext(), "Este platillo ya está en la lista.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
