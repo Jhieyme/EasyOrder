@@ -16,8 +16,10 @@ import com.jennifer.easyorder.Adapter.DetailOrderAdapter;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.databinding.FragmentDetailOrderBinding;
 import com.jennifer.easyorder.model.NewProduct;
+import com.jennifer.easyorder.model.Table;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class DetailOrderFragment extends Fragment {
@@ -26,7 +28,7 @@ public class DetailOrderFragment extends Fragment {
     private FragmentDetailOrderBinding binding;
 
     private List<NewProduct> listFragment = new ArrayList<>();
-    private int numberTable;
+    private Table tableSelected;
 
 
     private RecyclerView recyclerView;
@@ -46,38 +48,6 @@ public class DetailOrderFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//
-//        double subTotal = 0.0;
-//        double total = 0.0;
-//
-//        TextView txtSubTotal = binding.txtSubTotalDetail.findViewById(R.id.txtSubTotalDetail);
-//        TextView txtTotal = binding.txtTotalDetailOrder.findViewById(R.id.txtTotalDetailOrder);
-//
-//        binding.txtSubTotalDetail.setText("S/. " + String.valueOf(0));
-//        binding.txtTotalDetailOrder.setText("S/. " + String.valueOf(0));
-//
-//
-//        LinearLayout linearDetailProduct = view.findViewById(R.id.linearDetail);
-//        for (NewProduct newProduct : listFragment) {
-//
-//            // Aqui se peude cambiar por un ScrollView
-//            View detailProduct = getLayoutInflater().inflate(R.layout.detail_product_row, null);
-//            TextView txtDetailName = detailProduct.findViewById(R.id.txtNameDetail);
-//            TextView txtDetailQnt = detailProduct.findViewById(R.id.txtQntDetail);
-//            TextView txtDetailPrice = detailProduct.findViewById(R.id.txtPriceDetail);
-//            ImageView img = detailProduct.findViewById(R.id.imgProduct2);
-//            Glide.with(img.getContext()).load(newProduct.getProduct().getUrlImagen()).load(img);
-//
-//            txtDetailName.setText(newProduct.getProduct().getNombre());
-//            txtDetailQnt.setText(String.valueOf(newProduct.getQuantity()));
-//            txtDetailPrice.setText(String.valueOf(newProduct.getProduct().getPrecio()));
-//            double price = newProduct.getProduct().getPrecio();
-//            int quantity = newProduct.getQuantity();
-//            double pricexQuantity = price * quantity;
-//            subTotal += pricexQuantity;
-//            linearDetailProduct.addView(detailProduct);
-//        }
-//
 
         //  Listando en el adapter el listFragment que obtengo del ProductAdapter
         recyclerView = view.findViewById(R.id.rvDetailOrder);
@@ -116,9 +86,9 @@ public class DetailOrderFragment extends Fragment {
 
 
     public void putArgs(Bundle args) {
-        List<NewProduct> listProduct = (List<NewProduct>) args.getSerializable("LIST");
-        listFragment = listProduct;
-        numberTable = args.getInt("NRO_MESA");
+        HashSet<NewProduct> listProduct = (HashSet<NewProduct>) args.getSerializable("LIST");
+        listFragment = new ArrayList<>(listProduct);
+        tableSelected = (Table) args.getSerializable("MESA");
 
 
     }

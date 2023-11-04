@@ -16,8 +16,6 @@ public class DetailOrderAdapter extends RecyclerView.Adapter<DetailOrderAdapter.
 
 
     private List<NewProduct> productList;
-
-
     public DetailOrderAdapter(List<NewProduct> productList) {
         this.productList = productList;
     }
@@ -34,10 +32,19 @@ public class DetailOrderAdapter extends RecyclerView.Adapter<DetailOrderAdapter.
         holder.bind(productList.get(position));
     }
 
+
     @Override
     public int getItemCount() {
         return productList.size();
     }
+
+
+
+
+
+
+
+
 
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {
@@ -49,8 +56,10 @@ public class DetailOrderAdapter extends RecyclerView.Adapter<DetailOrderAdapter.
         }
 
         public void bind(NewProduct newProduct) {
-            binding.txtNameDetail.setText(newProduct.getProduct().getNombre());
-
+            binding.txtNombrePlatillo.setText(newProduct.getProduct().getNombre());
+            binding.txtCategorias.setText(newProduct.getProduct().getIdCategoriaNavigation().getDescripcion());
+            binding.txtPrecio.setText(String.format("S/. %.2f", newProduct.getProduct().getPrecio()));
+            binding.txtCnt.setText(String.valueOf(newProduct.getQuantity()));
             Glide.with(itemView.getContext()).load(newProduct.getProduct().getUrlImagen()).into(binding.imgProduct2);
         }
 
