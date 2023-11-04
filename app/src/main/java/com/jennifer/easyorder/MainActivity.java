@@ -210,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             binding.toolbar.setTitle("Comandas");
         } else if (itemId == R.id.nav_print) {
             openFragment(new VoucherFragment());
-
         } else if (itemId == R.id.nav_logout) {
             showDialog();
         }

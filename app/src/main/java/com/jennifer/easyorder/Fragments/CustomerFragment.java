@@ -2,32 +2,26 @@ package com.jennifer.easyorder.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifer.easyorder.Adapter.CustomerAdapter;
 import com.jennifer.easyorder.R;
@@ -37,6 +31,7 @@ import com.jennifer.easyorder.data.RetrofitReniec;
 import com.jennifer.easyorder.databinding.FragmentCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.NewCustomer;
+import com.jennifer.easyorder.viewmodel.VoucherViewModel;
 
 import java.util.List;
 
@@ -49,10 +44,13 @@ public class CustomerFragment extends Fragment {
     private FragmentCustomerBinding binding;
     private RecyclerView recyclerView;
 
+    private VoucherViewModel voucherViewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCustomerBinding.inflate(inflater, container, false);
+        voucherViewModel = new ViewModelProvider(requireActivity()).get(VoucherViewModel.class);
         return binding.getRoot();
     }
 
@@ -73,7 +71,7 @@ public class CustomerFragment extends Fragment {
         binding.btnSearchDni.setOnClickListener(v -> {
             String txtdni = binding.txtDni.getText().toString();
 
-            if(txtdni != null){
+            if (txtdni != null) {
                 Call<NewCustomer> dni = dniInterface.getCustomer(txtdni);
                 dni.enqueue(new Callback<NewCustomer>() {
                     @Override
@@ -82,12 +80,13 @@ public class CustomerFragment extends Fragment {
                         binding.txtName.setText(customer.getNombres());
                         binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
                     }
+
                     @Override
                     public void onFailure(Call<NewCustomer> call, Throwable t) {
 
                     }
                 });
-            }else {
+            } else {
                 Toast.makeText(getContext(), "El DNI debe tener 8 digitos", Toast.LENGTH_SHORT).show();
             }
         });
@@ -98,8 +97,7 @@ public class CustomerFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
                 List<Customer> items = response.body();
-
-                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items);
+                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, voucherViewModel);
                 recyclerView.setAdapter(rvCustomerAdapter);
             }
 
@@ -157,15 +155,15 @@ public class CustomerFragment extends Fragment {
             String apellidos = binding.txtApellido.getText().toString();
             String dni = binding.txtDni.getText().toString();
 
-            if (nombres!= null && apellidos!= null && dni!=null){
+            if (nombres != null && apellidos != null && dni != null) {
                 Customer newCustomer = new Customer(
-                        dni,nombres,apellidos,true);
+                        dni, nombres, apellidos, true);
 
                 Call<Customer> add = customerInterface.addCustomer(newCustomer);
                 add.enqueue(new Callback<Customer>() {
                     @Override
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             System.out.println(response.code());
                             showNotify();
                             binding.txtName.setText("");
@@ -173,6 +171,7 @@ public class CustomerFragment extends Fragment {
                             binding.txtDni.setText("");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Customer> call, Throwable t) {
                     }

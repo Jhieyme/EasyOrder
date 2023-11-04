@@ -1,71 +1,63 @@
 package com.jennifer.easyorder.Adapter;
 
-import static com.jennifer.easyorder.R.color.buttonBg;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.databinding.ItemCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
-
+import com.jennifer.easyorder.viewmodel.VoucherViewModel;
 
 import java.util.List;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowViewHolder> {
-  private List<Customer> customersList;
+    private List<Customer> customersList;
+    private VoucherViewModel voucherViewModel;
 
-  public CustomerAdapter(List<Customer> customersList) {
-    this.customersList = customersList;
-  }
+    public CustomerAdapter(List<Customer> customersList, VoucherViewModel voucherViewModel) {
+        this.customersList = customersList;
+        this.voucherViewModel = voucherViewModel;
+    }
 
     @NonNull
     @Override
     public ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-      ItemCustomerBinding binding = ItemCustomerBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-      return new ShowViewHolder(binding);
+        ItemCustomerBinding binding = ItemCustomerBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ShowViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
-      holder.bind(customersList.get(position));
-        Customer customer = customersList.get(position);
-        if (customer.isActivo()){
-            holder.bind(customer);
-        }else {
-            //holder.itemView.setVisibility(View.GONE);
-            holder.itemView.setBackgroundColor(Color.rgb(201, 201, 201));
-            //holder.itemView.setEnabled(false);
-        }
+        holder.bind(customersList.get(position));
+
+        // Esto sirve para poder pasar el id de cliente al fragment de Voucher
+        holder.itemView.setOnClickListener(v -> {
+            voucherViewModel.selectedCustomer(customersList.get(position));
+        });
     }
 
     @Override
     public int getItemCount() {
-      return customersList.size();
+        return customersList.size();
     }
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {
         private ItemCustomerBinding binding;
+
         public ShowViewHolder(@NonNull ItemCustomerBinding binding) {
-          super(binding.getRoot());
-          this.binding = binding;
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         public void bind(Customer customer) {
@@ -74,9 +66,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
             binding.txtLastname.setText(customer.getApellidos());
             binding.txtDni.setText(customer.getDni());
 
-            if ( customer.isActivo() == true){
+            if (customer.isActivo() == true) {
                 binding.txtStatus.setText("Habilitado");
-            }else {
+            } else {
                 binding.txtStatus.setText("Deshabilitado");
             }
 
@@ -89,7 +81,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                 showMethod();
             });
         }
-        public void showMethod(){
+
+        public void showMethod() {
             AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
             LayoutInflater inflater = LayoutInflater.from(binding.getRoot().getContext());
             View customDialogView = inflater.inflate(R.layout.custom_status, null);
