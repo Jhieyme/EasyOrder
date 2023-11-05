@@ -9,6 +9,7 @@ import android.graphics.PorterDuffXfermode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -87,7 +88,21 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
             LayoutInflater inflater = LayoutInflater.from(binding.getRoot().getContext());
             View customDialogView = inflater.inflate(R.layout.custom_status, null);
             builder.setView(customDialogView);
-            builder.show();
+            //builder.show();
+
+            Button btnSi = customDialogView.findViewById(R.id.btn_yes);
+            Button btnNo = customDialogView.findViewById(R.id.btn_no);
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+            btnSi.setOnClickListener(v -> {
+
+            });
+
+            btnNo.setOnClickListener(v -> {
+                alertDialog.dismiss();
+            });
         }
     }
 

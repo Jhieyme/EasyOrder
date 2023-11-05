@@ -181,8 +181,7 @@
             android:id="@+id/loginButton"
             android:layout_width="320dp"
             android:layout_height="50dp"
-
-            android:backgroundTint="@color/buttonBg"
+            android:backgroundTint="@color/lavender"
             android:fontFamily="@font/plex_sans_semibold"
             android:text="INGRESAR"
             android:textSize="14sp"

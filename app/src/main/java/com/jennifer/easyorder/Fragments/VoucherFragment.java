@@ -51,7 +51,5 @@ public class VoucherFragment extends Fragment {
         binding.txtDni.setText(voucher.getIdClienteNavigation().getDni());
         binding.txtCliente.setText(voucher.getIdClienteNavigation().getNombres() + " " + voucher.getIdClienteNavigation().getApellidos());
         binding.txtCajero.setText(voucher.getIdWorkerNavigation().getNombres() + " " + voucher.getIdWorkerNavigation().getApellidos());
-
-
     }
 }

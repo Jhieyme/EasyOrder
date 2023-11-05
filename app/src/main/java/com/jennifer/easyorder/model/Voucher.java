@@ -8,11 +8,14 @@ public class Voucher {
     public Worker idWorkerNavigation;
     public Order idComandaNavigation;
 
-    public Voucher(int idBoleta, Customer idClienteNavigation, Worker idWorkerNavigation, Order idComandaNavigation) {
+    public MethodPay idTipoPagoNavigation;
+
+    public Voucher(int idBoleta, Customer idClienteNavigation, Worker idWorkerNavigation, Order idComandaNavigation, MethodPay idTipoPagoNavigation) {
         this.idBoleta = idBoleta;
         this.idClienteNavigation = idClienteNavigation;
         this.idWorkerNavigation = idWorkerNavigation;
         this.idComandaNavigation = idComandaNavigation;
+        this.idTipoPagoNavigation = idTipoPagoNavigation;
     }
 
 
@@ -46,5 +49,13 @@ public class Voucher {
 
     public void setIdComandaNavigation(Order idComandaNavigation) {
         this.idComandaNavigation = idComandaNavigation;
+    }
+
+    public MethodPay getIdTipoPagoNavigation() {
+        return idTipoPagoNavigation;
+    }
+
+    public void setIdTipoPagoNavigation(MethodPay idTipoPagoNavigation) {
+        this.idTipoPagoNavigation = idTipoPagoNavigation;
     }
 }

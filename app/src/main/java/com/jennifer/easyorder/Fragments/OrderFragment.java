@@ -8,10 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.jennifer.easyorder.Adapter.OrderAdapter;
 import com.jennifer.easyorder.R;
@@ -29,6 +33,7 @@ import retrofit2.Response;
 public class OrderFragment extends Fragment {
     private FragmentOrderBinding binding;
     private RecyclerView recyclerView;
+    private OrderAdapter orderAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,8 +57,8 @@ public class OrderFragment extends Fragment {
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                 if (response.isSuccessful() && response.body() != null){
                     List<Order> item = response.body();
-                    OrderAdapter rvOrderAdapter = new OrderAdapter(item);
-                    recyclerView.setAdapter(rvOrderAdapter);
+                    orderAdapter = new OrderAdapter(item, OrderFragment.this);
+                    recyclerView.setAdapter(orderAdapter);
                 }
             }
             @Override
@@ -65,5 +70,28 @@ public class OrderFragment extends Fragment {
                 }
             }
         });
+
+    }
+
+   // Método para mostrar mensaje de exito
+    public void showNotify() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_message, null);
+        final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popup.setAnimationStyle(R.style.PopupAnimation);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 330);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        popup.dismiss();
+                    }
+                }, 3000);
+            }
+        }, 100);
+        TextView message = layout.findViewById(R.id.txt_message);
+        message.setText("Seleccionaste el metodo de pago");
     }
 }

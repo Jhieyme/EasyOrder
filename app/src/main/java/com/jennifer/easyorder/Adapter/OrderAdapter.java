@@ -3,11 +3,13 @@ package com.jennifer.easyorder.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jennifer.easyorder.Fragments.OrderFragment;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.databinding.ItemOrderBinding;
 import com.jennifer.easyorder.model.Order;
@@ -22,9 +24,11 @@ import java.util.Locale;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHolder> {
 
     private List<Order> orderList;
+    private OrderFragment orderFragment;
 
-    public OrderAdapter(List<Order> orderList){
+    public OrderAdapter(List<Order> orderList, OrderFragment orderFragment){
         this.orderList = orderList;
+        this.orderFragment = orderFragment;
     }
 
     @NonNull
@@ -74,17 +78,35 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
                 throw new RuntimeException(e);
             }
 
-
             binding.btnPagar.setOnClickListener(v -> {
                 showMethod();
             });
         }
+
+        // Método que muestra el alert del tipo de pago
         public void showMethod(){
             AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
             LayoutInflater inflater = LayoutInflater.from(binding.getRoot().getContext());
-            View customDialogView = inflater.inflate(R.layout.custom_dialog, null);
+            View customDialogView = inflater.inflate(R.layout.custom_method_pay, null);
             builder.setView(customDialogView);
-            builder.show();
+            //builder.show();
+
+            Button btnEfectivo = customDialogView.findViewById(R.id.btn_efectivo);
+            Button btnTarjeta = customDialogView.findViewById(R.id.btn_tarjeta);
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+            btnEfectivo.setOnClickListener(v -> {
+                orderFragment.showNotify();
+                // Hace que se cierre el alert
+                // alertDialog.dismiss();
+            });
+
+            btnTarjeta.setOnClickListener(v -> {
+                orderFragment.showNotify();
+            });
+
         }
     }
 }
