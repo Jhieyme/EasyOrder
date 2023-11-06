@@ -6,6 +6,7 @@ import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.NewCustomer;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Product;
+import com.jennifer.easyorder.model.PutCustomer;
 import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.model.User;
 import com.jennifer.easyorder.model.Voucher;
@@ -39,7 +40,7 @@ public interface RestaurantInterface {
     @GET("Comanda")
     Call<List<Order>> getShowOrder();
 
-    // ------------------ Detalle Comanda ------------
+    // ------------------ Detalle Comanda ------------ //
     @GET("DetalleComanda")
     Call<List<DetailOrder>> getShowDetail();
 
@@ -65,9 +66,10 @@ public interface RestaurantInterface {
     Call<Customer> addCustomer(@Body Customer customerBody);
 
     @PUT("Cliente/{id}")
-    Call<Customer> putCustormer(@Path("id") int id, @Body Customer customer);
+    Call<PutCustomer> putCustomer(@Path("id") int id, @Body PutCustomer customer);
 
-    @DELETE("Ciente/{id}")
+    @DELETE("Cliente/{id}")
+    Call<Customer> deleteCustomer(@Path("id") int id);
 
     // ------------------ Boleta ---------------  //
     @GET("Boleta/{id}")

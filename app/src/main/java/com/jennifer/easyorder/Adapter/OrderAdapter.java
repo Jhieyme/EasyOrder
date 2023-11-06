@@ -4,12 +4,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifer.easyorder.Fragments.OrderFragment;
+import com.jennifer.easyorder.Fragments.WorkerFragment;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.databinding.ItemOrderBinding;
 import com.jennifer.easyorder.model.Order;
@@ -25,6 +30,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
     private List<Order> orderList;
     private OrderFragment orderFragment;
+
+    private boolean selectedMethodPay = false;
 
     public OrderAdapter(List<Order> orderList, OrderFragment orderFragment){
         this.orderList = orderList;
@@ -79,34 +86,52 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             }
 
             binding.btnPagar.setOnClickListener(v -> {
-                showMethod();
+                showMethodPay();
             });
         }
 
         // Método que muestra el alert del tipo de pago
-        public void showMethod(){
+        public void showMethodPay(){
             AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
             LayoutInflater inflater = LayoutInflater.from(binding.getRoot().getContext());
             View customDialogView = inflater.inflate(R.layout.custom_method_pay, null);
             builder.setView(customDialogView);
-            //builder.show();
 
             Button btnEfectivo = customDialogView.findViewById(R.id.btn_efectivo);
             Button btnTarjeta = customDialogView.findViewById(R.id.btn_tarjeta);
+            ImageButton btnNext =customDialogView.findViewById(R.id.btn_next);
 
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
 
             btnEfectivo.setOnClickListener(v -> {
                 orderFragment.showNotify();
-                // Hace que se cierre el alert
-                // alertDialog.dismiss();
+                selectedMethodPay = true;
             });
 
             btnTarjeta.setOnClickListener(v -> {
                 orderFragment.showNotify();
+                selectedMethodPay = true;
             });
 
+            btnNext.setOnClickListener(v -> {
+                if (selectedMethodPay){
+                    showFragment();
+                    alertDialog.dismiss();
+                }else {
+                    Toast.makeText(orderFragment.getContext(), "Selecciona un método de pago", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+        }
+
+        private void showFragment(){
+            FragmentManager fragmentManager = orderFragment.getFragmentManager();
+            WorkerFragment workerFragment = new WorkerFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fcv_main, workerFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     }
 }

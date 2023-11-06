@@ -8,9 +8,7 @@ import com.jennifer.easyorder.model.Customer;
 
 public class VoucherViewModel extends ViewModel {
 
-
     private final MutableLiveData<Customer> selectedCustomer = new MutableLiveData<>();
-
 
     public void selectedCustomer(Customer customer) {
         selectedCustomer.setValue(customer);
@@ -19,6 +17,5 @@ public class VoucherViewModel extends ViewModel {
     public LiveData<Customer> getSelectedCustomer() {
         return selectedCustomer;
     }
-
 
 }

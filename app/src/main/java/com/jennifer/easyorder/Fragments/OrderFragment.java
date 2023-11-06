@@ -13,7 +13,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -88,7 +87,7 @@ public class OrderFragment extends Fragment {
                     public void run() {
                         popup.dismiss();
                     }
-                }, 3000);
+                }, 2000);
             }
         }, 100);
         TextView message = layout.findViewById(R.id.txt_message);

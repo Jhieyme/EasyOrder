@@ -31,7 +31,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.navigation.NavigationView;
-import com.jennifer.easyorder.Fragments.CashierFragment;
 import com.jennifer.easyorder.Fragments.CategoryFragment;
 import com.jennifer.easyorder.Fragments.CustomerFragment;
 import com.jennifer.easyorder.Fragments.DetailOrderFragment;
@@ -211,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemId == R.id.nav_print) {
             openFragment(new VoucherFragment());
         } else if (itemId == R.id.nav_logout) {
-            showDialog();
+            showDialogLogout();
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -225,7 +224,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 
     private void openFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -254,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         message.setText("¡Quitaste este platillo!");
     }
 
-    private void showDialog() {
+    private void showDialogLogout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Cerrar Sesión");
         builder.setMessage("¿Estás seguro que deseas cerrar sesión?");

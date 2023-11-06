@@ -43,7 +43,6 @@ public class CustomerFragment extends Fragment {
 
     private FragmentCustomerBinding binding;
     private RecyclerView recyclerView;
-
     private VoucherViewModel voucherViewModel;
 
     @Override
@@ -97,7 +96,7 @@ public class CustomerFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
                 List<Customer> items = response.body();
-                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, voucherViewModel);
+                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, voucherViewModel, CustomerFragment.this);
                 recyclerView.setAdapter(rvCustomerAdapter);
             }
 
@@ -165,7 +164,7 @@ public class CustomerFragment extends Fragment {
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
                         if (response.isSuccessful()) {
                             System.out.println(response.code());
-                            showNotify();
+                            showNotifyAdd();
                             binding.txtName.setText("");
                             binding.txtApellido.setText("");
                             binding.txtDni.setText("");
@@ -180,8 +179,8 @@ public class CustomerFragment extends Fragment {
         });
     }
 
-    // Método para mostrar mensaje de exito
-    private void showNotify() {
+    // Métodos para mostrar mensaje de exito
+    public void showNotifyPut() {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_message, null);
         final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -195,10 +194,52 @@ public class CustomerFragment extends Fragment {
                     public void run() {
                         popup.dismiss();
                     }
-                }, 4000);
+                }, 2000);
+            }
+        }, 100);
+        TextView message = layout.findViewById(R.id.txt_message);
+        message.setText("Estado actualizado exitosamente");
+    }
+
+    private void showNotifyAdd() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_message, null);
+        final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popup.setAnimationStyle(R.style.PopupAnimation);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 330);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        popup.dismiss();
+                    }
+                }, 2000);
             }
         }, 100);
         TextView message = layout.findViewById(R.id.txt_message);
         message.setText("Cliente agregado exitosamente");
+    }
+
+    public void showNotifyDelete() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_message, null);
+        final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popup.setAnimationStyle(R.style.PopupAnimation);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 330);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        popup.dismiss();
+                    }
+                }, 2000);
+            }
+        }, 100);
+        TextView message = layout.findViewById(R.id.txt_message);
+        message.setText("Cliente eliminado exitosamente");
     }
 }

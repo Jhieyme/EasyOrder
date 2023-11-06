@@ -1,6 +1,6 @@
 package com.jennifer.easyorder.model;
 
-public class Customer {
+public class PutCustomer {
 
     private int idCliente;
     private String dni;
@@ -8,14 +8,13 @@ public class Customer {
     private String apellidos;
     private boolean activo;
 
-
-    public Customer(String dni, String nombres, String apellidos, boolean activo) {
+    public PutCustomer(int idCliente, String dni, String nombres, String apellidos, boolean activo) {
+        this.idCliente = idCliente;
         this.dni = dni;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.activo = activo;
     }
-
 
     public int getIdCliente() {
         return idCliente;

@@ -7,11 +7,12 @@
     android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="125dp">
 
         <RelativeLayout
-            android:id="@+id/relativeLayout2"
+            android:id="@+id/rl_customer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center">
