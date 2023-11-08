@@ -39,6 +39,7 @@ public class TablesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentTablesBinding.inflate(inflater, container, false);
 
+        // Se instancia cuando la vista se crea
         tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
         return binding.getRoot();
     }

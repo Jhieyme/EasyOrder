@@ -3,7 +3,6 @@ package com.jennifer.easyorder.data;
 import com.jennifer.easyorder.model.Category;
 import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.DetailOrder;
-import com.jennifer.easyorder.model.NewCustomer;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Product;
 import com.jennifer.easyorder.model.PutCustomer;
@@ -40,12 +39,18 @@ public interface RestaurantInterface {
     @GET("Comanda")
     Call<List<Order>> getShowOrder();
 
+    @POST("Comanda")
+    Call<Order> addOrder(@Body Order orderBody);
+
+
     // ------------------ Detalle Comanda ------------ //
     @GET("DetalleComanda")
     Call<List<DetailOrder>> getShowDetail();
 
-    @POST("Comanda")
-    Call<Order> addOrder(@Body Order orderBody);
+    @POST("DetalleComanda")
+    Call<DetailOrder> addDetailOrder(@Body DetailOrder detailOrder);
+
+
 
     // ------------------ Mesas ------------------ //
     @GET("Mesa")
@@ -60,13 +65,13 @@ public interface RestaurantInterface {
     Call<List<Customer>> getShowCustomer();
 
     @GET("{dni}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFuZHJlc3BhcmphdEBnbWFpbC5jb20ifQ.A4kk76bROCy44OoQZZqfLo27rG3rqg1HK6GXZUcjvuI")
-    Call<NewCustomer> getCustomer(@Path("dni") String dni);
+    Call<Customer> getCustomer(@Path("dni") String dni);
 
     @POST("Cliente")
     Call<Customer> addCustomer(@Body Customer customerBody);
 
     @PUT("Cliente/{id}")
-    Call<PutCustomer> putCustomer(@Path("id") int id, @Body PutCustomer customer);
+    Call<Customer> updateCustomer(@Path("id") int id, @Body Customer customer);
 
     @DELETE("Cliente/{id}")
     Call<Customer> deleteCustomer(@Path("id") int id);

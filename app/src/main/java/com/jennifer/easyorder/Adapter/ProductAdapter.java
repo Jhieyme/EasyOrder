@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.jennifer.easyorder.databinding.ItemProduct2Binding;
+import com.jennifer.easyorder.databinding.ItemProductBinding;
 import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Product;
 import com.jennifer.easyorder.viewmodel.ProductViewModel;
@@ -19,10 +19,11 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowViewHolder> {
 
-    private List<Product> productsList;
 
+    // Esta lista viene de la API
+    private List<Product> productsList;
     private ProductViewModel productViewModel;
-    private List<NewProduct> listNewProduct;
+
 
     public ProductAdapter(List<Product> productsList, ProductViewModel productViewModel) {
         this.productsList = productsList;
@@ -33,13 +34,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
     @NonNull
     @Override
     public ProductAdapter.ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemProduct2Binding binding = ItemProduct2Binding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemProductBinding binding = ItemProductBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductAdapter.ShowViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
-        holder.bind(productsList.get(position));
+        Product productItem = productsList.get(position);
+        holder.bind(productItem);
 
         holder.binding.imgProduct.setOnClickListener(view -> {
             // Añadir productos con cantidad a lista para el detalle de orden
@@ -64,9 +66,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
     }
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {
-        private ItemProduct2Binding binding;
+        private ItemProductBinding binding;
 
-        public ShowViewHolder(@NonNull ItemProduct2Binding binding) {
+        public ShowViewHolder(@NonNull ItemProductBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -16,13 +16,14 @@ public class DetailOrderAdapter extends RecyclerView.Adapter<DetailOrderAdapter.
 
 
     private List<NewProduct> productList;
+
     public DetailOrderAdapter(List<NewProduct> productList) {
         this.productList = productList;
     }
 
     @NonNull
     @Override
-    public DetailOrderAdapter.ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         DetailProductRowBinding binding = DetailProductRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new DetailOrderAdapter.ShowViewHolder(binding);
     }
@@ -37,14 +38,6 @@ public class DetailOrderAdapter extends RecyclerView.Adapter<DetailOrderAdapter.
     public int getItemCount() {
         return productList.size();
     }
-
-
-
-
-
-
-
-
 
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {

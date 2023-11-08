@@ -16,6 +16,14 @@ public class Customer {
         this.activo = activo;
     }
 
+    public Customer(int idCliente, String dni, String nombres, String apellidos, boolean activo) {
+        this.idCliente = idCliente;
+        this.dni = dni;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.activo = activo;
+    }
+
 
     public int getIdCliente() {
         return idCliente;

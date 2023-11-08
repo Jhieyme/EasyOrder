@@ -17,7 +17,6 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
     private List<Table> tablesList;
     private TableViewModel tableViewModel;
 
-
     public TableAdapter(List<Table> tablesList, TableViewModel tableViewModel) {
         this.tablesList = tablesList;
         this.tableViewModel = tableViewModel;
@@ -33,10 +32,6 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
     @Override
     public void onBindViewHolder(@NonNull TableAdapter.ShowViewHolder holder, int position) {
         holder.bind(tablesList.get(position));
-
-        holder.itemView.setOnClickListener(v -> {
-            tableViewModel.setSelectedTable(tablesList.get(position));
-        });
     }
 
     @Override
@@ -55,6 +50,9 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
         public void bind(Table table) {
             int numeroMesa = table.getNroMesa();
             binding.txtNumero.setText("N° " + numeroMesa);
+            binding.clothingCard.setOnClickListener(v -> {
+                tableViewModel.setSelectedTable(table);
+            });
         }
     }
 }

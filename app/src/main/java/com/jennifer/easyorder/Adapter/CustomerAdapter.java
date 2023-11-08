@@ -21,7 +21,6 @@ import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ItemCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
-import com.jennifer.easyorder.model.PutCustomer;
 import com.jennifer.easyorder.viewmodel.VoucherViewModel;
 
 import java.util.List;
@@ -50,10 +49,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
         holder.bind(customersList.get(position));
-
         // Esto sirve para poder pasar el id de cliente al fragment de Voucher
         holder.itemView.setOnClickListener(v -> {
-
             voucherViewModel.selectedCustomer(customersList.get(position));
         });
     }
@@ -138,26 +135,26 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
             String nombres = customer.getNombres();
             String apellidos = customer.getApellidos();
             boolean activo = customer.isActivo();
-            System.out.println(id);
-            PutCustomer newCustomer = new PutCustomer(id,dni,nombres,apellidos,activo);
+
+            Customer updatedCustomer = new Customer(id, dni, nombres, apellidos, activo);
 
             btnSi.setOnClickListener(v -> {
                 RestaurantInterface customerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
 
-                if(activo == false){
-                    newCustomer.setActivo(true);
-                }else {
-                    newCustomer.setActivo(false);
+                if (activo == false) {
+                    updatedCustomer.setActivo(true);
+                } else {
+                    updatedCustomer.setActivo(false);
                 }
 
-                Call<PutCustomer> put = customerInterface.putCustomer(customer.getIdCliente(), newCustomer);
-                put.enqueue(new Callback<PutCustomer>() {
+                Call<Customer> put = customerInterface.updateCustomer(customer.getIdCliente(), updatedCustomer);
+                put.enqueue(new Callback<Customer>() {
                     @Override
-                    public void onResponse(Call<PutCustomer> call, Response<PutCustomer> response) {
+                    public void onResponse(Call<Customer> call, Response<Customer> response) {
                         System.out.println(response.code());
                     }
                     @Override
-                    public void onFailure(Call<PutCustomer> call, Throwable t) {
+                    public void onFailure(Call<Customer> call, Throwable t) {
 
                     }
                 });

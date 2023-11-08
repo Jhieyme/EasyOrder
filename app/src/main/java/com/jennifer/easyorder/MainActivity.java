@@ -46,7 +46,6 @@ import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.viewmodel.ProductViewModel;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
-import java.io.Serializable;
 import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,11 +58,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DetailOrderFragment detailOrderFragment = new DetailOrderFragment();
 
+
     // ViewModel
     private HashSet<NewProduct> listProduct = new HashSet<>();
-    private Table tableSelected;
+
     private ProductViewModel productViewModel;
     private TableViewModel tableViewModel;
+    private Table tableSelected;
 
 
     @Override
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         sharedPreferences = getSharedPreferences(LoginActivity.SESSION_PREFERENCE, MODE_PRIVATE);
         setContentView(binding.getRoot());
+
+        // Instanciamos los ViewModel cuando se crea el activity;
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         tableViewModel = new ViewModelProvider(this).get(TableViewModel.class);
         setSupportActionBar(binding.toolbar);
@@ -117,14 +120,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LinearLayout linearProduct = dialog.findViewById(R.id.linearProduct);
 
 
+        // Usamos esa variable instanciada para poder obtener del LiveData la lista productos setteada;
         productViewModel.getSelectedListNewProduct().observe(this, list -> {
             listProduct = list;
         });
 
+        // Lo mismo aqui xd
         tableViewModel.getSelectedTable().observe(this, table -> {
             tableSelected = table;
         });
 
+        // Listar productos en el modal del activity
 
         for (NewProduct np : listProduct) {
             View productView = getLayoutInflater().inflate(R.layout.view_product, null);
@@ -168,22 +174,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             linearProduct.addView(productView);
         }
 
-        //Table
-
 
         // Generar Comanda;
         Button btnComanda = dialog.findViewById(R.id.btnGenerarComanda);
         btnComanda.setOnClickListener(v -> {
 
-            // Aqui estoy enviando los datos al Fragment DetailOrderFragment
-            Bundle data = new Bundle();
-            data.putSerializable("LIST", (Serializable) listProduct);
-            data.putSerializable("MESA", (Serializable) tableSelected);
-            detailOrderFragment.putArgs(data);
-            openFragment(detailOrderFragment);
-            dialog.cancel();
+//            // Aqui estoy enviando los datos al Fragment DetailOrderFragment
+//            Bundle data = new Bundle();
+//            data.putSerializable("LIST", (Serializable) listProduct);
+//            data.putSerializable("MESA", (Serializable) tableSelected);
+//            detailOrderFragment.putArgs(data);
+//            openFragment(detailOrderFragment);
+//            dialog.cancel();
 
         });
+
+        // Dialogo
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

@@ -19,7 +19,6 @@ import com.jennifer.easyorder.model.Category;
 import java.util.List;
 
 public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.ShowViewHolder> {
-
     private List<Category> categoryList;
     public CategoryAdapter(List<Category> categoryList) {
         this.categoryList = categoryList;

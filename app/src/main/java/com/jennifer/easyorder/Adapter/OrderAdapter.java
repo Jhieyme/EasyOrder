@@ -16,15 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jennifer.easyorder.Fragments.OrderFragment;
 import com.jennifer.easyorder.Fragments.WorkerFragment;
 import com.jennifer.easyorder.R;
+import com.jennifer.easyorder.data.RestaurantInterface;
+import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ItemOrderBinding;
+import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHolder> {
 
@@ -33,7 +41,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
     private boolean selectedMethodPay = false;
 
-    public OrderAdapter(List<Order> orderList, OrderFragment orderFragment){
+    public OrderAdapter(List<Order> orderList, OrderFragment orderFragment) {
         this.orderList = orderList;
         this.orderFragment = orderFragment;
     }
@@ -47,7 +55,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
-        holder.bind(orderList.get(position));
+        Order oderItem = orderList.get(position);
+        holder.bind(oderItem);
+        Integer idComanda = oderItem.getIdComanda();
+
+
+
+
     }
 
     @Override
@@ -58,7 +72,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
     public class ShowViewHolder extends RecyclerView.ViewHolder {
 
         private ItemOrderBinding binding;
-        public ShowViewHolder(@NonNull ItemOrderBinding binding){
+
+        public ShowViewHolder(@NonNull ItemOrderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
@@ -67,7 +82,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             binding.txtNumero.setText("#0" + String.valueOf(order.getIdComanda()));
 
             Table table = order.getIdMesaNavigation();
-            if (table != null){
+            if (table != null) {
                 binding.txtMesa.setText("N° de mesa: " + String.valueOf(table.getNroMesa()));
             }
 
@@ -91,7 +106,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
         }
 
         // Método que muestra el alert del tipo de pago
-        public void showMethodPay(){
+        public void showMethodPay() {
             AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
             LayoutInflater inflater = LayoutInflater.from(binding.getRoot().getContext());
             View customDialogView = inflater.inflate(R.layout.custom_method_pay, null);
@@ -99,7 +114,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
             Button btnEfectivo = customDialogView.findViewById(R.id.btn_efectivo);
             Button btnTarjeta = customDialogView.findViewById(R.id.btn_tarjeta);
-            ImageButton btnNext =customDialogView.findViewById(R.id.btn_next);
+            ImageButton btnNext = customDialogView.findViewById(R.id.btn_next);
 
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
@@ -115,17 +130,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             });
 
             btnNext.setOnClickListener(v -> {
-                if (selectedMethodPay){
+                if (selectedMethodPay) {
                     showFragment();
                     alertDialog.dismiss();
-                }else {
+                } else {
                     Toast.makeText(orderFragment.getContext(), "Selecciona un método de pago", Toast.LENGTH_SHORT).show();
                 }
 
             });
         }
 
-        private void showFragment(){
+        private void showFragment() {
             FragmentManager fragmentManager = orderFragment.getFragmentManager();
             WorkerFragment workerFragment = new WorkerFragment();
             FragmentTransaction transaction = fragmentManager.beginTransaction();

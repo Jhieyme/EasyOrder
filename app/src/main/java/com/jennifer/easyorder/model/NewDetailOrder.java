@@ -1,16 +1,15 @@
 package com.jennifer.easyorder.model;
 
-public class DetailOrder {
+public class NewDetailOrder {
 
-
-    public int idDetalleComanda;
     public int cantidad;
     public double subTotal;
     public double importe;
     public int idComanda;
     public int idProducto;
 
-    public DetailOrder(int cantidad, double subTotal, double importe, int idComanda, int idProducto) {
+
+    public NewDetailOrder(int cantidad, double subTotal, double importe, int idComanda, int idProducto) {
         this.cantidad = cantidad;
         this.subTotal = subTotal;
         this.importe = importe;
@@ -18,14 +17,6 @@ public class DetailOrder {
         this.idProducto = idProducto;
     }
 
-
-    public int getIdDetalleComanda() {
-        return idDetalleComanda;
-    }
-
-    public void setIdDetalleComanda(int idDetalleComanda) {
-        this.idDetalleComanda = idDetalleComanda;
-    }
 
     public int getCantidad() {
         return cantidad;
