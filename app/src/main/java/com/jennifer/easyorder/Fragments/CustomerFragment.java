@@ -31,8 +31,8 @@ import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.data.RetrofitReniec;
 import com.jennifer.easyorder.databinding.FragmentCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
-import com.jennifer.easyorder.model.NewCustomer;
-import com.jennifer.easyorder.viewmodel.VoucherViewModel;
+import com.jennifer.easyorder.model.CustomerRENIEC;
+import com.jennifer.easyorder.viewmodel.CustomerViewModel;
 
 import java.util.List;
 
@@ -44,13 +44,13 @@ public class CustomerFragment extends Fragment {
 
     private FragmentCustomerBinding binding;
     private RecyclerView recyclerView;
-    private VoucherViewModel voucherViewModel;
+    private CustomerViewModel customerViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCustomerBinding.inflate(inflater, container, false);
-        voucherViewModel = new ViewModelProvider(requireActivity()).get(VoucherViewModel.class);
+        customerViewModel = new ViewModelProvider(requireActivity()).get(CustomerViewModel.class);
         return binding.getRoot();
     }
 
@@ -72,17 +72,17 @@ public class CustomerFragment extends Fragment {
             String txtdni = binding.txtDni.getText().toString();
 
             if (txtdni != null) {
-                Call<NewCustomer> dni = dniInterface.getCustomer(txtdni);
-                dni.enqueue(new Callback<NewCustomer>() {
+                Call<CustomerRENIEC> dni = dniInterface.getCustomer(txtdni);
+                dni.enqueue(new Callback<CustomerRENIEC>() {
                     @Override
-                    public void onResponse(Call<NewCustomer> call, Response<NewCustomer> response) {
-                        NewCustomer customer = response.body();
+                    public void onResponse(Call<CustomerRENIEC> call, Response<CustomerRENIEC> response) {
+                        CustomerRENIEC customer = response.body();
                         binding.txtName.setText(customer.getNombres());
                         binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
                     }
 
                     @Override
-                    public void onFailure(Call<NewCustomer> call, Throwable t) {
+                    public void onFailure(Call<CustomerRENIEC> call, Throwable t) {
 
                     }
                 });
@@ -97,7 +97,7 @@ public class CustomerFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
                 List<Customer> items = response.body();
-                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, voucherViewModel, CustomerFragment.this);
+                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, customerViewModel, CustomerFragment.this);
                 recyclerView.setAdapter(rvCustomerAdapter);
             }
 

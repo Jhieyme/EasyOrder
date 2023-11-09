@@ -21,21 +21,22 @@ import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ItemCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
-import com.jennifer.easyorder.viewmodel.VoucherViewModel;
+import com.jennifer.easyorder.viewmodel.CustomerViewModel;
 
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowViewHolder> {
     private List<Customer> customersList;
-    private VoucherViewModel voucherViewModel;
+    private CustomerViewModel customerViewModel;
     private CustomerFragment customerFragment;
 
-    public CustomerAdapter(List<Customer> customersList, VoucherViewModel voucherViewModel, CustomerFragment customerFragment) {
+    public CustomerAdapter(List<Customer> customersList, CustomerViewModel customerViewModel, CustomerFragment customerFragment) {
         this.customersList = customersList;
-        this.voucherViewModel = voucherViewModel;
+        this.customerViewModel = customerViewModel;
         this.customerFragment = customerFragment;
     }
 
@@ -51,7 +52,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
         holder.bind(customersList.get(position));
         // Esto sirve para poder pasar el id de cliente al fragment de Voucher
         holder.itemView.setOnClickListener(v -> {
-            voucherViewModel.selectedCustomer(customersList.get(position));
+            customerViewModel.selectedCustomer(customersList.get(position));
         });
     }
 
@@ -153,6 +154,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
                         System.out.println(response.code());
                     }
+
                     @Override
                     public void onFailure(Call<Customer> call, Throwable t) {
 
@@ -190,6 +192,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
                         System.out.println(response.code());
                     }
+
                     @Override
                     public void onFailure(Call<Customer> call, Throwable t) {
 

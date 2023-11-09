@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.jennifer.easyorder.model.Customer;
 
-public class VoucherViewModel extends ViewModel {
+public class CustomerViewModel extends ViewModel {
 
     private final MutableLiveData<Customer> selectedCustomer = new MutableLiveData<>();
 

@@ -86,16 +86,14 @@ public class DetailOrderFragment extends Fragment {
         txtTotal.setText("S/. " + String.valueOf(total));
 
 
-        double finalSubTotal = subTotal;
         double finalTotal = total;
-
         binding.btnGenerarComanda.setOnClickListener(v -> {
             // Formato de fecha de acuerdo a la API
             Date fechaActual = new Date();
             SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             String parseFecha = fechaFormato.format(fechaActual);
 
-            // Refactorizar
+            // Refactorizar <--TODO
             Table tableSelected = new Table(1, 1);
 
             // Creación de nuevo objeto Order SIN ID

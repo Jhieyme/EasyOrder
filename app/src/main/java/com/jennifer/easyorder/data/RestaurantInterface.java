@@ -2,10 +2,10 @@ package com.jennifer.easyorder.data;
 
 import com.jennifer.easyorder.model.Category;
 import com.jennifer.easyorder.model.Customer;
+import com.jennifer.easyorder.model.CustomerRENIEC;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Product;
-import com.jennifer.easyorder.model.PutCustomer;
 import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.model.User;
 import com.jennifer.easyorder.model.Voucher;
@@ -51,7 +51,6 @@ public interface RestaurantInterface {
     Call<DetailOrder> addDetailOrder(@Body DetailOrder detailOrder);
 
 
-
     // ------------------ Mesas ------------------ //
     @GET("Mesa")
     Call<List<Table>> getShowTable();
@@ -65,7 +64,7 @@ public interface RestaurantInterface {
     Call<List<Customer>> getShowCustomer();
 
     @GET("{dni}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFuZHJlc3BhcmphdEBnbWFpbC5jb20ifQ.A4kk76bROCy44OoQZZqfLo27rG3rqg1HK6GXZUcjvuI")
-    Call<Customer> getCustomer(@Path("dni") String dni);
+    Call<CustomerRENIEC> getCustomer(@Path("dni") String dni);
 
     @POST("Cliente")
     Call<Customer> addCustomer(@Body Customer customerBody);

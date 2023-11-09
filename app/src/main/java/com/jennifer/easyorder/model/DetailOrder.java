@@ -6,17 +6,29 @@ public class DetailOrder {
     private int cantidad;
     private double subTotal;
     private double importe;
+
+    private int idComanda;
+    private int idProducto;
     private Order idComandaNavigation;
     private Product idProductoNavigation;
 
-//    public DetailOrder(int idDetalleComanda, int cantidad, double subTotal, double importe, Order idComandaNavigation, Product idProductoNavigation) {
-//        this.idDetalleComanda = idDetalleComanda;
-//        this.cantidad = cantidad;
-//        this.subTotal = subTotal;
-//        this.importe = importe;
-//        this.idComandaNavigation = idComandaNavigation;
-//        this.idProductoNavigation = idProductoNavigation;
-//    }
+    public DetailOrder(int idDetalleComanda, int cantidad, double subTotal, double importe, Order idComandaNavigation, Product idProductoNavigation) {
+        this.idDetalleComanda = idDetalleComanda;
+        this.cantidad = cantidad;
+        this.subTotal = subTotal;
+        this.importe = importe;
+        this.idComandaNavigation = idComandaNavigation;
+        this.idProductoNavigation = idProductoNavigation;
+    }
+
+    public DetailOrder(int cantidad, double subTotal, double importe, int idComanda, int idProducto) {
+        this.cantidad = cantidad;
+        this.subTotal = subTotal;
+        this.importe = importe;
+        this.idComanda = idComanda;
+        this.idProducto = idProducto;
+    }
+
 
     public int getIdDetalleComanda() {
         return idDetalleComanda;
@@ -48,6 +60,22 @@ public class DetailOrder {
 
     public void setImporte(double importe) {
         this.importe = importe;
+    }
+
+    public int getIdComanda() {
+        return idComanda;
+    }
+
+    public void setIdComanda(int idComanda) {
+        this.idComanda = idComanda;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
     public Order getIdComandaNavigation() {
