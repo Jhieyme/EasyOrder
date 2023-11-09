@@ -1,7 +1,6 @@
 package com.jennifer.easyorder.Fragments;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,6 +20,7 @@ import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentOrderBinding;
+import com.jennifer.easyorder.databinding.ItemOrderBinding;
 import com.jennifer.easyorder.model.Order;
 
 import java.util.List;
@@ -34,6 +34,8 @@ public class OrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private OrderAdapter orderAdapter;
 
+    private ItemOrderBinding orderBinding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,12 +46,13 @@ public class OrderFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //orderBinding = view.findViewById(R.id.item_order);
         recyclerView = view.findViewById(R.id.rv_order);
-        GridLayoutManager gridLayout = new GridLayoutManager(view.getContext(), 2);
-        binding.rvOrder.setLayoutManager(gridLayout);
+        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
+        binding.rvOrder.setLayoutManager(layoutManager);
 
         RestaurantInterface orderInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
-        RestaurantInterface detailInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Order>> call = orderInterface.getShowOrder();
         call.enqueue(new Callback<List<Order>>() {
             @Override

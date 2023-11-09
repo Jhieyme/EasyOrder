@@ -2,22 +2,21 @@ package com.jennifer.easyorder.model;
 
 public class DetailOrder {
 
+    private int idDetalleComanda;
+    private int cantidad;
+    private double subTotal;
+    private double importe;
+    private Order idComandaNavigation;
+    private Product idProductoNavigation;
 
-    public int idDetalleComanda;
-    public int cantidad;
-    public double subTotal;
-    public double importe;
-    public int idComanda;
-    public int idProducto;
-
-    public DetailOrder(int cantidad, double subTotal, double importe, int idComanda, int idProducto) {
-        this.cantidad = cantidad;
-        this.subTotal = subTotal;
-        this.importe = importe;
-        this.idComanda = idComanda;
-        this.idProducto = idProducto;
-    }
-
+//    public DetailOrder(int idDetalleComanda, int cantidad, double subTotal, double importe, Order idComandaNavigation, Product idProductoNavigation) {
+//        this.idDetalleComanda = idDetalleComanda;
+//        this.cantidad = cantidad;
+//        this.subTotal = subTotal;
+//        this.importe = importe;
+//        this.idComandaNavigation = idComandaNavigation;
+//        this.idProductoNavigation = idProductoNavigation;
+//    }
 
     public int getIdDetalleComanda() {
         return idDetalleComanda;
@@ -51,19 +50,19 @@ public class DetailOrder {
         this.importe = importe;
     }
 
-    public int getIdComanda() {
-        return idComanda;
+    public Order getIdComandaNavigation() {
+        return idComandaNavigation;
     }
 
-    public void setIdComanda(int idComanda) {
-        this.idComanda = idComanda;
+    public void setIdComandaNavigation(Order idComandaNavigation) {
+        this.idComandaNavigation = idComandaNavigation;
     }
 
-    public int getIdProducto() {
-        return idProducto;
+    public Product getIdProductoNavigation() {
+        return idProductoNavigation;
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public void setIdProductoNavigation(Product idProductoNavigation) {
+        this.idProductoNavigation = idProductoNavigation;
     }
 }

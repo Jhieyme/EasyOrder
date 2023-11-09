@@ -1,5 +1,8 @@
 package com.jennifer.easyorder.model;
 
+import java.util.Date;
+import java.util.List;
+
 public class Order {
 
     private int idComanda;
@@ -7,16 +10,16 @@ public class Order {
     private String estado;
     private double total;
 
-    private int idMesa;
+    private List<DetailOrder> detalleComanda;
 
     private Table idMesaNavigation;
 
-    public Order(String fechaHora, String estado, double total, int idMesa) {
-
+    public Order(int idComanda, String fechaHora, String estado, double total, Table idMesaNavigation) {
+        this.idComanda = idComanda;
         this.fechaHora = fechaHora;
         this.estado = estado;
         this.total = total;
-        this.idMesa = idMesa;
+        this.idMesaNavigation = idMesaNavigation;
     }
 
     public int getIdComanda() {
@@ -57,5 +60,13 @@ public class Order {
 
     public void setIdMesaNavigation(Table idMesaNavigation) {
         this.idMesaNavigation = idMesaNavigation;
+    }
+
+    public List<DetailOrder> getDetalleComanda() {
+        return detalleComanda;
+    }
+
+    public void setDetalleComanda(List<DetailOrder> detalleComanda) {
+        this.detalleComanda = detalleComanda;
     }
 }

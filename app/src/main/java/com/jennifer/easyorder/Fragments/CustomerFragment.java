@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.data.RetrofitReniec;
 import com.jennifer.easyorder.databinding.FragmentCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
+import com.jennifer.easyorder.model.NewCustomer;
 import com.jennifer.easyorder.viewmodel.VoucherViewModel;
 
 import java.util.List;
@@ -66,28 +68,28 @@ public class CustomerFragment extends Fragment {
 
         // Buscar dni desde la api - Reniec
 
-//        binding.btnSearchDni.setOnClickListener(v -> {
-//            String txtdni = binding.txtDni.getText().toString();
-//
-//            if (txtdni != null) {
-//                Call<NewCustomer> dni = dniInterface.getCustomer(txtdni);
-//                dni.enqueue(new Callback<NewCustomer>() {
-//                    @Override
-//                    public void onResponse(Call<NewCustomer> call, Response<NewCustomer> response) {
-//                        NewCustomer customer = response.body();
-//                        binding.txtName.setText(customer.getNombres());
-//                        binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<NewCustomer> call, Throwable t) {
-//
-//                    }
-//                });
-//            } else {
-//                Toast.makeText(getContext(), "El DNI debe tener 8 digitos", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        binding.btnSearchDni.setOnClickListener(v -> {
+            String txtdni = binding.txtDni.getText().toString();
+
+            if (txtdni != null) {
+                Call<NewCustomer> dni = dniInterface.getCustomer(txtdni);
+                dni.enqueue(new Callback<NewCustomer>() {
+                    @Override
+                    public void onResponse(Call<NewCustomer> call, Response<NewCustomer> response) {
+                        NewCustomer customer = response.body();
+                        binding.txtName.setText(customer.getNombres());
+                        binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
+                    }
+
+                    @Override
+                    public void onFailure(Call<NewCustomer> call, Throwable t) {
+
+                    }
+                });
+            } else {
+                Toast.makeText(getContext(), "El DNI debe tener 8 digitos", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Lista de todos los CLientes
         call.enqueue(new Callback<List<Customer>>() {
@@ -140,6 +142,9 @@ public class CustomerFragment extends Fragment {
             myKonten.startAnimation(togo);
             icCustomer.startAnimation(togo);
             icCustomer.setVisibility(View.GONE);
+            binding.txtName.setText("");
+            binding.txtApellido.setText("");
+            binding.txtDni.setText("");
 
             ViewCompat.animate(myKonten).setStartDelay(1000).alpha(0).start();
             ViewCompat.animate(overbox).setStartDelay(1000).alpha(0).start();
