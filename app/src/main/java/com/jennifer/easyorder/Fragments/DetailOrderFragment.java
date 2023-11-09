@@ -59,7 +59,6 @@ public class DetailOrderFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvDetailOrder);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         binding.rvDetailOrder.setLayoutManager(layoutManager);
-
         DetailOrderAdapter adapter = new DetailOrderAdapter(listFragment);
         recyclerView.setAdapter(adapter);
 

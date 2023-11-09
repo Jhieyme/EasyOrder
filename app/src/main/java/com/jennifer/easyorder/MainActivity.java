@@ -15,11 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -29,8 +26,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.jennifer.easyorder.Adapter.ModalDetailOrderAdapter;
 import com.jennifer.easyorder.Fragments.CategoryFragment;
 import com.jennifer.easyorder.Fragments.CustomerFragment;
 import com.jennifer.easyorder.Fragments.DetailOrderFragment;
@@ -39,6 +39,7 @@ import com.jennifer.easyorder.Fragments.ProductFragment;
 import com.jennifer.easyorder.Fragments.TablesFragment;
 import com.jennifer.easyorder.Fragments.VoucherFragment;
 import com.jennifer.easyorder.Fragments.WorkerFragment;
+import com.jennifer.easyorder.animate.ProductViewAnimate;
 import com.jennifer.easyorder.databinding.ActivityMainBinding;
 import com.jennifer.easyorder.databinding.ModallayoutBinding;
 import com.jennifer.easyorder.model.NewProduct;
@@ -46,7 +47,10 @@ import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.viewmodel.ProductViewModel;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -65,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ProductViewModel productViewModel;
     private TableViewModel tableViewModel;
     private Table tableSelected;
+
+    // RecyclerView - Modal
+    private RecyclerView recyclerViewModal;
 
 
     @Override
@@ -117,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.setContentView(R.layout.modallayout);
         bindingModal = ModallayoutBinding.inflate(LayoutInflater.from(this));
         dialog.setContentView(bindingModal.getRoot());
-        LinearLayout linearProduct = dialog.findViewById(R.id.linearProduct);
 
 
         // Usamos esa variable instanciada para poder obtener del LiveData la lista productos setteada;
@@ -130,68 +136,79 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tableSelected = table;
         });
 
-        // Listar productos en el modal del activity
+        // Mostrando en Modal el RecyclerView
+        recyclerViewModal = bindingModal.rvModal;
+        LinearLayoutManager layoutModalManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        ProductViewAnimate productViewAnimate = new ProductViewAnimate();
+        bindingModal.rvModal.setLayoutManager(layoutModalManager);
+        List<NewProduct> listNewProductoToList = new ArrayList<>(listProduct);
+        ModalDetailOrderAdapter modalDetailOrderAdapter = new ModalDetailOrderAdapter(listNewProductoToList, productViewModel);
+        recyclerViewModal.setItemAnimator(productViewAnimate);
+        recyclerViewModal.setAdapter(modalDetailOrderAdapter);
 
-        for (NewProduct np : listProduct) {
-            View productView = getLayoutInflater().inflate(R.layout.view_product, null);
-            TextView txtNameProduct = productView.findViewById(R.id.txtNameProduct);
-            TextView txtQuantity = productView.findViewById(R.id.txtQuantity);
-            ImageButton removeProduct = productView.findViewById(R.id.btnRemoveProduct);
-            ImageButton addQuantity = productView.findViewById(R.id.btnAddQt);
-            ImageButton minusQuantity = productView.findViewById(R.id.btnMinusQt);
 
-            removeProduct.setOnClickListener(view -> {
-                listProduct.remove(np);
-                linearProduct.removeView(productView);
-                showNotify();
-            });
-
-            addQuantity.setOnClickListener(view -> {
-                String currentQuantity = (String) txtQuantity.getText().toString();
-                int newQnt = Integer.parseInt(currentQuantity) + 1;
-                if (newQnt > 10) {
-                    Toast.makeText(view.getContext(), "¡No puedes seleccionar más de 10 platillos", Toast.LENGTH_SHORT).show();
-                } else {
-                    np.setQuantity(newQnt);
-                    txtQuantity.setText(String.valueOf(newQnt));
-                }
-            });
-
-            minusQuantity.setOnClickListener(view -> {
-                String currentQuantity = (String) txtQuantity.getText().toString();
-                int newQnt = Integer.parseInt(currentQuantity) - 1;
-                if (newQnt <= 0) {
-                    np.setQuantity(1);
-                    txtQuantity.setText(String.valueOf(1));
-                    Toast.makeText(view.getContext(), "¡No puedes seleccionaar 0 en todo caso eliminalo xd", Toast.LENGTH_SHORT).show();
-                } else {
-                    np.setQuantity(newQnt);
-                    txtQuantity.setText(String.valueOf(newQnt));
-                }
-            });
-            txtNameProduct.setText(np.getProduct().getNombre());
-            txtQuantity.setText(String.valueOf(np.getQuantity()));
-            linearProduct.addView(productView);
-        }
+//        // Listar productos en el modal del activity
+//        LinearLayout linearProduct = dialog.findViewById(R.id.linearProduct);
+//        for (NewProduct np : listProduct) {
+//            View productView = getLayoutInflater().inflate(R.layout.view_product, null);
+//            TextView txtNameProduct = productView.findViewById(R.id.txtNameProduct);
+//            TextView txtQuantity = productView.findViewById(R.id.txtQuantity);
+//            ImageButton removeProduct = productView.findViewById(R.id.btnRemoveProduct);
+//            ImageButton addQuantity = productView.findViewById(R.id.btnAddQt);
+//            ImageButton minusQuantity = productView.findViewById(R.id.btnMinusQt);
+//
+//            removeProduct.setOnClickListener(view -> {
+//                listProduct.remove(np);
+//                linearProduct.removeView(productView);
+//                showNotify();
+//            });
+//
+//            addQuantity.setOnClickListener(view -> {
+//                String currentQuantity = (String) txtQuantity.getText().toString();
+//                int newQnt = Integer.parseInt(currentQuantity) + 1;
+//                if (newQnt > 10) {
+//                    Toast.makeText(view.getContext(), "¡No puedes seleccionar más de 10 platillos", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    np.setQuantity(newQnt);
+//                    txtQuantity.setText(String.valueOf(newQnt));
+//                }
+//            });
+//
+//            minusQuantity.setOnClickListener(view -> {
+//                String currentQuantity = (String) txtQuantity.getText().toString();
+//                int newQnt = Integer.parseInt(currentQuantity) - 1;
+//                if (newQnt <= 0) {
+//                    np.setQuantity(1);
+//                    txtQuantity.setText(String.valueOf(1));
+//                    Toast.makeText(view.getContext(), "¡No puedes seleccionaar 0 en todo caso eliminalo xd", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    np.setQuantity(newQnt);
+//                    txtQuantity.setText(String.valueOf(newQnt));
+//                }
+//            });
+//            txtNameProduct.setText(np.getProduct().getNombre());
+//            txtQuantity.setText(String.valueOf(np.getQuantity()));
+//            linearProduct.addView(productView);
+//        }
 
 
         // Generar Comanda;
         Button btnComanda = dialog.findViewById(R.id.btnGenerarComanda);
         btnComanda.setOnClickListener(v -> {
 
-//            // Aqui estoy enviando los datos al Fragment DetailOrderFragment
-//            Bundle data = new Bundle();
-//            data.putSerializable("LIST", (Serializable) listProduct);
-//            data.putSerializable("MESA", (Serializable) tableSelected);
-//            detailOrderFragment.putArgs(data);
-//            openFragment(detailOrderFragment);
-//            dialog.cancel();
+            // Aqui estoy enviando los datos al Fragment DetailOrderFragment
+            Bundle data = new Bundle();
+            data.putSerializable("LIST", (Serializable) listProduct);
+            data.putSerializable("MESA", (Serializable) tableSelected);
+            detailOrderFragment.putArgs(data);
+            openFragment(detailOrderFragment);
+            dialog.cancel();
 
         });
 
         // Dialogo
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 800);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);

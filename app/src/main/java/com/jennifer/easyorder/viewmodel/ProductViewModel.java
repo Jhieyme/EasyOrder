@@ -35,6 +35,14 @@ public class ProductViewModel extends ViewModel {
 
     }
 
+    public void deleteProduct(NewProduct newProduct, View view) {
+        HashSet<NewProduct> products = new HashSet<>(selectedListNewProduct.getValue());
+        products.remove(newProduct);
+        selectedListNewProduct.setValue(products);
+        Toast.makeText(view.getContext(), "¡Eliminaste un platillo!", Toast.LENGTH_SHORT).show();
+
+    }
+
     public void selectedListNewProduct(HashSet<NewProduct> listNewProduct) {
         selectedListNewProduct.setValue(listNewProduct);
     }
