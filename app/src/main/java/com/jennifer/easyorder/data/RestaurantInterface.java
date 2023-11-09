@@ -44,8 +44,8 @@ public interface RestaurantInterface {
 
 
     // ------------------ Detalle Comanda ------------ //
-    @GET("DetalleComanda")
-    Call<List<DetailOrder>> getShowDetail();
+    @GET("DetalleComanda/PorComanda/{id}")
+    Call<List<DetailOrder>> getShowDetail(@Path("id") int id);
 
     @POST("DetalleComanda")
     Call<DetailOrder> addDetailOrder(@Body DetailOrder detailOrder);

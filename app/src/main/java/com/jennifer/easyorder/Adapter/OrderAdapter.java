@@ -66,37 +66,51 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
         int idComanda = orderList.get(position).getIdComanda();
 
-        RestaurantInterface productDetailInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
-        Call<List<DetailOrder>> callDetail = productDetailInterface.getShowDetail();
-        callDetail.enqueue(new Callback<List<DetailOrder>>() {
-            @Override
-            public void onResponse(Call<List<DetailOrder>> call, Response<List<DetailOrder>> response) {
-                if (response.isSuccessful()) {
-                    List<DetailOrder> item= response.body();
-                    List<DetailOrder> orderDetailsList = new ArrayList<>();
+        holder.binding.btnViewModelDetail.setOnClickListener(v -> {
+            RestaurantInterface productDetailInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+            Call<List<DetailOrder>> callDetail = productDetailInterface.getShowDetail(idComanda);
+            callDetail.enqueue(new Callback<List<DetailOrder>>() {
+                @Override
+                public void onResponse(Call<List<DetailOrder>> call, Response<List<DetailOrder>> response) {
+                    if (response.isSuccessful()) {
+                        List<DetailOrder> item= response.body();
+                        List<DetailOrder> orderDetailsList = new ArrayList<>();
 
-                    for (DetailOrder detailOrder : item) {
-                        //int idComandaD = detailOrder.getIdDetalleComanda();
-                        int idComandaD = detailOrder.getIdComandaNavigation().getIdComanda();
+                        for (DetailOrder detailOrder : item) {
+                            int idComandaD = detailOrder.getIdComandaNavigation().getIdComanda();
 
-                        if (idComandaD == idComanda ) {
-                            orderDetailsList.add(detailOrder);
+                            if (idComandaD == idComanda ) {
+                                orderDetailsList.add(detailOrder);
+                            }
                         }
+
+//                        DetailProductAdapter detailProductAdapter = new DetailProductAdapter(orderDetailsList);
+//                        RecyclerView rvDetailProduct = holder.itemView.findViewById(R.id.rvDetailProduct);
+//                        LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
+//                        System.out.println(layoutManager);
+//                        rvDetailProduct.setLayoutManager(layoutManager);
+//                        rvDetailProduct.setAdapter(detailProductAdapter);
+
+                        View customDialogView = LayoutInflater.from(orderFragment.getContext()).inflate(R.layout.custom_modal_order_detail, null);
+                        RecyclerView rvDetailProduct = customDialogView.findViewById(R.id.rvDetailProduct);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
+                        rvDetailProduct.setLayoutManager(layoutManager);
+
+                        DetailProductAdapter detailProductAdapter = new DetailProductAdapter(orderDetailsList);
+                        rvDetailProduct.setAdapter(detailProductAdapter);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(orderFragment.requireContext());
+                        builder.setView(customDialogView);
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
                     }
-
-                    DetailProductAdapter detailProductAdapter = new DetailProductAdapter(orderDetailsList);
-                    RecyclerView rvDetailProduct = holder.itemView.findViewById(R.id.rvDetailProduct);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
-                    System.out.println(layoutManager);
-                    rvDetailProduct.setLayoutManager(layoutManager);
-                    rvDetailProduct.setAdapter(detailProductAdapter);
-
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<DetailOrder>> call, Throwable t) {
-            }
+                @Override
+                public void onFailure(Call<List<DetailOrder>> call, Throwable t) {
+                }
+            });
         });
     }
 
@@ -114,33 +128,33 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
         }
 
         public void bind(Order order) {
-//            binding.txtNumero.setText("#0" + String.valueOf(order.getIdComanda()));
-//
-//            Table table = order.getIdMesaNavigation();
-//            if (table != null) {
-//                binding.txtMesa.setText("N° de mesa: " + String.valueOf(table.getNroMesa()));
-//            }
-//
-//            String dateTime = order.getFechaHora();
-//            try {
-//                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//                Date fecha = inputFormat.parse(dateTime);
-//                //SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//                SimpleDateFormat outputFormat = new SimpleDateFormat("E, dd HH:mm a", new Locale("es", "PE"));
-//                String dateTimeFormat = outputFormat.format(fecha);
-//
-//                binding.txtFecha.setText(dateTimeFormat);
-//
-//            } catch (ParseException e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//            binding.btnPrint.setOnClickListener(v -> {
-//            });
-//
-//            binding.btnPagar.setOnClickListener(v -> {
-//                showMethodPay();
-//            });
+            binding.txtNumero.setText("#0" + String.valueOf(order.getIdComanda()));
+
+            Table table = order.getIdMesaNavigation();
+            if (table != null) {
+                binding.txtMesa.setText("N° de mesa: " + String.valueOf(table.getNroMesa()));
+            }
+
+            String dateTime = order.getFechaHora();
+            try {
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                Date fecha = inputFormat.parse(dateTime);
+                //SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                SimpleDateFormat outputFormat = new SimpleDateFormat("E, dd HH:mm a", new Locale("es", "PE"));
+                String dateTimeFormat = outputFormat.format(fecha);
+
+                binding.txtFecha.setText(dateTimeFormat);
+
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            binding.btnPrint.setOnClickListener(v -> {
+            });
+
+            binding.btnPagar.setOnClickListener(v -> {
+                showMethodPay();
+            });
 
         }
 

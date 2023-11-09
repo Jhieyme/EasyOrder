@@ -34,8 +34,6 @@ public class OrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private OrderAdapter orderAdapter;
 
-    private ItemOrderBinding orderBinding;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,7 +45,6 @@ public class OrderFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //orderBinding = view.findViewById(R.id.item_order);
         recyclerView = view.findViewById(R.id.rv_order);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         binding.rvOrder.setLayoutManager(layoutManager);
