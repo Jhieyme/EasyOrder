@@ -38,15 +38,6 @@ public class DetailOrderAdapter extends RecyclerView.Adapter<DetailOrderAdapter.
         return productList.size();
     }
 
-
-
-
-
-
-
-
-
-
     public class ShowViewHolder extends RecyclerView.ViewHolder {
         private DetailProductRowBinding binding;
 
@@ -62,7 +53,5 @@ public class DetailOrderAdapter extends RecyclerView.Adapter<DetailOrderAdapter.
             binding.txtCnt.setText(String.valueOf(newProduct.getQuantity()));
             Glide.with(itemView.getContext()).load(newProduct.getProduct().getUrlImagen()).into(binding.imgProduct2);
         }
-
-
     }
 }

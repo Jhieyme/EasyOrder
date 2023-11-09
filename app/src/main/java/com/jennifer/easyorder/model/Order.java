@@ -1,6 +1,7 @@
 package com.jennifer.easyorder.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Order {
 
@@ -8,6 +9,8 @@ public class Order {
     private String fechaHora;
     private String estado;
     private double total;
+
+    private List<DetailOrder> detalleComanda;
 
     private Table idMesaNavigation;
 
@@ -57,5 +60,13 @@ public class Order {
 
     public void setIdMesaNavigation(Table idMesaNavigation) {
         this.idMesaNavigation = idMesaNavigation;
+    }
+
+    public List<DetailOrder> getDetalleComanda() {
+        return detalleComanda;
+    }
+
+    public void setDetalleComanda(List<DetailOrder> detalleComanda) {
+        this.detalleComanda = detalleComanda;
     }
 }

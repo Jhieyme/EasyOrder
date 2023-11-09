@@ -83,33 +83,7 @@
 
         </LinearLayout>
 
-<!--        <TextView-->
-<!--            android:id="@+id/txt_name"-->
-<!--            android:layout_width="194dp"-->
-<!--            android:layout_height="42dp"-->
-<!--            android:layout_marginLeft="25dp"-->
-<!--            android:layout_marginRight="25dp"-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            android:background="#FFFFFF"-->
-<!--            android:textAlignment="center"-->
-<!--            android:gravity="center"-->
-<!--            android:enabled="false"-->
-<!--            android:textSize="14sp"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/txt_apellido"-->
-<!--            android:layout_width="194dp"-->
-<!--            android:layout_height="42dp"-->
-<!--            android:layout_marginLeft="25dp"-->
-<!--            android:layout_marginRight="25dp"-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            android:background="#FFFFFF"-->
-<!--            android:enabled="false"-->
-<!--            android:gravity="center"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="14sp"/>-->
-
-        <EditText
+        <TextView
             android:id="@+id/txt_name"
             android:layout_width="194dp"
             android:layout_height="42dp"
@@ -119,11 +93,10 @@
             android:background="#FFFFFF"
             android:textAlignment="center"
             android:gravity="center"
-            android:singleLine="true"
-            android:inputType="text"
+            android:enabled="false"
             android:textSize="14sp"/>
 
-        <EditText
+        <TextView
             android:id="@+id/txt_apellido"
             android:layout_width="194dp"
             android:layout_height="42dp"
@@ -131,11 +104,38 @@
             android:layout_marginRight="25dp"
             android:layout_marginTop="15dp"
             android:background="#FFFFFF"
+            android:enabled="false"
             android:gravity="center"
-            android:singleLine="true"
-            android:inputType="text"
             android:textAlignment="center"
             android:textSize="14sp"/>
+
+<!--        <EditText-->
+<!--            android:id="@+id/txt_name"-->
+<!--            android:layout_width="194dp"-->
+<!--            android:layout_height="42dp"-->
+<!--            android:layout_marginLeft="25dp"-->
+<!--            android:layout_marginRight="25dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:background="#FFFFFF"-->
+<!--            android:textAlignment="center"-->
+<!--            android:gravity="center"-->
+<!--            android:singleLine="true"-->
+<!--            android:inputType="text"-->
+<!--            android:textSize="14sp"/>-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/txt_apellido"-->
+<!--            android:layout_width="194dp"-->
+<!--            android:layout_height="42dp"-->
+<!--            android:layout_marginLeft="25dp"-->
+<!--            android:layout_marginRight="25dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:background="#FFFFFF"-->
+<!--            android:gravity="center"-->
+<!--            android:singleLine="true"-->
+<!--            android:inputType="text"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textSize="14sp"/>-->
 
         <Button
             android:id="@+id/btn_add_customer"
