@@ -18,16 +18,13 @@ import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentDetailOrderBinding;
-import com.jennifer.easyorder.model.DetailOrder;
+import com.jennifer.easyorder.databinding.ItemTableBinding;
 import com.jennifer.easyorder.model.NewProduct;
-import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
-import com.jennifer.easyorder.utils.ComandaUtils;
 import com.jennifer.easyorder.viewmodel.OrderViewModel;
+import com.jennifer.easyorder.viewmodel.TableViewModel;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -35,8 +32,12 @@ public class DetailOrderFragment extends Fragment {
 
     private FragmentDetailOrderBinding binding;
     private List<NewProduct> listFragment = new ArrayList<>();
+    private Table tableSelected;
     private RecyclerView recyclerView;
     private OrderViewModel orderViewModel;
+    private TableViewModel tableViewModel;
+
+    private ItemTableBinding bindingTable;
 
 
     @Override
@@ -44,7 +45,7 @@ public class DetailOrderFragment extends Fragment {
 
         binding = FragmentDetailOrderBinding.inflate(inflater, container, false);
         orderViewModel = new ViewModelProvider(requireActivity()).get(OrderViewModel.class);
-
+        tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
         return binding.getRoot();
 
 
@@ -63,13 +64,9 @@ public class DetailOrderFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        double subTotal = 0;
         double total = 0;
-        TextView txtSubTotal = binding.txtSubTotalDetail.findViewById(R.id.txtSubTotalDetail);
         TextView txtTotal = binding.txtTotalDetailOrder.findViewById(R.id.txtTotalDetailOrder);
-
-        binding.txtSubTotalDetail.setText("S/. " + String.valueOf(0));
-        binding.txtTotalDetailOrder.setText("S/. " + String.valueOf(0));
+        txtTotal.setText("S/. " + String.valueOf(0));
 
 
         for (NewProduct newProduct : listFragment) {
@@ -78,43 +75,45 @@ public class DetailOrderFragment extends Fragment {
             double price = newProduct.getProduct().getPrecio();
             int quantity = newProduct.getQuantity();
             double pricexQuantity = price * quantity;
-            subTotal += pricexQuantity;
+            total += pricexQuantity;
         }
 
-        total = subTotal + 2;
-        txtSubTotal.setText("S/. " + String.valueOf(subTotal));
+        if (tableSelected != null) {
+            binding.txtNumberTable.setText(String.valueOf(tableSelected.getNroMesa()));
+        } else {
+            binding.txtNumberTable.setText(" :'( ");
+        }
+
         txtTotal.setText("S/. " + String.valueOf(total));
 
 
         double finalTotal = total;
         binding.btnGenerarComanda.setOnClickListener(v -> {
-            // Formato de fecha de acuerdo a la API
-            Date fechaActual = new Date();
-            SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            String parseFecha = fechaFormato.format(fechaActual);
-
-            // Refactorizar <--TODO
-            Table tableSelected = new Table(1, 1);
-
-            // Creación de nuevo objeto Order SIN ID
-            Order newOrder = new Order(parseFecha, "En Proceso", finalTotal, tableSelected.getIdMesa());
-
-            // Instancia de clase Utils para los metodos CRUD
-            ComandaUtils utils = new ComandaUtils(orderViewModel);
-            utils.postComanda(newOrder);
-
-            // Función para obtener el response body de la solicitud POST
-            orderViewModel.getSettedOrder().observe(getViewLifecycleOwner(), order -> {
-                // Bucle para realizar un post por cada PRODUCTO (Detalle Comanda)
-                for (NewProduct np : listFragment) {
-                    double price = np.getProduct().getPrecio();
-                    int quantity = np.getQuantity();
-                    double pricexQuantity = price * quantity;
-                    DetailOrder newDetailOrder = new DetailOrder(np.getQuantity(), pricexQuantity, pricexQuantity, order.getIdComanda(), np.getProduct().getIdProducto());
-                    utils.postDetailOrder(newDetailOrder);
-                }
-
-            });
+//            // Formato de fecha de acuerdo a la API
+//            Date fechaActual = new Date();
+//            SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//            String parseFecha = fechaFormato.format(fechaActual);
+//
+//            // Creación de nuevo objeto Order SIN ID
+//            Order newOrder = new Order(parseFecha, "En Proceso", finalTotal, tableSelected.getIdMesa());
+//
+//            // Instancia de clase Utils para los metodos CRUD
+//            ComandaUtils utils = new ComandaUtils(orderViewModel);
+//            utils.postComanda(newOrder);
+//
+//            // Función para obtener el response body de la solicitud POST
+//            orderViewModel.getSettedOrder().observe(getViewLifecycleOwner(), order -> {
+//                // Bucle para realizar un post por cada PRODUCTO (Detalle Comanda)
+//                for (NewProduct np : listFragment) {
+//                    double price = np.getProduct().getPrecio();
+//                    int quantity = np.getQuantity();
+//                    double pricexQuantity = price * quantity;
+//                    DetailOrder newDetailOrder = new DetailOrder(np.getQuantity(), pricexQuantity, pricexQuantity, order.getIdComanda(), np.getProduct().getIdProducto());
+//                    utils.postDetailOrder(newDetailOrder);
+//                }
+//
+//            });
+            tableViewModel.setSelectedTableImg(tableSelected);
 
 
         });
@@ -126,6 +125,7 @@ public class DetailOrderFragment extends Fragment {
     public void putArgs(Bundle args) {
         HashSet<NewProduct> listProduct = (HashSet<NewProduct>) args.getSerializable("LIST");
         listFragment = new ArrayList<>(listProduct);
+        tableSelected = (Table) args.getSerializable("MESA");
 
 
     }

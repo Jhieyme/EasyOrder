@@ -1,12 +1,6 @@
 package com.jennifer.easyorder.Fragments;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifer.easyorder.Adapter.OrderAdapter;
 import com.jennifer.easyorder.R;
@@ -52,17 +52,21 @@ public class OrderFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         binding.rvOrder.setLayoutManager(layoutManager);
 
+
         RestaurantInterface orderInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Order>> call = orderInterface.getShowOrder();
         call.enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
-                if (response.isSuccessful() && response.body() != null){
-                    List<Order> item = response.body();
-                    orderAdapter = new OrderAdapter(item, OrderFragment.this);
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Order> items = response.body();
+
+
+                    orderAdapter = new OrderAdapter(items, OrderFragment.this);
                     recyclerView.setAdapter(orderAdapter);
                 }
             }
+
             @Override
             public void onFailure(Call<List<Order>> call, Throwable t) {
                 try {
@@ -75,7 +79,7 @@ public class OrderFragment extends Fragment {
 
     }
 
-   // Método para mostrar mensaje de exito
+    // Método para mostrar mensaje de exito
     public void showNotify() {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_message, null);

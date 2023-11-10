@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.databinding.ItemTableBinding;
 import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
@@ -16,11 +17,15 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
 
     private List<Table> tablesList;
     private TableViewModel tableViewModel;
+    private Table tableSelected;
 
-    public TableAdapter(List<Table> tablesList, TableViewModel tableViewModel) {
+
+    public TableAdapter(List<Table> tablesList, TableViewModel tableViewModel, Table tableSelected) {
         this.tablesList = tablesList;
         this.tableViewModel = tableViewModel;
+        this.tableSelected = tableSelected;
     }
+
 
     @NonNull
     @Override
@@ -53,6 +58,14 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
             binding.clothingCard.setOnClickListener(v -> {
                 tableViewModel.setSelectedTable(table);
             });
+            if (tableSelected != null) {
+                if (table.getNroMesa() == tableSelected.getNroMesa()) {
+                    binding.imgTableState.setImageResource(R.drawable.mesaocupada);
+                    binding.clothingCard.setEnabled(false);
+                }
+            }
+
+
         }
     }
 }

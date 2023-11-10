@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sharedPreferences = getSharedPreferences(LoginActivity.SESSION_PREFERENCE, MODE_PRIVATE);
         setContentView(binding.getRoot());
 
+
         // Instanciamos los ViewModel cuando se crea el activity;
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         tableViewModel = new ViewModelProvider(this).get(TableViewModel.class);
@@ -131,10 +133,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             listProduct = list;
         });
 
+
         // Lo mismo aqui xd
         tableViewModel.getSelectedTable().observe(this, table -> {
             tableSelected = table;
+
         });
+
+        // Setteando texto en caso no hay una mesa seleccionada
+        if (tableSelected != null) {
+            bindingModal.txtNumberTable.setText(String.valueOf(tableSelected.getNroMesa()));
+        } else {
+            bindingModal.txtNumberTable.setText(" :'( ");
+        }
+
+
+        // Mostrar layout por si no hay productos en lista
+        if (listProduct.size() == 0) {
+            View noProductsView = LayoutInflater.from(bindingModal.getRoot().getContext()).inflate(R.layout.noproducts_modal, null);
+            LinearLayout linearProduct = bindingModal.linearProduct;
+            linearProduct.addView(noProductsView);
+            linearProduct.removeView(bindingModal.rvModal);
+
+        }
+
 
         // Mostrando en Modal el RecyclerView
         recyclerViewModal = bindingModal.rvModal;
@@ -200,15 +222,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Bundle data = new Bundle();
             data.putSerializable("LIST", (Serializable) listProduct);
             data.putSerializable("MESA", (Serializable) tableSelected);
-            detailOrderFragment.putArgs(data);
-            openFragment(detailOrderFragment);
+            if (listProduct.size() != 0 && tableSelected != null) {
+                detailOrderFragment.putArgs(data);
+                openFragment(detailOrderFragment);
+            } else {
+                showNotify();
+            }
             dialog.cancel();
 
         });
 
         // Dialogo
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 800);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 750);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);

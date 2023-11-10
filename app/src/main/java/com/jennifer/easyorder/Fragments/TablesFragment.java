@@ -33,10 +33,11 @@ public class TablesFragment extends Fragment {
 
     private TableViewModel tableViewModel;
 
+    private Table tableSelected;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentTablesBinding.inflate(inflater, container, false);
 
         // Se instancia cuando la vista se crea
@@ -51,7 +52,10 @@ public class TablesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_table);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         binding.rvTable.setLayoutManager(layoutManager);
+        tableViewModel.getSelectedTableImg().observe(getViewLifecycleOwner(), tableSelectedView -> {
 
+            tableSelected = tableSelectedView;
+        });
         RestaurantInterface tableInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Table>> call = tableInterface.getShowTable();
 
@@ -60,7 +64,7 @@ public class TablesFragment extends Fragment {
             public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Table> items = response.body();
-                    TableAdapter rvTableAdapter = new TableAdapter(items, tableViewModel);
+                    TableAdapter rvTableAdapter = new TableAdapter(items, tableViewModel, tableSelected);
                     recyclerView.setAdapter(rvTableAdapter);
                 }
             }
@@ -69,6 +73,8 @@ public class TablesFragment extends Fragment {
             public void onFailure(Call<List<Table>> call, Throwable t) {
             }
         });
+
+
     }
 
 

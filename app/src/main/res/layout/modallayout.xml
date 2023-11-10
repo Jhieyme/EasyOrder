@@ -16,6 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
@@ -26,7 +27,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
             android:padding="8dp"
-            android:text="Detail Order"
+            android:text="Detalle Orden"
             android:textAlignment="viewStart"
             android:textColor="@color/lavender"
             android:textSize="25dp" />
@@ -36,24 +37,24 @@
 
 
     <ScrollView
+        android:id="@+id/svModal"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center">
 
         <LinearLayout
             android:id="@+id/linearProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:gravity="center"
             android:orientation="vertical"
             android:padding="10dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvModal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:orientation="vertical" />
         </LinearLayout>
@@ -65,6 +66,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
@@ -73,7 +75,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
             android:padding="8dp"
-            android:text="Detail Table"
+            android:text="Mesa seleccionada"
             android:textAlignment="viewStart"
             android:textColor="@color/lavender"
             android:textSize="25dp" />
@@ -92,14 +94,14 @@
             android:id="@+id/btnRemoveProduct"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/mesa"
+            android:background="@drawable/ic_table"
             android:contentDescription="Eliminar producto" />
 
         <TextView
             android:layout_width="280dp"
             android:layout_height="20dp"
             android:layout_marginLeft="10dp"
-            android:text="Numeró de Mesa:"
+            android:text="Número de Mesa:"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -107,10 +109,12 @@
             android:id="@+id/txtNumberTable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="4"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/bordered_text_modal"
+            android:padding="7dp"
+            android:text="5"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
