@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="185dp"
+    android:layout_width="match_parent"
     android:layout_height="25dp">
 
     <LinearLayout
@@ -18,25 +18,25 @@
 
         <TextView
             android:id="@+id/txt_cantidad"
-            android:layout_width="59dp"
-            android:layout_height="20dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="x 2.00"
             android:textAlignment="center"
             android:textColor="#8C8C8C"
-            android:textSize="10sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/txt_product"
-            android:layout_width="99dp"
-            android:layout_height="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="CEVICHE MIXTO"
             android:textAlignment="center"
             android:textColor="#8C8C8C"
-            android:textSize="10sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
