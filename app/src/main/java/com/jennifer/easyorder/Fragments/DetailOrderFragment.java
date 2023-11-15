@@ -19,12 +19,17 @@ import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentDetailOrderBinding;
 import com.jennifer.easyorder.databinding.ItemTableBinding;
+import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.NewProduct;
+import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
+import com.jennifer.easyorder.utils.ComandaUtils;
 import com.jennifer.easyorder.viewmodel.OrderViewModel;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -89,30 +94,30 @@ public class DetailOrderFragment extends Fragment {
 
         double finalTotal = total;
         binding.btnGenerarComanda.setOnClickListener(v -> {
-//            // Formato de fecha de acuerdo a la API
-//            Date fechaActual = new Date();
-//            SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//            String parseFecha = fechaFormato.format(fechaActual);
-//
-//            // Creación de nuevo objeto Order SIN ID
-//            Order newOrder = new Order(parseFecha, "En Proceso", finalTotal, tableSelected.getIdMesa());
-//
-//            // Instancia de clase Utils para los metodos CRUD
-//            ComandaUtils utils = new ComandaUtils(orderViewModel);
-//            utils.postComanda(newOrder);
-//
-//            // Función para obtener el response body de la solicitud POST
-//            orderViewModel.getSettedOrder().observe(getViewLifecycleOwner(), order -> {
-//                // Bucle para realizar un post por cada PRODUCTO (Detalle Comanda)
-//                for (NewProduct np : listFragment) {
-//                    double price = np.getProduct().getPrecio();
-//                    int quantity = np.getQuantity();
-//                    double pricexQuantity = price * quantity;
-//                    DetailOrder newDetailOrder = new DetailOrder(np.getQuantity(), pricexQuantity, pricexQuantity, order.getIdComanda(), np.getProduct().getIdProducto());
-//                    utils.postDetailOrder(newDetailOrder);
-//                }
-//
-//            });
+            // Formato de fecha de acuerdo a la API
+            Date fechaActual = new Date();
+            SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            String parseFecha = fechaFormato.format(fechaActual);
+
+            // Creación de nuevo objeto Order SIN ID
+            Order newOrder = new Order(parseFecha, "En Proceso", finalTotal, tableSelected.getIdMesa());
+
+            // Instancia de clase Utils para los metodos CRUD
+            ComandaUtils utils = new ComandaUtils(orderViewModel);
+            utils.postComanda(newOrder);
+
+            // Función para obtener el response body de la solicitud POST
+            orderViewModel.getSettedOrder().observe(getViewLifecycleOwner(), order -> {
+                // Bucle para realizar un post por cada PRODUCTO (Detalle Comanda)
+                for (NewProduct np : listFragment) {
+                    double price = np.getProduct().getPrecio();
+                    int quantity = np.getQuantity();
+                    double pricexQuantity = price * quantity;
+                    DetailOrder newDetailOrder = new DetailOrder(np.getQuantity(), pricexQuantity, pricexQuantity, order.getIdComanda(), np.getProduct().getIdProducto());
+                    utils.postDetailOrder(newDetailOrder);
+                }
+
+            });
             tableViewModel.setSelectedTableImg(tableSelected);
 
 

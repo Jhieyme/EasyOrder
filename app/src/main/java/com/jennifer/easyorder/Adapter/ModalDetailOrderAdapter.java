@@ -34,6 +34,7 @@ public class ModalDetailOrderAdapter extends RecyclerView.Adapter<ModalDetailOrd
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
         NewProduct newProduct = listNewProduct.get(position);
+
         holder.bind(newProduct, holder);
 
     }

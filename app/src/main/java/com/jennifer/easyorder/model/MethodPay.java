@@ -3,11 +3,15 @@ package com.jennifer.easyorder.model;
 public class MethodPay {
 
     private int idTipoPago;
-    private String  descripcion;
+    private String descripcion;
 
     public MethodPay(int idTipoPago, String descripcion) {
         this.idTipoPago = idTipoPago;
         this.descripcion = descripcion;
+    }
+
+    public MethodPay() {
+
     }
 
     public int getIdTipoPago() {

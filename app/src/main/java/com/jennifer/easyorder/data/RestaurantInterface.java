@@ -4,6 +4,7 @@ import com.jennifer.easyorder.model.Category;
 import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.CustomerRENIEC;
 import com.jennifer.easyorder.model.DetailOrder;
+import com.jennifer.easyorder.model.MethodPay;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Product;
 import com.jennifer.easyorder.model.Table;
@@ -50,6 +51,7 @@ public interface RestaurantInterface {
     @GET("DetalleComanda")
     Call<List<DetailOrder>> getDetail();
 
+
     @POST("DetalleComanda")
     Call<DetailOrder> addDetailOrder(@Body DetailOrder detailOrder);
 
@@ -77,6 +79,12 @@ public interface RestaurantInterface {
 
     @DELETE("Cliente/{id}")
     Call<Customer> deleteCustomer(@Path("id") int id);
+
+
+    // --------------- Metodo de Pago -------------- //
+
+    @GET("TipoPago")
+    Call<List<MethodPay>> getMethodPay();
 
     // ------------------ Boleta ---------------  //
     @GET("Boleta/{id}")
