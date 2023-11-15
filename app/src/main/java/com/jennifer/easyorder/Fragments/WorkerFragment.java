@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,19 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 
-import com.jennifer.easyorder.Adapter.CustomerAdapter;
 import com.jennifer.easyorder.Adapter.WorkerAdapter;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
-import com.jennifer.easyorder.databinding.FragmentCustomerBinding;
 import com.jennifer.easyorder.databinding.FragmentWorkerBinding;
-import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.Worker;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,8 +53,6 @@ public class WorkerFragment extends Fragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
         autoCompleteTextView.setAdapter(adapter);
-
-
 
         RestaurantInterface workerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Worker>> call = workerInterface.getShowWorker();

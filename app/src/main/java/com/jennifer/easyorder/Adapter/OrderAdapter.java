@@ -45,10 +45,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
     private List<Order> orderList;
     private OrderFragment orderFragment;
 
+    private List<DetailOrder> detailOrderList;
+
     private boolean selectedMethodPay = false;
 
-    public OrderAdapter(List<Order> orderList, OrderFragment orderFragment) {
+    public OrderAdapter(List<Order> orderList, List<DetailOrder> detailOrderList, OrderFragment orderFragment) {
         this.orderList = orderList;
+        this.detailOrderList = detailOrderList;
         this.orderFragment = orderFragment;
     }
 
@@ -62,56 +65,56 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
-        holder.bind(orderList.get(position));
+        holder.bind(orderList.get(position), holder);
 
-        int idComanda = orderList.get(position).getIdComanda();
-
-        holder.binding.btnViewModelDetail.setOnClickListener(v -> {
-            RestaurantInterface productDetailInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
-            Call<List<DetailOrder>> callDetail = productDetailInterface.getShowDetail(idComanda);
-            callDetail.enqueue(new Callback<List<DetailOrder>>() {
-                @Override
-                public void onResponse(Call<List<DetailOrder>> call, Response<List<DetailOrder>> response) {
-                    if (response.isSuccessful()) {
-                        List<DetailOrder> item= response.body();
-                        List<DetailOrder> orderDetailsList = new ArrayList<>();
-
-                        for (DetailOrder detailOrder : item) {
-                            int idComandaD = detailOrder.getIdComandaNavigation().getIdComanda();
-
-                            if (idComandaD == idComanda ) {
-                                orderDetailsList.add(detailOrder);
-                            }
-                        }
-
-//                        DetailProductAdapter detailProductAdapter = new DetailProductAdapter(orderDetailsList);
-//                        RecyclerView rvDetailProduct = holder.itemView.findViewById(R.id.rvDetailProduct);
+//        int idComanda = orderList.get(position).getIdComanda();
+//
+//        holder.binding.btnViewModelDetail.setOnClickListener(v -> {
+//            RestaurantInterface productDetailInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+//            Call<List<DetailOrder>> callDetail = productDetailInterface.getShowDetail(idComanda);
+//            callDetail.enqueue(new Callback<List<DetailOrder>>() {
+//                @Override
+//                public void onResponse(Call<List<DetailOrder>> call, Response<List<DetailOrder>> response) {
+//                    if (response.isSuccessful()) {
+//                        List<DetailOrder> item= response.body();
+//                        List<DetailOrder> orderDetailsList = new ArrayList<>();
+//
+//                        for (DetailOrder detailOrder : item) {
+//                            int idComandaD = detailOrder.getIdComandaNavigation().getIdComanda();
+//
+//                            if (idComandaD == idComanda ) {
+//                                orderDetailsList.add(detailOrder);
+//                            }
+//                        }
+//
+////                        DetailProductAdapter detailProductAdapter = new DetailProductAdapter(orderDetailsList);
+////                        RecyclerView rvDetailProduct = holder.itemView.findViewById(R.id.rvDetailProduct);
+////                        LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
+////                        System.out.println(layoutManager);
+////                        rvDetailProduct.setLayoutManager(layoutManager);
+////                        rvDetailProduct.setAdapter(detailProductAdapter);
+//
+//                        View customDialogView = LayoutInflater.from(orderFragment.getContext()).inflate(R.layout.custom_modal_order_detail, null);
+//                        RecyclerView rvDetailProduct = customDialogView.findViewById(R.id.rvDetailProduct);
 //                        LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
-//                        System.out.println(layoutManager);
 //                        rvDetailProduct.setLayoutManager(layoutManager);
+//
+//                        DetailProductAdapter detailProductAdapter = new DetailProductAdapter(orderDetailsList);
 //                        rvDetailProduct.setAdapter(detailProductAdapter);
-
-                        View customDialogView = LayoutInflater.from(orderFragment.getContext()).inflate(R.layout.custom_modal_order_detail, null);
-                        RecyclerView rvDetailProduct = customDialogView.findViewById(R.id.rvDetailProduct);
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
-                        rvDetailProduct.setLayoutManager(layoutManager);
-
-                        DetailProductAdapter detailProductAdapter = new DetailProductAdapter(orderDetailsList);
-                        rvDetailProduct.setAdapter(detailProductAdapter);
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(orderFragment.requireContext());
-                        builder.setView(customDialogView);
-
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<DetailOrder>> call, Throwable t) {
-                }
-            });
-        });
+//
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(orderFragment.requireContext());
+//                        builder.setView(customDialogView);
+//
+//                        AlertDialog alertDialog = builder.create();
+//                        alertDialog.show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<List<DetailOrder>> call, Throwable t) {
+//                }
+//            });
+//        });
     }
 
     @Override
@@ -127,7 +130,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             this.binding = binding;
         }
 
-        public void bind(Order order) {
+        public void bind(Order order, ShowViewHolder holder) {
             binding.txtNumero.setText("#0" + String.valueOf(order.getIdComanda()));
 
             Table table = order.getIdMesaNavigation();
@@ -148,6 +151,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
+
+            int idComanda = order.getIdComanda();
+            List<DetailOrder> detailOrderr = new ArrayList<>();
+
+            for (DetailOrder detailOrder : detailOrderList) {
+                if (detailOrder.getIdComanda() == idComanda) {
+                    detailOrderr.add(detailOrder);
+                }
+            }
+            // RecyclerView -
+            DetailProductAdapter detailProductAdapter = new DetailProductAdapter(detailOrderr);
+            RecyclerView rvDetailProduct = holder.itemView.findViewById(R.id.rvDetailProduct);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
+            rvDetailProduct.setLayoutManager(layoutManager);
+            rvDetailProduct.setAdapter(detailProductAdapter);
 
             binding.btnPrint.setOnClickListener(v -> {
             });

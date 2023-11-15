@@ -21,6 +21,7 @@ import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentOrderBinding;
 import com.jennifer.easyorder.databinding.ItemOrderBinding;
+import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
 
 import java.util.List;
@@ -56,11 +57,26 @@ public class OrderFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Order> items = response.body();
+                    List<Order> itemsOrders = response.body(); // Lista de comandas
 
 
-                    orderAdapter = new OrderAdapter(items, OrderFragment.this);
-                    recyclerView.setAdapter(orderAdapter);
+                    Call<List<DetailOrder>> callDetail = orderInterface.getDetail();
+                    callDetail.enqueue(new Callback<List<DetailOrder>>() {
+                        @Override
+                        public void onResponse(Call<List<DetailOrder>> call, Response<List<DetailOrder>> response) {
+                            List<DetailOrder> itemsDetailsOrders = response.body(); // Lista de detalle comanda
+                            orderAdapter = new OrderAdapter(itemsOrders, itemsDetailsOrders, OrderFragment.this);
+                            recyclerView.setNestedScrollingEnabled(false);
+                            recyclerView.setAdapter(orderAdapter);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<DetailOrder>> call, Throwable t) {
+
+                        }
+                    });
+
                 }
             }
 

@@ -90,8 +90,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                 showMethodPut(customer);
             });
 
-            binding.rlCustomer.setOnClickListener(v -> {
+            binding.rlCustomer.setOnLongClickListener(v -> {
                 showMethodDelete(customer);
+                return false;
             });
 
 //            binding.constraint.setOnTouchListener(new View.OnTouchListener() {

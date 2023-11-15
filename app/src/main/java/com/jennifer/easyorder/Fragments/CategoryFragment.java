@@ -1,6 +1,8 @@
 package com.jennifer.easyorder.Fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jennifer.easyorder.Adapter.CategoryAdapter;
 import com.jennifer.easyorder.R;
@@ -24,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategoryFragment extends Fragment {
+public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private FragmentCategoryBinding binding;
     private RecyclerView recyclerView;
@@ -44,6 +47,12 @@ public class CategoryFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         binding.rvCategory.setLayoutManager(layoutManager);
 
+
+        ListCategories();
+    }
+
+    private void ListCategories(){
+
         RestaurantInterface categoryInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Category>> call = categoryInterface.getShowCategory();
 
@@ -52,6 +61,7 @@ public class CategoryFragment extends Fragment {
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Category> items = response.body();
+
                     CategoryAdapter rvCategoryAdapter = new CategoryAdapter(items);
                     recyclerView.setAdapter(rvCategoryAdapter);
                 }
@@ -68,4 +78,18 @@ public class CategoryFragment extends Fragment {
         });
     }
 
+    public void refreshCategory(){
+        ListCategories();
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                binding.swipe.setRefreshing(false);
+            }
+        }, 1000);
+    }
 }

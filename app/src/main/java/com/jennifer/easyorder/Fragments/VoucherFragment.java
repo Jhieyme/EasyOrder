@@ -30,9 +30,6 @@ public class VoucherFragment extends Fragment {
 
         binding = FragmentVoucherBinding.inflate(inflater, container, false);
         customerViewModel = new ViewModelProvider(requireActivity()).get(CustomerViewModel.class);
-        customerViewModel.getSelectedCustomer().observe(getViewLifecycleOwner(), item -> {
-            System.out.println(item.getDni());
-        });
 
         return binding.getRoot();
     }
@@ -42,8 +39,9 @@ public class VoucherFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RestaurantInterface voucherInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
-
-
+        customerViewModel.getSelectedCustomer().observe(getViewLifecycleOwner(), item -> {
+            System.out.println(item.getDni());
+        });
     }
 
     public void setBinding(Voucher voucher) {
