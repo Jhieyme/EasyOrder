@@ -147,8 +147,6 @@ public class VoucherFragment extends Fragment {
 
 
         });
-
-
     }
 
 

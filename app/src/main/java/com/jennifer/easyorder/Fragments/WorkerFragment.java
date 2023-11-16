@@ -1,16 +1,18 @@
 package com.jennifer.easyorder.Fragments;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import com.jennifer.easyorder.Adapter.WorkerAdapter;
 import com.jennifer.easyorder.R;
@@ -18,8 +20,8 @@ import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentWorkerBinding;
 import com.jennifer.easyorder.model.Worker;
-import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,14 +32,11 @@ public class WorkerFragment extends Fragment {
 
     private FragmentWorkerBinding binding;
     private RecyclerView recyclerView;
-    private PaymentViewModel paymentViewModel;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWorkerBinding.inflate(inflater, container, false);
-        paymentViewModel = new ViewModelProvider(requireActivity()).get(PaymentViewModel.class);
         return binding.getRoot();
     }
 
@@ -49,6 +48,11 @@ public class WorkerFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         binding.rvWorker.setLayoutManager(layoutManager);
 
+        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.et_search);
+        List<String> suggestions = Arrays.asList("Luis", "Banana", "Cereza", "Dátil", "Uva"); // Lista de sugerencias
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
+        autoCompleteTextView.setAdapter(adapter);
 
         RestaurantInterface workerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Worker>> call = workerInterface.getShowWorker();
@@ -58,7 +62,7 @@ public class WorkerFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Worker>> call, Response<List<Worker>> response) {
                 List<Worker> items = response.body();
-                WorkerAdapter rvWorkerAdapter = new WorkerAdapter(items, paymentViewModel, WorkerFragment.this);
+                WorkerAdapter rvWorkerAdapter = new WorkerAdapter(items);
                 recyclerView.setAdapter(rvWorkerAdapter);
             }
 

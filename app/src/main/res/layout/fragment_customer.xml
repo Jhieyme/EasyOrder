@@ -251,17 +251,27 @@
             android:layout_height="250dp"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_customer"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeCustomer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="160dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.338"
-                tools:layout_editor_absoluteX="15dp" />
+                android:layout_height="570dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="150dp"
+                android:background="#F4F6FA">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_customer"
+                    android:layout_marginBottom="150dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.338"
+                    tools:layout_editor_absoluteX="15dp" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </LinearLayout>
 

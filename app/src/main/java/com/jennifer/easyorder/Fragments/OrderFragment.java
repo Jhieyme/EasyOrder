@@ -64,7 +64,6 @@ public class OrderFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Order> itemsOrders = response.body(); // Lista de comandas
 
-
                     Call<List<DetailOrder>> callDetail = orderInterface.getDetail();
                     callDetail.enqueue(new Callback<List<DetailOrder>>() {
                         @Override
@@ -79,7 +78,6 @@ public class OrderFragment extends Fragment {
                             orderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel);
                             recyclerView.setNestedScrollingEnabled(false);
                             recyclerView.setAdapter(orderAdapter);
-
                         }
 
                         @Override

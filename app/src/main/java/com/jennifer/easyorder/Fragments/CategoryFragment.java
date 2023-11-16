@@ -96,17 +96,4 @@ public class CategoryFragment extends Fragment{
     public void refreshCategory(){
         ListCategories();
     }
-
-
-
-//    @Override
-//    public void onRefresh() {
-//        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                refreshCategory();
-//                binding.swipe.setRefreshing(false);
-//            }
-//        }, 1000);
-//    }
 }
