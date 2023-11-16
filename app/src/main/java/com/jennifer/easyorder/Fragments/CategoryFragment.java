@@ -27,10 +27,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class CategoryFragment extends Fragment{
 
     private FragmentCategoryBinding binding;
     private RecyclerView recyclerView;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,12 +45,25 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        swipeRefreshLayout = view.findViewById(R.id.swipe);
+        swipeRefreshLayout.setColorSchemeResources(R.color.teal_200, R.color.black);
         recyclerView = view.findViewById(R.id.rv_category);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         binding.rvCategory.setLayoutManager(layoutManager);
 
-
         ListCategories();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshCategory();
+                        binding.swipe.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
     }
 
     private void ListCategories(){
@@ -82,14 +97,16 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
         ListCategories();
     }
 
-    @Override
-    public void onRefresh() {
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-                binding.swipe.setRefreshing(false);
-            }
-        }, 1000);
-    }
+
+//    @Override
+//    public void onRefresh() {
+//        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                refreshCategory();
+//                binding.swipe.setRefreshing(false);
+//            }
+//        }, 1000);
+//    }
 }
