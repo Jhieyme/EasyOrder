@@ -1,33 +1,27 @@
 package com.jennifer.easyorder.Adapter;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewbinding.ViewBinding;
 
 import com.jennifer.easyorder.Fragments.OrderFragment;
 import com.jennifer.easyorder.Fragments.WorkerFragment;
 import com.jennifer.easyorder.R;
-import com.jennifer.easyorder.data.RestaurantInterface;
-import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ItemOrderBinding;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
+import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,10 +30,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHolder> {
 
     private List<Order> orderList;
@@ -47,12 +37,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
     private List<DetailOrder> detailOrderList;
 
+    private PaymentViewModel paymentViewModel;
+
     private boolean selectedMethodPay = false;
 
-    public OrderAdapter(List<Order> orderList, List<DetailOrder> detailOrderList, OrderFragment orderFragment) {
+    public OrderAdapter(List<Order> orderList, List<DetailOrder> detailOrderList, OrderFragment orderFragment, PaymentViewModel paymentViewModel) {
         this.orderList = orderList;
         this.detailOrderList = detailOrderList;
         this.orderFragment = orderFragment;
+        this.paymentViewModel = paymentViewModel;
     }
 
 
@@ -125,6 +118,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
     public class ShowViewHolder extends RecyclerView.ViewHolder {
 
         private ItemOrderBinding binding;
+
         public ShowViewHolder(@NonNull ItemOrderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -153,31 +147,35 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             }
 
             int idComanda = order.getIdComanda();
-            List<DetailOrder> detailOrderr = new ArrayList<>();
+            List<DetailOrder> detailOrders = new ArrayList<>();
 
-            for (DetailOrder detailOrder : detailOrderList) {
-                if (detailOrder.getIdComanda() == idComanda) {
-                    detailOrderr.add(detailOrder);
+            for (DetailOrder detailOrderItem : detailOrderList) {
+                if (detailOrderItem.getIdComanda() == idComanda) {
+                    detailOrders.add(detailOrderItem);
                 }
             }
             // RecyclerView -
-            DetailProductAdapter detailProductAdapter = new DetailProductAdapter(detailOrderr);
+            DetailProductAdapter detailProductAdapter = new DetailProductAdapter(detailOrders);
             RecyclerView rvDetailProduct = holder.itemView.findViewById(R.id.rvDetailProduct);
             LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
             rvDetailProduct.setLayoutManager(layoutManager);
             rvDetailProduct.setAdapter(detailProductAdapter);
 
             binding.btnPrint.setOnClickListener(v -> {
+
+                // TODO
+
             });
 
+
             binding.btnPagar.setOnClickListener(v -> {
-                showMethodPay();
+                showMethodPay(order, detailOrders);
             });
 
         }
 
         // Método que muestra el alert del tipo de pago
-        public void showMethodPay() {
+        public void showMethodPay(Order order, List<DetailOrder> detailOrders) {
             AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
             LayoutInflater inflater = LayoutInflater.from(binding.getRoot().getContext());
             View customDialogView = inflater.inflate(R.layout.custom_method_pay, null);
@@ -193,15 +191,20 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             btnEfectivo.setOnClickListener(v -> {
                 orderFragment.showNotify();
                 selectedMethodPay = true;
+                paymentViewModel.setMethodPayDescription(1);
+
             });
 
             btnTarjeta.setOnClickListener(v -> {
                 orderFragment.showNotify();
                 selectedMethodPay = true;
+                paymentViewModel.setMethodPayDescription(2);
             });
 
             btnNext.setOnClickListener(v -> {
                 if (selectedMethodPay) {
+                    paymentViewModel.setSelectOrder(order);
+                    paymentViewModel.setSelectedDetailOrder(detailOrders);
                     showFragment();
                     alertDialog.dismiss();
                 } else {

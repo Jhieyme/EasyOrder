@@ -30,6 +30,14 @@ public class Order {
         this.idMesa = idMesa;
     }
 
+    public Order(int idComanda, int idMesa, double total, String estado, String fechaHora) {
+        this.idComanda = idComanda;
+        this.idMesa = idMesa;
+        this.total = total;
+        this.estado = estado;
+        this.fechaHora = fechaHora;
+    }
+
     public int getIdComanda() {
         return idComanda;
     }

@@ -21,7 +21,8 @@ import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ItemCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
-import com.jennifer.easyorder.viewmodel.CustomerViewModel;
+import com.jennifer.easyorder.utils.ShowAlertCustom;
+import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 
 import java.util.List;
 
@@ -31,13 +32,18 @@ import retrofit2.Response;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowViewHolder> {
     private List<Customer> customersList;
-    private CustomerViewModel customerViewModel;
+    private PaymentViewModel paymentViewModel;
     private CustomerFragment customerFragment;
+    private ShowAlertCustom alertCustom = new ShowAlertCustom();
+    ;
 
-    public CustomerAdapter(List<Customer> customersList, CustomerViewModel customerViewModel, CustomerFragment customerFragment) {
+
+    public CustomerAdapter(List<Customer> customersList, PaymentViewModel paymentViewModel, CustomerFragment customerFragment) {
         this.customersList = customersList;
-        this.customerViewModel = customerViewModel;
+        this.paymentViewModel = paymentViewModel;
         this.customerFragment = customerFragment;
+
+
     }
 
     @NonNull
@@ -50,10 +56,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
         holder.bind(customersList.get(position));
-        // Esto sirve para poder pasar el id de cliente al fragment de Voucher
-        holder.itemView.setOnClickListener(v -> {
-            customerViewModel.selectedCustomer(customersList.get(position));
-        });
+
     }
 
     @Override
@@ -93,6 +96,28 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
             binding.rlCustomer.setOnLongClickListener(v -> {
                 showMethodDelete(customer);
                 return false;
+            });
+
+
+            binding.imgCustomer.setOnClickListener(v -> {
+
+                String nombreUPPER = customer.getNombres();
+                String[] nombresList = nombreUPPER.split("\\s+");
+                StringBuilder result = new StringBuilder();
+
+
+                for (String word : nombresList) {
+
+                    result.append(Character.toUpperCase(word.charAt(0)));
+                    result.append(word.substring(1).toLowerCase());
+                    result.append(" ");
+
+
+                }
+
+                String strCustom = result.toString();
+                alertCustom.showCustomAlert(customerFragment.getContext(), "Seleccionaste al cliente", strCustom, customer, paymentViewModel, customerFragment);
+                ;
             });
 
 //            binding.constraint.setOnTouchListener(new View.OnTouchListener() {

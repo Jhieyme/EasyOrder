@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,10 +21,11 @@ import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentOrderBinding;
-import com.jennifer.easyorder.databinding.ItemOrderBinding;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
+import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,10 +37,13 @@ public class OrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private OrderAdapter orderAdapter;
 
+    private PaymentViewModel paymentViewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentOrderBinding.inflate(inflater, container, false);
+        paymentViewModel = new ViewModelProvider(requireActivity()).get(PaymentViewModel.class);
         return binding.getRoot();
     }
 
@@ -65,7 +70,13 @@ public class OrderFragment extends Fragment {
                         @Override
                         public void onResponse(Call<List<DetailOrder>> call, Response<List<DetailOrder>> response) {
                             List<DetailOrder> itemsDetailsOrders = response.body(); // Lista de detalle comanda
-                            orderAdapter = new OrderAdapter(itemsOrders, itemsDetailsOrders, OrderFragment.this);
+                            List<Order> ordersFiltered = new ArrayList<>();
+                            for (Order order : itemsOrders) {
+                                if (order.getEstado().equals("En Proceso")) {
+                                    ordersFiltered.add(order);
+                                }
+                            }
+                            orderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel);
                             recyclerView.setNestedScrollingEnabled(false);
                             recyclerView.setAdapter(orderAdapter);
 
