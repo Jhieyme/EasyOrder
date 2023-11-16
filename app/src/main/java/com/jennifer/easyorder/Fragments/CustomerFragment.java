@@ -32,7 +32,7 @@ import com.jennifer.easyorder.data.RetrofitReniec;
 import com.jennifer.easyorder.databinding.FragmentCustomerBinding;
 import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.CustomerRENIEC;
-import com.jennifer.easyorder.viewmodel.CustomerViewModel;
+import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 
 import java.util.List;
 
@@ -44,13 +44,13 @@ public class CustomerFragment extends Fragment {
 
     private FragmentCustomerBinding binding;
     private RecyclerView recyclerView;
-    private CustomerViewModel customerViewModel;
+    private PaymentViewModel paymentViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCustomerBinding.inflate(inflater, container, false);
-        customerViewModel = new ViewModelProvider(requireActivity()).get(CustomerViewModel.class);
+        paymentViewModel = new ViewModelProvider(requireActivity()).get(PaymentViewModel.class);
         return binding.getRoot();
     }
 
@@ -97,7 +97,7 @@ public class CustomerFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
                 List<Customer> items = response.body();
-                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, customerViewModel, CustomerFragment.this);
+                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, paymentViewModel, CustomerFragment.this);
                 recyclerView.setAdapter(rvCustomerAdapter);
             }
 

@@ -18,7 +18,6 @@ import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentDetailOrderBinding;
-import com.jennifer.easyorder.databinding.ItemTableBinding;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Order;
@@ -41,9 +40,6 @@ public class DetailOrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private OrderViewModel orderViewModel;
     private TableViewModel tableViewModel;
-
-    private ItemTableBinding bindingTable;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

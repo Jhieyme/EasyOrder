@@ -84,16 +84,16 @@
                     app:layout_constraintTop_toBottomOf="@+id/img_worker"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <RadioButton
-                    android:id="@+id/radioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="58dp"
-                    android:layout_alignTop="@+id/txt_name"
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="58dp"-->
+<!--                    android:layout_alignTop="@+id/txt_name"-->
 
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="6dp"
-                    android:layout_toEndOf="@+id/txt_name" />
+<!--                    android:layout_marginStart="0dp"-->
+<!--                    android:layout_marginTop="1dp"-->
+<!--                    android:layout_marginBottom="6dp"-->
+<!--                    android:layout_toEndOf="@+id/txt_name" />-->
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 

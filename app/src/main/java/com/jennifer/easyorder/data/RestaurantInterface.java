@@ -43,6 +43,8 @@ public interface RestaurantInterface {
     @POST("Comanda")
     Call<Order> addOrder(@Body Order orderBody);
 
+    @PUT("Comanda/{id}")
+    Call<Order> updateOrder(@Body Order orderBody, @Path("id") int id);
 
     // ------------------ Detalle Comanda ------------ //
     @GET("DetalleComanda/PorComanda/{id}")
@@ -89,4 +91,7 @@ public interface RestaurantInterface {
     // ------------------ Boleta ---------------  //
     @GET("Boleta/{id}")
     Call<Voucher> getVoucher(@Path("id") int id);
+
+    @POST("Boleta")
+    Call<Voucher> addBoleta(@Body Voucher voucherBody);
 }

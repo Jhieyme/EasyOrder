@@ -3,6 +3,12 @@ package com.jennifer.easyorder.model;
 public class Voucher {
 
     public int idBoleta;
+    public int idCliente;
+    public int idComanda;
+    public int idPersonal;
+    public String fechaHora;
+    public int idTipoPago;
+
 
     public Customer idClienteNavigation;
     public Worker idWorkerNavigation;
@@ -10,14 +16,15 @@ public class Voucher {
 
     public MethodPay idTipoPagoNavigation;
 
-    public Voucher(int idBoleta, Customer idClienteNavigation, Worker idWorkerNavigation, Order idComandaNavigation, MethodPay idTipoPagoNavigation) {
-        this.idBoleta = idBoleta;
-        this.idClienteNavigation = idClienteNavigation;
-        this.idWorkerNavigation = idWorkerNavigation;
-        this.idComandaNavigation = idComandaNavigation;
-        this.idTipoPagoNavigation = idTipoPagoNavigation;
-    }
 
+    public Voucher(int idCliente, int idComanda, int idPersonal, int idTipoPago, String fechaHora) {
+
+        this.idCliente = idCliente;
+        this.idComanda = idComanda;
+        this.idPersonal = idPersonal;
+        this.idTipoPago = idTipoPago;
+        this.fechaHora = fechaHora;
+    }
 
     public int getIdBoleta() {
         return idBoleta;
@@ -25,6 +32,46 @@ public class Voucher {
 
     public void setIdBoleta(int idBoleta) {
         this.idBoleta = idBoleta;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public int getIdComanda() {
+        return idComanda;
+    }
+
+    public void setIdComanda(int idComanda) {
+        this.idComanda = idComanda;
+    }
+
+    public int getIdPersonal() {
+        return idPersonal;
+    }
+
+    public void setIdPersonal(int idPersonal) {
+        this.idPersonal = idPersonal;
+    }
+
+    public String getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(String fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public int getIdTipoPago() {
+        return idTipoPago;
+    }
+
+    public void setIdTipoPago(int idTipoPago) {
+        this.idTipoPago = idTipoPago;
     }
 
     public Customer getIdClienteNavigation() {
