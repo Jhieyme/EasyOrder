@@ -1,18 +1,18 @@
 package com.jennifer.easyorder.Fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifer.easyorder.Adapter.WorkerAdapter;
 import com.jennifer.easyorder.R;
@@ -20,6 +20,7 @@ import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentWorkerBinding;
 import com.jennifer.easyorder.model.Worker;
+import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,10 +34,13 @@ public class WorkerFragment extends Fragment {
     private FragmentWorkerBinding binding;
     private RecyclerView recyclerView;
 
+    private PaymentViewModel paymentViewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWorkerBinding.inflate(inflater, container, false);
+        paymentViewModel = new ViewModelProvider(requireActivity()).get(PaymentViewModel.class);
         return binding.getRoot();
     }
 
@@ -62,7 +66,7 @@ public class WorkerFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Worker>> call, Response<List<Worker>> response) {
                 List<Worker> items = response.body();
-                WorkerAdapter rvWorkerAdapter = new WorkerAdapter(items);
+                WorkerAdapter rvWorkerAdapter = new WorkerAdapter(items, paymentViewModel, WorkerFragment.this);
                 recyclerView.setAdapter(rvWorkerAdapter);
             }
 

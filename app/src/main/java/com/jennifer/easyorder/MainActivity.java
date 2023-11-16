@@ -38,7 +38,6 @@ import com.jennifer.easyorder.Fragments.DetailOrderFragment;
 import com.jennifer.easyorder.Fragments.OrderFragment;
 import com.jennifer.easyorder.Fragments.ProductFragment;
 import com.jennifer.easyorder.Fragments.TablesFragment;
-import com.jennifer.easyorder.Fragments.VoucherFragment;
 import com.jennifer.easyorder.Fragments.WorkerFragment;
 import com.jennifer.easyorder.animate.ProductViewAnimate;
 import com.jennifer.easyorder.databinding.ActivityMainBinding;
@@ -53,7 +52,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
     private ModallayoutBinding bindingModal;
@@ -256,8 +255,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemId == R.id.nav_order) {
             openFragment(new OrderFragment());
             binding.toolbar.setTitle("Comandas");
-        } else if (itemId == R.id.nav_print) {
-            openFragment(new VoucherFragment());
         } else if (itemId == R.id.nav_logout) {
             showDialogLogout();
         }
