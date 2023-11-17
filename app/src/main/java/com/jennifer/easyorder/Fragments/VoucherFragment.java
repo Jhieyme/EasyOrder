@@ -38,8 +38,6 @@ import retrofit2.Response;
 public class VoucherFragment extends Fragment {
 
     private FragmentVoucherBinding binding;
-
-
     private PaymentViewModel paymentViewModel;
 
     private RecyclerView recyclerView;

@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifer.easyorder.Adapter.DetailOrderAdapter;
 import com.jennifer.easyorder.R;
-import com.jennifer.easyorder.data.RestaurantInterface;
-import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentDetailOrderBinding;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.NewProduct;
@@ -56,12 +54,12 @@ public class DetailOrderFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RestaurantInterface comandaInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+
         //  Listando en el adapter el listFragment que obtengo del ProductAdapter
         recyclerView = view.findViewById(R.id.rvDetailOrder);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-        binding.rvDetailOrder.setLayoutManager(layoutManager);
         DetailOrderAdapter adapter = new DetailOrderAdapter(listFragment);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
 
@@ -109,11 +107,15 @@ public class DetailOrderFragment extends Fragment {
                     double price = np.getProduct().getPrecio();
                     int quantity = np.getQuantity();
                     double pricexQuantity = price * quantity;
+
+                    // Aqui creo la cantidad de detalles comanda (Producto) tiene la orden
                     DetailOrder newDetailOrder = new DetailOrder(np.getQuantity(), pricexQuantity, pricexQuantity, order.getIdComanda(), np.getProduct().getIdProducto());
                     utils.postDetailOrder(newDetailOrder);
                 }
 
             });
+
+            // Aqui setteo mediante ViewModel la mesa seleccionada
             tableViewModel.setSelectedTableImg(tableSelected);
 
 

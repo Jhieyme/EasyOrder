@@ -14,6 +14,7 @@ import java.util.List;
 public class VoucherProductAdapter extends RecyclerView.Adapter<VoucherProductAdapter.ShovViewHolder> {
 
 
+    // Esta lista viene seteada del ViewModel (Order Adapter)
     private List<DetailOrder> detailOrderList;
 
 
@@ -53,7 +54,6 @@ public class VoucherProductAdapter extends RecyclerView.Adapter<VoucherProductAd
             int cantidad = detailOrder.getCantidad();
             double precio = detailOrder.getIdProductoNavigation().getPrecio();
             double importe = detailOrder.getImporte();
-            System.out.println(importe);
 
 
             binding.tvNombre.setText(detailOrder.getIdProductoNavigation().getNombre());

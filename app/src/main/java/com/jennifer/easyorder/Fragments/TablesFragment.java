@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jennifer.easyorder.Adapter.TableAdapter;
 import com.jennifer.easyorder.R;
@@ -32,6 +33,7 @@ public class TablesFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private TableViewModel tableViewModel;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private Table tableSelected;
 
@@ -49,6 +51,9 @@ public class TablesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+//        swipeRefreshLayout = view.findViewById(R.id.swipe);
+//        swipeRefreshLayout.setColorSchemeResources(R.color.teal_200, R.color.black);
+
         recyclerView = view.findViewById(R.id.rv_table);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         binding.rvTable.setLayoutManager(layoutManager);
@@ -56,6 +61,25 @@ public class TablesFragment extends Fragment {
 
             tableSelected = tableSelectedView;
         });
+
+        listTables();
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        refreshTables();
+//                        binding.swipe.setRefreshing(false);
+//                    }
+//                }, 1000);
+//            }
+//        });
+
+
+    }
+
+    private void listTables() {
         RestaurantInterface tableInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Table>> call = tableInterface.getShowTable();
 
@@ -73,8 +97,10 @@ public class TablesFragment extends Fragment {
             public void onFailure(Call<List<Table>> call, Throwable t) {
             }
         });
+    }
 
-
+    private void refreshTables() {
+        listTables();
     }
 
 

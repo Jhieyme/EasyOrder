@@ -48,11 +48,16 @@ public class ProductFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.rv_product);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-        binding.rvProduct.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
+        showProducts();
+
+
+    }
+
+    private void showProducts() {
         RestaurantInterface productInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Product>> call = productInterface.getShowProduct();
-
 
         call.enqueue(new Callback<List<Product>>() {
             @Override

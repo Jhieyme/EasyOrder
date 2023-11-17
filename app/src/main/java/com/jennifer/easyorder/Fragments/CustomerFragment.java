@@ -60,7 +60,7 @@ public class CustomerFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.rv_customer);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-        binding.rvCustomer.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         RestaurantInterface customerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         RestaurantInterface dniInterface = RetrofitReniec.getInstance().create(RestaurantInterface.class);
@@ -158,6 +158,7 @@ public class CustomerFragment extends Fragment {
             String nombres = binding.txtName.getText().toString();
             String apellidos = binding.txtApellido.getText().toString();
             String dni = binding.txtDni.getText().toString();
+
 
             if (nombres != null && apellidos != null && dni != null) {
                 Customer newCustomer = new Customer(

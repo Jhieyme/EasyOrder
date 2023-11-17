@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.jennifer.easyorder.Adapter.ModalDetailOrderAdapter;
@@ -38,6 +40,7 @@ import com.jennifer.easyorder.Fragments.DetailOrderFragment;
 import com.jennifer.easyorder.Fragments.OrderFragment;
 import com.jennifer.easyorder.Fragments.ProductFragment;
 import com.jennifer.easyorder.Fragments.TablesFragment;
+import com.jennifer.easyorder.Fragments.VoucherFragment;
 import com.jennifer.easyorder.Fragments.WorkerFragment;
 import com.jennifer.easyorder.animate.ProductViewAnimate;
 import com.jennifer.easyorder.databinding.ActivityMainBinding;
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // RecyclerView - Modal
     private RecyclerView recyclerViewModal;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -80,7 +84,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         sharedPreferences = getSharedPreferences(LoginActivity.SESSION_PREFERENCE, MODE_PRIVATE);
         setContentView(binding.getRoot());
+        swipeRefreshLayout = findViewById(R.id.swipe);
+        swipeRefreshLayout.setColorSchemeResources(R.color.teal_200, R.color.black);
 
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        Fragment fragmentActual = getSupportFragmentManager().findFragmentById(R.id.fcv_main);
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        Class<?> fragmentClass = fragmentActual.getClass();
+
+                        Fragment nuevoFragmento;
+                        try {
+                            nuevoFragmento = (Fragment) fragmentClass.newInstance();
+
+                            if (nuevoFragmento instanceof DetailOrderFragment || nuevoFragmento instanceof VoucherFragment) {
+
+                                System.out.println("oaaaa");
+                            } else {
+
+                                fragmentTransaction.replace(R.id.fcv_main, nuevoFragmento);
+                                fragmentTransaction.commit();
+                            }
+
+
+                        } catch (IllegalAccessException e) {
+                            throw new RuntimeException(e);
+                        } catch (InstantiationException e) {
+                            throw new RuntimeException(e);
+                        }
+
+
+                        binding.swipe.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
 
         // Instanciamos los ViewModel cuando se crea el activity;
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);

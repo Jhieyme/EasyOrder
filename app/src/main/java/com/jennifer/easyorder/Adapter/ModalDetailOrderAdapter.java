@@ -35,7 +35,7 @@ public class ModalDetailOrderAdapter extends RecyclerView.Adapter<ModalDetailOrd
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
         NewProduct newProduct = listNewProduct.get(position);
 
-        holder.bind(newProduct, holder);
+        holder.bind(newProduct);
 
     }
 
@@ -53,7 +53,7 @@ public class ModalDetailOrderAdapter extends RecyclerView.Adapter<ModalDetailOrd
             this.binding = binding;
         }
 
-        public void bind(NewProduct newProduct, ShowViewHolder holder) {
+        public void bind(NewProduct newProduct) {
 
             binding.txtNameProduct.setText(newProduct.getProduct().getNombre());
             binding.txtQuantity.setText(String.valueOf(newProduct.getQuantity()));

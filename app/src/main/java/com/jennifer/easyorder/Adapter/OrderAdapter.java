@@ -146,15 +146,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
                 throw new RuntimeException(e);
             }
 
+
+            // Obtenemos el idComanda del objeto Comanda
             int idComanda = order.getIdComanda();
+
+            // Creamos una lista del detalle comanda de esa Comanda
             List<DetailOrder> detailOrders = new ArrayList<>();
 
+
+            // Iteramos cada detalleComandaITEM ded la lista detailOrderList que tiene cada comanda
             for (DetailOrder detailOrderItem : detailOrderList) {
+
+                // Del Item que estamos recorriendo en la primera iteración lo comparamos con el idComanda de arriba
                 if (detailOrderItem.getIdComanda() == idComanda) {
+                    // Si la condición se cumple se agrega a la lista creada
                     detailOrders.add(detailOrderItem);
                 }
             }
-            // RecyclerView -
+            // RecyclerView - Adapter para mostrar el detalle comanda de cada comanda (esto se genera por cada Comanda que existe)
             DetailProductAdapter detailProductAdapter = new DetailProductAdapter(detailOrders);
             RecyclerView rvDetailProduct = holder.itemView.findViewById(R.id.rvDetailProduct);
             LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
@@ -176,11 +185,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
         // Método que muestra el alert del tipo de pago
         public void showMethodPay(Order order, List<DetailOrder> detailOrders) {
+            // Inicializamos el Alert Builder
             AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
             LayoutInflater inflater = LayoutInflater.from(binding.getRoot().getContext());
             View customDialogView = inflater.inflate(R.layout.custom_method_pay, null);
             builder.setView(customDialogView);
 
+            // Inicializamos los Widgets
             Button btnEfectivo = customDialogView.findViewById(R.id.btn_efectivo);
             Button btnTarjeta = customDialogView.findViewById(R.id.btn_tarjeta);
             ImageButton btnNext = customDialogView.findViewById(R.id.btn_next);
@@ -191,6 +202,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             btnEfectivo.setOnClickListener(v -> {
                 orderFragment.showNotify();
                 selectedMethodPay = true;
+                // Aqui se setea solo el id xd (en realidad deberia hacer un get a la tabla Tipo de Pago, pero esa vaina que sea en EasyOrder3)
                 paymentViewModel.setMethodPayDescription(1);
 
             });
@@ -198,11 +210,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             btnTarjeta.setOnClickListener(v -> {
                 orderFragment.showNotify();
                 selectedMethodPay = true;
+                // Lo mismo aqui jeje
                 paymentViewModel.setMethodPayDescription(2);
             });
 
             btnNext.setOnClickListener(v -> {
                 if (selectedMethodPay) {
+
+                    // Aqui si el metodo de pago fue seleccionado se setea con el ViewModel la COMANDA y su DETALLE COMANDA
                     paymentViewModel.setSelectOrder(order);
                     paymentViewModel.setSelectedDetailOrder(detailOrders);
                     showFragment();

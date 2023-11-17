@@ -15,7 +15,7 @@
         android:background="@drawable/rectangle_background"
         android:elevation="2dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -47,36 +47,59 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:textAlignment="center"
+
+    <!--    <FrameLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginBottom="50dp"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout">-->
+
+    <!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+    <!--            android:id="@+id/swipe"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_gravity="top"-->
+    <!--            android:background="#F4F6FA"-->
+    <!--            android:elevation="6dp">-->
+
+    <!--            <androidx.recyclerview.widget.RecyclerView-->
+    <!--                android:id="@+id/rv_table"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:elevation="2dp"-->
+    <!--                android:orientation="vertical"-->
+    <!--                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+    <!--                app:spanCount="2" />-->
+
+    <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    <!--    </FrameLayout>-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="30dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.025"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:elevation="2dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_table"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="160dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2" />
-        </LinearLayout>
-
-    </ScrollView>
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

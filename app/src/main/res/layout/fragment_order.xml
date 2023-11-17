@@ -12,10 +12,10 @@
         android:layout_width="250dp"
         android:layout_height="42dp"
         android:layout_marginTop="30dp"
-        android:elevation="2dp"
         android:background="@drawable/rectangle_background"
+        android:elevation="2dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -47,36 +47,30 @@
 
     </LinearLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:textAlignment="center"
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.025"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center_horizontal"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_order"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="150dp"
-                android:orientation="vertical"
-                android:nestedScrollingEnabled="false"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2" />
-        </LinearLayout>
+    </FrameLayout>
 
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

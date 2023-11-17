@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,42 +7,60 @@
     android:background="#F4F6FA"
     tools:context=".Fragments.CategoryFragment">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:textAlignment="center"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
+
+    <!--    <FrameLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginBottom="40dp"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+    <!--            android:id="@+id/swipe"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_gravity="top"-->
+    <!--            android:background="#F4F6FA">-->
+
+    <!--            <androidx.recyclerview.widget.RecyclerView-->
+    <!--                android:id="@+id/rv_category"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+
+    <!--                android:orientation="vertical"-->
+    <!--                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+    <!--                app:spanCount="2" />-->
+
+    <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    <!--    </FrameLayout>-->
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:orientation="vertical">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipe"
-                android:layout_width="match_parent"
-                android:layout_height="570dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="150dp"
-                android:background="#F4F6FA">
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_category"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="2"
-                    android:layout_marginBottom="150dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:orientation="vertical" />
+    </FrameLayout>
 
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-        </LinearLayout>
-
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

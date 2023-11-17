@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategoryFragment extends Fragment{
+public class CategoryFragment extends Fragment {
 
     private FragmentCategoryBinding binding;
     private RecyclerView recyclerView;
@@ -45,28 +45,28 @@ public class CategoryFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        swipeRefreshLayout = view.findViewById(R.id.swipe);
-        swipeRefreshLayout.setColorSchemeResources(R.color.teal_200, R.color.black);
+//        swipeRefreshLayout = view.findViewById(R.id.swipe);
+//        swipeRefreshLayout.setColorSchemeResources(R.color.teal_200, R.color.black);
         recyclerView = view.findViewById(R.id.rv_category);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         binding.rvCategory.setLayoutManager(layoutManager);
 
         ListCategories();
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshCategory();
-                        binding.swipe.setRefreshing(false);
-                    }
-                }, 1000);
-            }
-        });
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        refreshCategory();
+//                        binding.swipe.setRefreshing(false);
+//                    }
+//                }, 1000);
+//            }
+//        });
     }
 
-    private void ListCategories(){
+    private void ListCategories() {
 
         RestaurantInterface categoryInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Category>> call = categoryInterface.getShowCategory();
@@ -93,7 +93,7 @@ public class CategoryFragment extends Fragment{
         });
     }
 
-    public void refreshCategory(){
+    public void refreshCategory() {
         ListCategories();
     }
 }

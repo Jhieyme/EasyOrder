@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F4F6FA"
-
     tools:context=".Fragments.ProductFragment">
 
     <LinearLayout
@@ -13,10 +12,10 @@
         android:layout_width="344dp"
         android:layout_height="42dp"
         android:layout_marginTop="40dp"
-        android:elevation="2dp"
         android:background="@drawable/rectangle_background"
+        android:elevation="2dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -48,39 +47,29 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:textAlignment="center"
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.025"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:elevation="2dp"
+            android:orientation="vertical"
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_product"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="162dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+            />
 
-        </LinearLayout>
-
-    </ScrollView>
-
-
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

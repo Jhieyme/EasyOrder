@@ -10,72 +10,94 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#F4F6FA">
+
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:id="@+id/toolbar"
-            app:title="Categorias"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+
             android:background="@drawable/header_background"
+
             android:elevation="4dp"
             android:padding="10dp"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:title="Categorias" />
 
-        <FrameLayout
-            android:id="@+id/fcv_main"
-            android:layout_width="match_parent"
-            android:layout_height="660dp"
-            android:layout_below="@+id/toolbar"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="-40dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="47dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <FrameLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment_container">
+            android:layout_below="@+id/toolbar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="top"
+            android:layout_marginStart="0dp"
+
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="47dp"
+
+            android:background="#F4F6FA"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <FrameLayout
+                android:id="@+id/fcv_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.bottomappbar.BottomAppBar
+                    android:id="@+id/bottomAppBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bottomAppBar"
                     android:layout_gravity="bottom"
                     android:backgroundTint="@color/white"
                     app:fabCradleMargin="10dp"
                     app:fabCradleRoundedCornerRadius="50dp">
 
                     <com.google.android.material.bottomnavigation.BottomNavigationView
+                        android:id="@+id/bottom_navigation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/bottom_navigation"
                         android:layout_marginEnd="20dp"
-                        app:labelVisibilityMode="labeled"
-                        app:menu="@menu/bottom_menu"
+                        android:background="@android:color/transparent"
                         app:itemIconTint="@color/lavender"
                         app:itemTextColor="@color/lavender"
-                        android:background="@android:color/transparent"/>
+                        app:labelVisibilityMode="labeled"
+                        app:menu="@menu/bottom_menu" />
                 </com.google.android.material.bottomappbar.BottomAppBar>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_anchor="@id/bottomAppBar"
                     android:backgroundTint="@color/lavender"
                     android:src="@drawable/ic_add"
+                    app:layout_anchor="@id/bottomAppBar"
                     app:maxImageSize="40dp"
-                    app:tint ="@color/white"
-                    app:shapeAppearanceOverlay="@style/RoundedFAB"/>
+                    app:shapeAppearanceOverlay="@style/RoundedFAB"
+                    app:tint="@color/white" />
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -84,13 +106,14 @@
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_drawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/navigation_drawer"
         android:layout_gravity="start"
+        android:background="@color/white"
+        app:headerLayout="@layout/nav_header"
         app:itemIconTint="@color/lavender"
         app:itemTextColor="@color/lavender"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu"/>
+        app:menu="@menu/nav_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -6,9 +6,15 @@
     android:background="#F4F6FA"
     tools:context=".Fragments.CashierFragment">
 
-    <TextView
+    <!--    Encabezado de la comanda a cocina-->
+
+    <LinearLayout
+        android:id="@+id/lnProductsCocina"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Paga :)" />
+        android:orientation="vertical">
+
+
+    </LinearLayout>
 
 </FrameLayout>
