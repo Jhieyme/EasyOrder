@@ -119,28 +119,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                 alertCustom.showCustomAlert(customerFragment.getContext(), "Seleccionaste al cliente", strCustom, customer, paymentViewModel, customerFragment);
                 ;
             });
-
-//            binding.constraint.setOnTouchListener(new View.OnTouchListener() {
-//                private boolean isPress = false;
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    if (event.getAction() == MotionEvent.ACTION_DOWN){
-//                        isPress = false;
-//                        v.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                isPress = true;
-//                            }
-//                        },2000);
-//                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-//                        if (!isPress){
-//                            showMethodDelete(customer);
-//                        }
-//                        v.removeCallbacks(null);
-//                    }
-//                    return true;
-//                }
-//            });
         }
 
 

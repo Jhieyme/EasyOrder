@@ -70,40 +70,26 @@ public class CustomerFragment extends Fragment {
 
         binding.btnSearchDni.setOnClickListener(v -> {
             String txtdni = binding.txtDni.getText().toString();
-
-            if (txtdni != null) {
+            if (txtdni.length() == 8 && txtdni != null) {
                 Call<CustomerRENIEC> dni = dniInterface.getCustomer(txtdni);
                 dni.enqueue(new Callback<CustomerRENIEC>() {
                     @Override
                     public void onResponse(Call<CustomerRENIEC> call, Response<CustomerRENIEC> response) {
-                        CustomerRENIEC customer = response.body();
-                        binding.txtName.setText(customer.getNombres());
-                        binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
+                        if (response.isSuccessful() && response.body() != null){
+                            CustomerRENIEC customer = response.body();
+                            binding.txtName.setText(customer.getNombres());
+                            binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
+                        } else {
+                            Toast.makeText(getContext(), "Ingrese un DNI valido", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<CustomerRENIEC> call, Throwable t) {
-
                     }
                 });
             } else {
                 Toast.makeText(getContext(), "El DNI debe tener 8 digitos", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //Lista de todos los CLientes
-        call.enqueue(new Callback<List<Customer>>() {
-
-            @Override
-            public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
-                List<Customer> items = response.body();
-                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, paymentViewModel, CustomerFragment.this);
-                recyclerView.setAdapter(rvCustomerAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Customer>> call, Throwable t) {
-
             }
         });
 
@@ -142,48 +128,81 @@ public class CustomerFragment extends Fragment {
             myKonten.startAnimation(togo);
             icCustomer.startAnimation(togo);
             icCustomer.setVisibility(View.GONE);
-            binding.txtName.setText("");
-            binding.txtApellido.setText("");
-            binding.txtDni.setText("");
+            clearCustomer();
 
             ViewCompat.animate(myKonten).setStartDelay(1000).alpha(0).start();
             ViewCompat.animate(overbox).setStartDelay(1000).alpha(0).start();
 
         });
 
-        //Aqui hago la solicitud POST
+        //Lista de todos los CLientes
+        call.enqueue(new Callback<List<Customer>>() {
 
-        binding.btnAddCustomer.setOnClickListener(v -> {
+            @Override
+            public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
+                List<Customer> items = response.body();
+                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, paymentViewModel, CustomerFragment.this);
+                recyclerView.setAdapter(rvCustomerAdapter);
 
-            String nombres = binding.txtName.getText().toString();
-            String apellidos = binding.txtApellido.getText().toString();
-            String dni = binding.txtDni.getText().toString();
+                //Aqui hago la solicitud POST
 
+                binding.btnAddCustomer.setOnClickListener(v -> {
 
-            if (nombres != null && apellidos != null && dni != null) {
-                Customer newCustomer = new Customer(
-                        dni, nombres, apellidos, true);
+                    String nombres = binding.txtName.getText().toString();
+                    String apellidos = binding.txtApellido.getText().toString();
+                    String dni = binding.txtDni.getText().toString();
+                    boolean dniExists = dniExist(items, dni);
 
-                Call<Customer> add = customerInterface.addCustomer(newCustomer);
-                add.enqueue(new Callback<Customer>() {
-                    @Override
-                    public void onResponse(Call<Customer> call, Response<Customer> response) {
-                        if (response.isSuccessful()) {
-                            System.out.println(response.code());
-                            showNotifyAdd();
-                            binding.txtName.setText("");
-                            binding.txtApellido.setText("");
-                            binding.txtDni.setText("");
-                            close.performClick();
-                        }
-                    }
+                    if (dniExists) {
+                        clearCustomer();
+                        Toast.makeText(getContext(), "El cliente ya esta registrado", Toast.LENGTH_SHORT).show();
+                    } else if (nombres != "" && apellidos != "" && dni != "") {
+                        Customer newCustomer = new Customer(
+                                dni, nombres, apellidos, true);
 
-                    @Override
-                    public void onFailure(Call<Customer> call, Throwable t) {
+                        Call<Customer> add = customerInterface.addCustomer(newCustomer);
+                        add.enqueue(new Callback<Customer>() {
+                            @Override
+                            public void onResponse(Call<Customer> call, Response<Customer> response) {
+                                if (response.isSuccessful()) {
+                                    System.out.println(response.code());
+                                    showNotifyAdd();
+                                    clearCustomer();
+                                    close.performClick();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Customer> call, Throwable t) {
+                            }
+                        });
+                    } else {
+                        Toast.makeText(getContext(), "Complete todos los campos", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
+
+            @Override
+            public void onFailure(Call<List<Customer>> call, Throwable t) {
+
+            }
         });
+
+    }
+
+    private void clearCustomer(){
+        binding.txtName.setText("");
+        binding.txtApellido.setText("");
+        binding.txtDni.setText("");
+    }
+
+    private boolean dniExist(List<Customer> customers, String dni) {
+        for (Customer customer : customers) {
+            if (customer.getDni().equals(dni)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Métodos para mostrar mensaje de exito
