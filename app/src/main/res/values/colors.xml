@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue_200">#FCB586</color>
-    <color name="blue_500">#F1832F</color>
-    <color name="blue_700">#FF6600</color>
+    <color name="blue_200">#7e97bf</color>
+    <color name="blue_500">#546f9c</color>
+    <color name="blue_700">#5c87cc</color>
     <color name="teal_200">#7F99B4</color>
-    <color name="teal_700">#874601</color>
+    <color name="teal_700">#445b80</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
     <color name="lavender">#323541</color>
-    <color name="buttonBg">#FF6600</color>
+    <color name="buttonBg">#335387</color>
 </resources>

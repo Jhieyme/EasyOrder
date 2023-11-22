@@ -12,10 +12,10 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="140dp"
         android:layout_marginEnd="8dp"
         android:elevation="6dp"
-        android:src="@drawable/client"
+        android:src="@drawable/new_customer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/overbox" />
@@ -69,8 +69,7 @@
                 android:inputType="number"
                 android:maxLength="8"
                 android:singleLine="true"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF" />
+                android:textAlignment="center" />
 
             <Button
                 android:id="@+id/btn_searchDni"
@@ -90,8 +89,8 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="25dp"
-            android:background="#FFFFFF"
-            android:enabled="false"
+            android:background="#28AEAEAE"
+           android:textColor="#3D3D3D"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp" />
@@ -103,50 +102,23 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="25dp"
-            android:background="#FFFFFF"
-            android:enabled="false"
+            android:background="#28AEAEAE"
+            android:textColor="#3D3D3D"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp" />
 
-        <!--        <EditText-->
-        <!--            android:id="@+id/txt_name"-->
-        <!--            android:layout_width="194dp"-->
-        <!--            android:layout_height="42dp"-->
-        <!--            android:layout_marginLeft="25dp"-->
-        <!--            android:layout_marginRight="25dp"-->
-        <!--            android:layout_marginTop="15dp"-->
-        <!--            android:background="#FFFFFF"-->
-        <!--            android:textAlignment="center"-->
-        <!--            android:gravity="center"-->
-        <!--            android:singleLine="true"-->
-        <!--            android:inputType="text"-->
-        <!--            android:textSize="14sp"/>-->
-
-        <!--        <EditText-->
-        <!--            android:id="@+id/txt_apellido"-->
-        <!--            android:layout_width="194dp"-->
-        <!--            android:layout_height="42dp"-->
-        <!--            android:layout_marginLeft="25dp"-->
-        <!--            android:layout_marginRight="25dp"-->
-        <!--            android:layout_marginTop="15dp"-->
-        <!--            android:background="#FFFFFF"-->
-        <!--            android:gravity="center"-->
-        <!--            android:singleLine="true"-->
-        <!--            android:inputType="text"-->
-        <!--            android:textAlignment="center"-->
-        <!--            android:textSize="14sp"/>-->
-
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_add_customer"
             android:layout_width="194dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="50dp"
-            android:backgroundTint="@color/lavender"
+            android:background="@drawable/button_selector"
             android:gravity="center"
+            android:textColor="@color/white"
             android:text="Agregar"
             android:textSize="15sp" />
 
