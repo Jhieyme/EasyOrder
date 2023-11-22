@@ -83,7 +83,7 @@ public class ModalDetailOrderAdapter extends RecyclerView.Adapter<ModalDetailOrd
                 if (newQnt <= 0) {
                     newProduct.setQuantity(1);
                     binding.txtQuantity.setText(String.valueOf(1));
-                    Toast.makeText(view.getContext(), "¡No puedes seleccionaar 0 en todo caso eliminalo xd", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "¡No puedes seleccionaar 0 en todo caso eliminalo", Toast.LENGTH_SHORT).show();
                 } else {
                     newProduct.setQuantity(newQnt);
                     binding.txtQuantity.setText(String.valueOf(newQnt));

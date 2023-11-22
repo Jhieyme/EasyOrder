@@ -182,11 +182,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         });
 
-        // Setteando texto en caso no hay una mesa seleccionada
+        // Setteando texto en caso no haya una mesa seleccionada
         if (tableSelected != null) {
             bindingModal.txtNumberTable.setText(String.valueOf(tableSelected.getNroMesa()));
         } else {
-            bindingModal.txtNumberTable.setText(" :'( ");
+            bindingModal.txtNumberTable.setText(" :( ");
+
         }
 
 
@@ -264,11 +265,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Bundle data = new Bundle();
             data.putSerializable("LIST", (Serializable) listProduct);
             data.putSerializable("MESA", (Serializable) tableSelected);
-            if (listProduct.size() != 0 && tableSelected != null) {
-                detailOrderFragment.putArgs(data);
-                openFragment(detailOrderFragment);
+            if (listProduct.size() != 0 ) {
+                if (tableSelected != null){
+                    detailOrderFragment.putArgs(data);
+                    openFragment(detailOrderFragment);
+                }else {
+                    notifyWarningTable();
+                }
             } else {
-                showNotify();
+                notifyWarningProduct();
             }
             dialog.cancel();
 
@@ -276,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Dialogo
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 750);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 720);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -320,15 +325,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
     }
 
-    private void showNotify() {
+    private void notifyWarningProduct() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_message, null);
+        View layout = inflater.inflate(R.layout.custom_message_warning, null);
         final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popup.setAnimationStyle(R.style.PopupAnimation);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 330);
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 115);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -338,7 +343,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }, 100);
         TextView message = layout.findViewById(R.id.txt_message);
-        message.setText("¡Quitaste este platillo!");
+        message.setText("¡Selecciona un producto!");
+    }
+
+    private void notifyWarningTable() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_message_warning, null);
+        final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popup.setAnimationStyle(R.style.PopupAnimation);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 115);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        popup.dismiss();
+                    }
+                }, 2000);
+            }
+        }, 100);
+        TextView message = layout.findViewById(R.id.txt_message);
+        message.setText("¡Selecciona una mesa!");
     }
 
     private void showDialogLogout() {

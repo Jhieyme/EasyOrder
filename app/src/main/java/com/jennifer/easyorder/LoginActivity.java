@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     for (User user : items) {
                         if (user.getNombre().equals(codigo) && user.getContra().equals(contra)) {
                             Role role = user.getIdRolNavigation();
-                            if (role.getIdRol() == 2) {
+                            if (role.getIdRol() == 1) {
                                 Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
                                 intent.putExtra(MainActivity.EMAIL, codigo);
                                 startActivity(intent);

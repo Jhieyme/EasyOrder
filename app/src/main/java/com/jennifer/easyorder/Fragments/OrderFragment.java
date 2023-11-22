@@ -112,7 +112,7 @@ public class OrderFragment extends Fragment {
     // Método para mostrar mensaje de exito
     public void showNotify() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_message, null);
+        View layout = inflater.inflate(R.layout.custom_message_confirm, null);
         final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popup.setAnimationStyle(R.style.PopupAnimation);
         new Handler().postDelayed(new Runnable() {

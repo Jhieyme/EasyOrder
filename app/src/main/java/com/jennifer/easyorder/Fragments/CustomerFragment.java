@@ -3,7 +3,6 @@ package com.jennifer.easyorder.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.print.PrintManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -236,13 +235,13 @@ public class CustomerFragment extends Fragment {
     // Métodos para mostrar mensaje de exito
     public void showNotifyPut() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_message, null);
+        View layout = inflater.inflate(R.layout.custom_message_confirm, null);
         final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popup.setAnimationStyle(R.style.PopupAnimation);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 330);
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 115);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -257,13 +256,13 @@ public class CustomerFragment extends Fragment {
 
     private void showNotifyAdd() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_message, null);
+        View layout = inflater.inflate(R.layout.custom_message_confirm, null);
         final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popup.setAnimationStyle(R.style.PopupAnimation);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 330);
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 115);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -278,13 +277,13 @@ public class CustomerFragment extends Fragment {
 
     public void showNotifyDelete() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_message, null);
+        View layout = inflater.inflate(R.layout.custom_message_confirm, null);
         final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popup.setAnimationStyle(R.style.PopupAnimation);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 330);
+                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 115);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
