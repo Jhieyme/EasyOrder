@@ -15,7 +15,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             android:layout_margin="10dp"
             android:layout_weight="0"
             app:cardCornerRadius="20dp"
@@ -56,40 +56,33 @@
 
                 </LinearLayout>
 
-                <ScrollView
-                    android:id="@+id/scrollView3"
+
+                <LinearLayout
+                    android:id="@+id/linearDetail"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="40dp"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout20">
 
-
-                    <LinearLayout
-                        android:id="@+id/linearDetail"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvDetailOrder"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:orientation="vertical"
-                        android:padding="40dp">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rvDetailOrder"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.338"
-                            tools:layout_editor_absoluteX="15dp" />
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
 
 
-                    </LinearLayout>
+                        />
 
 
-                </ScrollView>
+                </LinearLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -106,8 +99,9 @@
             android:layout_weight="1"
             app:cardCornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView3"
-            tools:layout_editor_absoluteX="10dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

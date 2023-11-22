@@ -105,10 +105,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             nuevoFragmento = (Fragment) fragmentClass.newInstance();
 
                             if (nuevoFragmento instanceof DetailOrderFragment || nuevoFragmento instanceof VoucherFragment) {
-
-                                System.out.println("oaaaa");
+                                binding.swipe.clearAnimation();
                             } else {
-
                                 fragmentTransaction.replace(R.id.fcv_main, nuevoFragmento);
                                 fragmentTransaction.commit();
                             }

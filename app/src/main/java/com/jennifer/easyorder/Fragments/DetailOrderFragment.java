@@ -1,5 +1,8 @@
 package com.jennifer.easyorder.Fragments;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +29,7 @@ import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.utils.ComandaUtils;
 import com.jennifer.easyorder.viewmodel.OrderViewModel;
+import com.jennifer.easyorder.viewmodel.ProductViewModel;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +45,8 @@ public class DetailOrderFragment extends Fragment {
     private Table tableSelected;
     private RecyclerView recyclerView;
     private OrderViewModel orderViewModel;
+
+    private ProductViewModel productViewModel;
     private TableViewModel tableViewModel;
 
     @Override
@@ -45,6 +55,7 @@ public class DetailOrderFragment extends Fragment {
         binding = FragmentDetailOrderBinding.inflate(inflater, container, false);
         orderViewModel = new ViewModelProvider(requireActivity()).get(OrderViewModel.class);
         tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
+        productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
         return binding.getRoot();
 
 
@@ -113,15 +124,50 @@ public class DetailOrderFragment extends Fragment {
                     utils.postDetailOrder(newDetailOrder);
                 }
 
-            });
 
+            });
             // Aqui setteo mediante ViewModel la mesa seleccionada
             tableViewModel.setSelectedTableImg(tableSelected);
+            showSuccessAlert(DetailOrderFragment.this);
 
+            // Aqui debo borrar los valores en el modal
+            HashSet<NewProduct> emptyList = new HashSet<>();
+            productViewModel.selectedListNewProduct(emptyList);
+            tableViewModel.setSelectedTable(null);
+
+
+            //Testeo de marcar ocupado más de una mesa!
+
+            tableViewModel.addTableAssigned(tableSelected);
 
         });
 
 
+    }
+
+    private void showSuccessAlert(Fragment fragmentCurrent) {
+        Context context = getContext();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View customDialogView = inflater.inflate(R.layout.custom_success, null);
+        builder.setView(customDialogView);
+
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        AppCompatButton btnContinue = customDialogView.findViewById(R.id.btnContinue);
+
+        btnContinue.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            FragmentManager fragmentManager = fragmentCurrent.getFragmentManager();
+            OrderFragment orderFragment = new OrderFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fcv_main, orderFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
     }
 
 

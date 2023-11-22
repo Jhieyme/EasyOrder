@@ -24,6 +24,7 @@ import com.jennifer.easyorder.databinding.FragmentOrderBinding;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.viewmodel.PaymentViewModel;
+import com.jennifer.easyorder.viewmodel.TableViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +39,14 @@ public class OrderFragment extends Fragment {
     private OrderAdapter orderAdapter;
 
     private PaymentViewModel paymentViewModel;
+    private TableViewModel tableViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentOrderBinding.inflate(inflater, container, false);
         paymentViewModel = new ViewModelProvider(requireActivity()).get(PaymentViewModel.class);
+        tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
         return binding.getRoot();
     }
 
@@ -94,7 +97,7 @@ public class OrderFragment extends Fragment {
                         ordersFiltered.add(order);
                     }
                 }
-                orderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel);
+                orderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel, tableViewModel);
                 recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(orderAdapter);
             }

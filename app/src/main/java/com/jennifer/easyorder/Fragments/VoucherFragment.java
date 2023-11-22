@@ -24,6 +24,7 @@ import com.jennifer.easyorder.model.Voucher;
 import com.jennifer.easyorder.model.Worker;
 import com.jennifer.easyorder.utils.ShowAlertCustom;
 import com.jennifer.easyorder.viewmodel.PaymentViewModel;
+import com.jennifer.easyorder.viewmodel.TableViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +42,7 @@ public class VoucherFragment extends Fragment {
     private PaymentViewModel paymentViewModel;
 
     private RecyclerView recyclerView;
+    private TableViewModel tableViewModel;
 
 
     @Override
@@ -48,6 +50,7 @@ public class VoucherFragment extends Fragment {
 
         binding = FragmentVoucherBinding.inflate(inflater, container, false);
         paymentViewModel = new ViewModelProvider(requireActivity()).get(PaymentViewModel.class);
+        tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
         return binding.getRoot();
     }
 
@@ -61,6 +64,7 @@ public class VoucherFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         Order order = paymentViewModel.getSelectedOrder().getValue();
+
 
         List<DetailOrder> detailOrderList = paymentViewModel.getSelectedDetailOrder().getValue();
 
@@ -111,7 +115,7 @@ public class VoucherFragment extends Fragment {
                         int idMesa = order.getIdMesa();
                         double total = order.getTotal();
                         String fechaHora = order.getFechaHora();
-                        String estado = "Completado";
+                        String estado = "Completada";
 
 
                         Order updatedOrder = new Order(idOrder, idMesa, total, estado, fechaHora);
@@ -131,6 +135,10 @@ public class VoucherFragment extends Fragment {
 
                         ShowAlertCustom alertCustom = new ShowAlertCustom();
                         alertCustom.showSuccesAlert(binding.getRoot().getContext(), VoucherFragment.this);
+
+
+                        // Aqui debo actualizar la mesa
+                        tableViewModel.deleteTableAssigned(idMesa);
 
 
 //

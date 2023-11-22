@@ -84,15 +84,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
     }
 
     public void addProductToList(ShowViewHolder holder, int position, View view) {
-        String currentQuantity = (String) holder.binding.txtCnt.getText().toString();
-        Product product = productsList.get(position);
-        NewProduct newProduct = new NewProduct(product, Integer.parseInt(currentQuantity));
 
-        if (newProduct.getQuantity() <= 0) {
-            Toast.makeText(view.getContext(), "La cantidad minima es 1.", Toast.LENGTH_SHORT).show();
-        } else {
-            productViewModel.addProduct(newProduct, view);
-        }
+        Product product = productsList.get(position);
+        NewProduct newProduct = new NewProduct(product, 1);
+        productViewModel.addProduct(newProduct, view);
+
     }
 
 

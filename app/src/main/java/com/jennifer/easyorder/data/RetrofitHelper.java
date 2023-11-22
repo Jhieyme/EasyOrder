@@ -12,7 +12,7 @@ public class RetrofitHelper {
     public  static Retrofit getInstance(){
         if (instance == null){
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://www.cevicheriamrfish.somee.com/api/")
+                    .baseUrl("https://kevin456-001-site1.btempurl.com/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getLoggingBuilder().build())
                     .build();

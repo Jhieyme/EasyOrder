@@ -17,7 +17,7 @@ import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 import java.util.Arrays;
 import java.util.List;
 
-public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowViewHolder> {
+public class    WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowViewHolder> {
     private List<Worker> workersList;
 
     private PaymentViewModel paymentViewModel;

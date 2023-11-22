@@ -11,6 +11,7 @@ import com.jennifer.easyorder.databinding.ItemTableBinding;
 import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHolder> {
@@ -18,12 +19,16 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
     private List<Table> tablesList;
     private TableViewModel tableViewModel;
     private Table tableSelected;
+    private int idTable;
+
+    private HashSet<Table> listTableAssigned;
 
 
-    public TableAdapter(List<Table> tablesList, TableViewModel tableViewModel, Table tableSelected) {
+    public TableAdapter(List<Table> tablesList, TableViewModel tableViewModel, Table tableSelected, HashSet<Table> listTableAssigned) {
         this.tablesList = tablesList;
         this.tableViewModel = tableViewModel;
         this.tableSelected = tableSelected;
+        this.listTableAssigned = listTableAssigned;
     }
 
 
@@ -58,10 +63,21 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
             binding.clothingCard.setOnClickListener(v -> {
                 tableViewModel.setSelectedTable(table);
             });
-            if (tableSelected != null) {
-                if (table.getNroMesa() == tableSelected.getNroMesa()) {
-                    binding.imgTableState.setImageResource(R.drawable.mesaocupada);
-                    binding.clothingCard.setEnabled(false);
+//            if (tableSelected != null) {
+//                if (table.getNroMesa() == tableSelected.getNroMesa()) {
+//                    binding.imgTableState.setImageResource(R.drawable.mesaocupada);
+//                    binding.clothingCard.setEnabled(false);
+//
+//                }
+//
+//            }
+
+            if (listTableAssigned != null) {
+                for (Table table1 : listTableAssigned) {
+                    if (table1.getNroMesa() == table.getNroMesa()) {
+                        binding.imgTableState.setImageResource(R.drawable.mesaocupada);
+                        binding.clothingCard.setEnabled(false);
+                    }
                 }
             }
 

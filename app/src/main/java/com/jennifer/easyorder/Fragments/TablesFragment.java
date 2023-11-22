@@ -21,6 +21,7 @@ import com.jennifer.easyorder.databinding.FragmentTablesBinding;
 import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
+import java.util.HashSet;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,6 +37,10 @@ public class TablesFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private Table tableSelected;
+
+    private HashSet<Table> listTablesAassigned;
+
+    private int idTable;
 
 
     @Override
@@ -61,6 +66,11 @@ public class TablesFragment extends Fragment {
 
             tableSelected = tableSelectedView;
         });
+
+        tableViewModel.getListTableAssigned().observe(getViewLifecycleOwner(), tables -> {
+            listTablesAassigned = tables;
+        });
+
 
         listTables();
 //        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -88,7 +98,7 @@ public class TablesFragment extends Fragment {
             public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Table> items = response.body();
-                    TableAdapter rvTableAdapter = new TableAdapter(items, tableViewModel, tableSelected);
+                    TableAdapter rvTableAdapter = new TableAdapter(items, tableViewModel, tableSelected, listTablesAassigned);
                     recyclerView.setAdapter(rvTableAdapter);
                 }
             }

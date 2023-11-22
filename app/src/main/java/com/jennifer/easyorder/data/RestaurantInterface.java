@@ -46,6 +46,7 @@ public interface RestaurantInterface {
     @PUT("Comanda/{id}")
     Call<Order> updateOrder(@Body Order orderBody, @Path("id") int id);
 
+
     // ------------------ Detalle Comanda ------------ //
     @GET("DetalleComanda/PorComanda/{id}")
     Call<List<DetailOrder>> getShowDetail(@Path("id") int id);

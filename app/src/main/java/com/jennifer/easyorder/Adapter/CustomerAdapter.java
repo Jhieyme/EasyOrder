@@ -46,6 +46,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
 
     }
 
+    public void updateCustomers(List<Customer> newCustomers) {
+        customersList = newCustomers;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -119,6 +124,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                 alertCustom.showCustomAlert(customerFragment.getContext(), "Seleccionaste al cliente", strCustom, customer, paymentViewModel, customerFragment);
                 ;
             });
+
+
         }
 
 

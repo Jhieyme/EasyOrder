@@ -3,6 +3,7 @@ package com.jennifer.easyorder.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.print.PrintManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,10 @@ public class CustomerFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+
         super.onViewCreated(view, savedInstanceState);
+
 
         recyclerView = view.findViewById(R.id.rv_customer);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
@@ -75,7 +79,7 @@ public class CustomerFragment extends Fragment {
                 dni.enqueue(new Callback<CustomerRENIEC>() {
                     @Override
                     public void onResponse(Call<CustomerRENIEC> call, Response<CustomerRENIEC> response) {
-                        if (response.isSuccessful() && response.body() != null){
+                        if (response.isSuccessful() && response.body() != null) {
                             CustomerRENIEC customer = response.body();
                             binding.txtName.setText(customer.getNombres());
                             binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
@@ -169,6 +173,24 @@ public class CustomerFragment extends Fragment {
                                     showNotifyAdd();
                                     clearCustomer();
                                     close.performClick();
+
+                                    // Obtén la nueva lista de clientes y actualiza el adaptador
+                                    Call<List<Customer>> callUpdate = customerInterface.getShowCustomer();
+                                    callUpdate.enqueue(new Callback<List<Customer>>() {
+                                        @Override
+                                        public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
+                                            List<Customer> updatedCustomers = response.body();
+                                            if (updatedCustomers != null) {
+                                                rvCustomerAdapter.updateCustomers(updatedCustomers);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<List<Customer>> call, Throwable t) {
+                                            // Manejo de errores al obtener la lista actualizada
+                                        }
+                                    });
+
                                 }
                             }
 
@@ -190,7 +212,13 @@ public class CustomerFragment extends Fragment {
 
     }
 
-    private void clearCustomer(){
+ 
+
+    public void printToCocina() {
+
+    }
+
+    private void clearCustomer() {
         binding.txtName.setText("");
         binding.txtApellido.setText("");
         binding.txtDni.setText("");

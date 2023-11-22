@@ -54,8 +54,9 @@
                         app:layout_constraintVertical_bias="0.0" />
 
                     <ImageButton
+                        android:id="@+id/btnCancel"
                         android:layout_width="9dp"
-                        android:layout_height="9dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:background="@color/white"
                         android:src="@drawable/ic_close"
@@ -114,29 +115,29 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout14"
                     app:layout_constraintVertical_bias="0.052" />
 
-<!--                <LinearLayout-->
-<!--                    android:id="@+id/linearLayout17"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="50dp"-->
-<!--                    android:gravity="center"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    app:layout_constraintBottom_toTopOf="@+id/btn_pagar"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/view2">-->
+                <!--                <LinearLayout-->
+                <!--                    android:id="@+id/linearLayout17"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="50dp"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:orientation="horizontal"-->
+                <!--                    app:layout_constraintBottom_toTopOf="@+id/btn_pagar"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/view2">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="100dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center"-->
-<!--                        android:text="Ver resumen" />-->
+                <!--                    <TextView-->
+                <!--                        android:layout_width="100dp"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:text="Ver resumen" />-->
 
-<!--                    <ImageButton-->
-<!--                        android:layout_width="50dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:backgroundTint="@color/white"-->
-<!--                        android:src="@drawable/ic_eye" />-->
+                <!--                    <ImageButton-->
+                <!--                        android:layout_width="50dp"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_gravity="center"-->
+                <!--                        android:backgroundTint="@color/white"-->
+                <!--                        android:src="@drawable/ic_eye" />-->
 
-<!--                </LinearLayout>-->
+                <!--                </LinearLayout>-->
 
                 <LinearLayout
                     android:id="@+id/linearLayout19"
