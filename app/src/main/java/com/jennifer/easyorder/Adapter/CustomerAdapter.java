@@ -163,7 +163,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                 put.enqueue(new Callback<Customer>() {
                     @Override
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
-                        System.out.println(response.code());
+                        if (response.isSuccessful()){
+                            System.out.println(response.code());
+                        }
                     }
 
                     @Override
@@ -171,6 +173,21 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
 
                     }
                 });
+//                Call<List<Customer>> callUpdate = customerInterface.getShowCustomer();
+//                callUpdate.enqueue(new Callback<List<Customer>>() {
+//                    @Override
+//                    public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
+//                        List<Customer> updatedCustomers = response.body();
+//                        if (updatedCustomers != null) {
+//                            updateCustomers(updatedCustomers);
+//                            System.out.println(response.body());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<List<Customer>> call, Throwable t) {
+//                    }
+//                });
                 customerFragment.showNotifyPut();
                 alertDialog.dismiss();
             });
@@ -211,6 +228,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                 });
                 customerFragment.showNotifyDelete();
                 alertDialog.dismiss();
+                int position = getAdapterPosition();
+                customersList.remove(position);
+                notifyItemRemoved(position);
             });
 
             btnNo.setOnClickListener(v -> {
