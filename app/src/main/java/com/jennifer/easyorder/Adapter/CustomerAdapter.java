@@ -35,15 +35,12 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
     private PaymentViewModel paymentViewModel;
     private CustomerFragment customerFragment;
     private ShowAlertCustom alertCustom = new ShowAlertCustom();
-    ;
 
 
     public CustomerAdapter(List<Customer> customersList, PaymentViewModel paymentViewModel, CustomerFragment customerFragment) {
         this.customersList = customersList;
         this.paymentViewModel = paymentViewModel;
         this.customerFragment = customerFragment;
-
-
     }
 
     public void updateCustomers(List<Customer> newCustomers) {

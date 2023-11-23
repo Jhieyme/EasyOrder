@@ -45,6 +45,7 @@ public class CustomerFragment extends Fragment {
     private FragmentCustomerBinding binding;
     private RecyclerView recyclerView;
     private PaymentViewModel paymentViewModel;
+    //private ConstraintLayout constraintLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -233,6 +234,22 @@ public class CustomerFragment extends Fragment {
     }
 
     // Métodos para mostrar mensaje de exito
+
+//    public void showSnackbarDelete(){
+//        Snackbar snackbar = Snackbar.make(constraintLayout, "Selecciona una mesa!",Snackbar.LENGTH_LONG);
+//        View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_warning, null);
+//
+//        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+//        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+//        snackbarLayout.setPadding(0,0,0,0);
+//        (custom.findViewById(R.id.txtOk)).setOnClickListener(v -> {
+//            snackbar.dismiss();
+//        });
+//
+//        snackbarLayout.addView(custom, 0);
+//        snackbar.show();
+//    }
+
     public void showNotifyPut() {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_message_confirm, null);

@@ -61,4 +61,9 @@ dependencies {
     // Swipe Refresh --------------------------------------
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Material Snackbar ----------------------------------
+
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }

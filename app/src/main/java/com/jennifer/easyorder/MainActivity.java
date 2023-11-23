@@ -18,11 +18,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -33,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.jennifer.easyorder.Adapter.ModalDetailOrderAdapter;
 import com.jennifer.easyorder.Fragments.CategoryFragment;
 import com.jennifer.easyorder.Fragments.CustomerFragment;
@@ -64,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager fragmentManager;
 
     private DetailOrderFragment detailOrderFragment = new DetailOrderFragment();
-
 
     // ViewModel
     private HashSet<NewProduct> listProduct = new HashSet<>();
@@ -270,10 +272,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     detailOrderFragment.putArgs(data);
                     openFragment(detailOrderFragment);
                 }else {
-                    notifyWarningTable();
+                    snackbarWarningTable();
                 }
             } else {
-                notifyWarningProduct();
+                snackbarWarningProduct();
             }
             dialog.cancel();
 
@@ -285,6 +287,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
+    private void snackbarWarningTable(){
+        RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
+        Snackbar snackbar = Snackbar.make(relativeLayout, "",Snackbar.LENGTH_LONG);
+        View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_warning, null);
+
+        TextView txtTitle = custom.findViewById(R.id.txtTitle);
+        txtTitle.setText("Selecciona una mesa por favor.");
+
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0,0,0,0);
+
+        (custom.findViewById(R.id.txtOk)).setOnClickListener(v -> {
+            snackbar.dismiss();
+        });
+        snackbarLayout.addView(custom, 0);
+        snackbar.show();
+    }
+
+    private void snackbarWarningProduct(){
+        RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
+        Snackbar snackbar = Snackbar.make(relativeLayout, "",Snackbar.LENGTH_LONG);
+        View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_warning, null);
+
+        TextView txtTitle = custom.findViewById(R.id.txtTitle);
+        txtTitle.setText("Selecciona un producto por favor.");
+
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0,0,0,0);
+
+        (custom.findViewById(R.id.txtOk)).setOnClickListener(v -> {
+            snackbar.dismiss();
+        });
+        snackbarLayout.addView(custom, 0);
+        snackbar.show();
     }
 
 
@@ -323,48 +363,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fcv_main, fragment);
         fragmentTransaction.commit();
-    }
-
-    private void notifyWarningProduct() {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_message_warning, null);
-        final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        popup.setAnimationStyle(R.style.PopupAnimation);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 115);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        popup.dismiss();
-                    }
-                }, 2000);
-            }
-        }, 100);
-        TextView message = layout.findViewById(R.id.txt_message);
-        message.setText("¡Selecciona un producto!");
-    }
-
-    private void notifyWarningTable() {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_message_warning, null);
-        final PopupWindow popup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        popup.setAnimationStyle(R.style.PopupAnimation);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                popup.showAtLocation(layout, Gravity.LEFT | Gravity.TOP, 0, 115);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        popup.dismiss();
-                    }
-                }, 2000);
-            }
-        }, 100);
-        TextView message = layout.findViewById(R.id.txt_message);
-        message.setText("¡Selecciona una mesa!");
     }
 
     private void showDialogLogout() {

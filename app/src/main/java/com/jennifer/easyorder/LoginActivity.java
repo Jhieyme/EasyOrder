@@ -1,16 +1,20 @@
 package com.jennifer.easyorder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ActivityLoginBinding;
-import com.jennifer.easyorder.model.Product;
 import com.jennifer.easyorder.model.Role;
 import com.jennifer.easyorder.model.User;
 
@@ -69,6 +73,11 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
                             }
                         }
+                        else {
+                            snackbarValid();
+                            binding.txtCodigo.setText("");
+                            binding.txtContra.setText("");
+                        }
                     }
                 }
 
@@ -78,5 +87,24 @@ public class LoginActivity extends AppCompatActivity {
             });
 
         });
+    }
+
+    private void snackbarValid(){
+        ConstraintLayout constraintLayout = findViewById(R.id.constraint);
+        Snackbar snackbar = Snackbar.make(constraintLayout, "",Snackbar.LENGTH_LONG);
+        View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_error, null);
+
+        TextView txtTitle = custom.findViewById(R.id.txt_TitleMessage);
+        txtTitle.setText("Credenciales incorrectas");
+
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0,0,0,0);
+
+        (custom.findViewById(R.id.txt_Ok)).setOnClickListener(v -> {
+            snackbar.dismiss();
+        });
+        snackbarLayout.addView(custom, 0);
+        snackbar.show();
     }
 }
