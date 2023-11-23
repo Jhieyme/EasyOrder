@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra(MainActivity.EMAIL, codigo);
                                 startActivity(intent);
                                 finish();
+                                break;
                             } else {
                                 Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
                             }
