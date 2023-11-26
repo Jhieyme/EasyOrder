@@ -124,7 +124,7 @@ public class CustomerFragment extends Fragment {
                     }
                 });
             } else {
-                showSnackbarError("¡El DNI debe contar con 8 digitos");
+                showSnackbarError("¡El DNI debe contar con 8 digitos!");
             }
         });
 
@@ -190,7 +190,7 @@ public class CustomerFragment extends Fragment {
 
                     if (dniExists) {
                         clearCustomer();
-                        showSnackbarError("¡El cliente ya esta registrado");
+                        showSnackbarError("¡El cliente ya esta registrado!");
                     }
                     else if (nombres != "" && apellidos != "" && dni != "") {
                         Customer newCustomer = new Customer(
@@ -253,7 +253,7 @@ public class CustomerFragment extends Fragment {
             }
         }
         if (filterList.isEmpty()) {
-            showSnackbarWarning("Cliente no encontrado");
+            showSnackbarWarning("¡Cliente no encontrado!");
         } else {
             rvCustomerAdapter.setFilterListCustomer(filterList);
         }
