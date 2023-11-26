@@ -113,7 +113,7 @@ public class CustomerFragment extends Fragment {
                                 binding.txtApellido.setText(apellidoP + " " + apellidoM);
                             }
                             else {
-                                Toast.makeText(getContext(), "Ingrese un DNI valido", Toast.LENGTH_SHORT).show();
+                                showSnackbarError("¡Ingrese un DNI valido por favor!");
                                 clearCustomer();
                             }
                         }
@@ -124,7 +124,7 @@ public class CustomerFragment extends Fragment {
                     }
                 });
             } else {
-                Toast.makeText(getContext(), "El DNI debe tener 8 dígitos", Toast.LENGTH_SHORT).show();
+                showSnackbarError("¡El DNI debe contar con 8 digitos");
             }
         });
 
@@ -190,8 +190,9 @@ public class CustomerFragment extends Fragment {
 
                     if (dniExists) {
                         clearCustomer();
-                        snackbarWarningDniExists();
-                    } else if (nombres != "" && apellidos != "" && dni != "") {
+                        showSnackbarError("¡El cliente ya esta registrado");
+                    }
+                    else if (nombres != "" && apellidos != "" && dni != "") {
                         Customer newCustomer = new Customer(
                                 dni, nombres, apellidos, true);
 
@@ -218,7 +219,7 @@ public class CustomerFragment extends Fragment {
 
                                         @Override
                                         public void onFailure(Call<List<Customer>> call, Throwable t) {
-                                            // Manejo de errores al obtener la lista actualizada
+
                                         }
                                     });
 
@@ -230,7 +231,7 @@ public class CustomerFragment extends Fragment {
                             }
                         });
                     } else {
-                        Toast.makeText(getContext(), "Complete todos los campos", Toast.LENGTH_SHORT).show();
+                        showSnackbarError("¡Complete todos los campos!");
                     }
                 });
             }
@@ -252,7 +253,7 @@ public class CustomerFragment extends Fragment {
             }
         }
         if (filterList.isEmpty()) {
-            Toast.makeText(getContext(), "Cliente no encontrado", Toast.LENGTH_SHORT).show();
+            showSnackbarWarning("Cliente no encontrado");
         } else {
             rvCustomerAdapter.setFilterListCustomer(filterList);
         }
@@ -267,6 +268,7 @@ public class CustomerFragment extends Fragment {
         binding.txtName.setText("");
         binding.txtApellido.setText("");
         binding.txtDni.setText("");
+        binding.txtDni.requestFocus();
     }
 
     private boolean dniExist(List<Customer> customers, String dni) {
@@ -278,23 +280,44 @@ public class CustomerFragment extends Fragment {
         return false;
     }
 
-    // Métodos para mostrar mensaje de exito
+    // Métodos para mostrar mensajes
 
-    private void snackbarWarningDniExists(){
-        ConstraintLayout constraintCustomer = requireView().findViewById(R.id.constraintCustomer);
-        Snackbar snackbar = Snackbar.make(constraintCustomer, "",Snackbar.LENGTH_LONG);
-        View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_error, null);
+    private void showSnackbarWarning(String message) {
+        ConstraintLayout constraintLayout = requireView().findViewById(R.id.constraintCustomer);
+        Snackbar snackbar = Snackbar.make(constraintLayout, "", Snackbar.LENGTH_LONG);
+        View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_warning, null);
 
-        TextView txtTitle = custom.findViewById(R.id.txt_TitleMessage);
-        txtTitle.setText("El cliente ya esta registrado");
+        TextView txtTitle = custom.findViewById(R.id.txtTitle);
+        txtTitle.setText(message);
 
         snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
         Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-        snackbarLayout.setPadding(0,0,0,0);
+        snackbarLayout.setPadding(0, 0, 0, 0);
+
+        (custom.findViewById(R.id.txtOk)).setOnClickListener(v -> {
+            snackbar.dismiss();
+        });
+
+        snackbarLayout.addView(custom, 0);
+        snackbar.show();
+    }
+
+    private void showSnackbarError(String message) {
+        ConstraintLayout constraintLayout = requireView().findViewById(R.id.constraintCustomer);
+        Snackbar snackbar = Snackbar.make(constraintLayout, "", Snackbar.LENGTH_LONG);
+        View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_error, null);
+
+        TextView txtTitle = custom.findViewById(R.id.txt_TitleMessage);
+        txtTitle.setText(message);
+
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0, 0, 0, 0);
 
         (custom.findViewById(R.id.txt_Ok)).setOnClickListener(v -> {
             snackbar.dismiss();
         });
+
         snackbarLayout.addView(custom, 0);
         snackbar.show();
     }
