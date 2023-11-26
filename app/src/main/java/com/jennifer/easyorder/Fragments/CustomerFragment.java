@@ -101,11 +101,19 @@ public class CustomerFragment extends Fragment {
                     public void onResponse(Call<CustomerRENIEC> call, Response<CustomerRENIEC> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             CustomerRENIEC customer = response.body();
-                            binding.txtName.setText(customer.getNombres());
-                            if (customer.getApellidoPaterno() != null && customer.getApellidoMaterno() != null) {
-                                binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
-                            } else {
-                                Toast.makeText(getContext(), "Ingrese un DNI válido", Toast.LENGTH_SHORT).show();
+                            String nombres = customer.getNombres();
+                            String apellidoM = customer.getApellidoMaterno();
+                            String apellidoP = customer.getApellidoPaterno();
+
+                            if (nombres != null && !nombres.isEmpty() &&
+                                    apellidoP != null && !apellidoP.isEmpty() &&
+                                    apellidoM != null && !apellidoM.isEmpty()) {
+
+                                binding.txtName.setText(nombres);
+                                binding.txtApellido.setText(apellidoP + " " + apellidoM);
+                            }
+                            else {
+                                Toast.makeText(getContext(), "Ingrese un DNI valido", Toast.LENGTH_SHORT).show();
                                 clearCustomer();
                             }
                         }
@@ -183,7 +191,6 @@ public class CustomerFragment extends Fragment {
                     if (dniExists) {
                         clearCustomer();
                         snackbarWarningDniExists();
-//                        Toast.makeText(getContext(), "El cliente ya esta registrado", Toast.LENGTH_SHORT).show();
                     } else if (nombres != "" && apellidos != "" && dni != "") {
                         Customer newCustomer = new Customer(
                                 dni, nombres, apellidos, true);
