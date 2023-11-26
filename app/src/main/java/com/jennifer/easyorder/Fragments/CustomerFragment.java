@@ -1,6 +1,7 @@
 package com.jennifer.easyorder.Fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -19,12 +20,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.jennifer.easyorder.Adapter.CustomerAdapter;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
@@ -50,7 +53,6 @@ public class CustomerFragment extends Fragment {
     private List<Customer> itemsCustomer;
     private CustomerAdapter rvCustomerAdapter;
     private SearchView searchViewCustomer;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,9 +102,12 @@ public class CustomerFragment extends Fragment {
                         if (response.isSuccessful() && response.body() != null) {
                             CustomerRENIEC customer = response.body();
                             binding.txtName.setText(customer.getNombres());
-                            binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
-                        } else {
-                            Toast.makeText(getContext(), "Ingrese un DNI valido", Toast.LENGTH_SHORT).show();
+                            if (customer.getApellidoPaterno() != null && customer.getApellidoMaterno() != null) {
+                                binding.txtApellido.setText(customer.getApellidoPaterno() + " " + customer.getApellidoMaterno());
+                            } else {
+                                Toast.makeText(getContext(), "Ingrese un DNI válido", Toast.LENGTH_SHORT).show();
+                                clearCustomer();
+                            }
                         }
                     }
 
@@ -111,7 +116,7 @@ public class CustomerFragment extends Fragment {
                     }
                 });
             } else {
-                Toast.makeText(getContext(), "El DNI debe tener 8 digitos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "El DNI debe tener 8 dígitos", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -177,7 +182,8 @@ public class CustomerFragment extends Fragment {
 
                     if (dniExists) {
                         clearCustomer();
-                        Toast.makeText(getContext(), "El cliente ya esta registrado", Toast.LENGTH_SHORT).show();
+                        snackbarWarningDniExists();
+//                        Toast.makeText(getContext(), "El cliente ya esta registrado", Toast.LENGTH_SHORT).show();
                     } else if (nombres != "" && apellidos != "" && dni != "") {
                         Customer newCustomer = new Customer(
                                 dni, nombres, apellidos, true);
@@ -267,6 +273,24 @@ public class CustomerFragment extends Fragment {
 
     // Métodos para mostrar mensaje de exito
 
+    private void snackbarWarningDniExists(){
+        ConstraintLayout constraintCustomer = requireView().findViewById(R.id.constraintCustomer);
+        Snackbar snackbar = Snackbar.make(constraintCustomer, "",Snackbar.LENGTH_LONG);
+        View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_error, null);
+
+        TextView txtTitle = custom.findViewById(R.id.txt_TitleMessage);
+        txtTitle.setText("El cliente ya esta registrado");
+
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0,0,0,0);
+
+        (custom.findViewById(R.id.txt_Ok)).setOnClickListener(v -> {
+            snackbar.dismiss();
+        });
+        snackbarLayout.addView(custom, 0);
+        snackbar.show();
+    }
 
     public void showNotifyPut() {
         LayoutInflater inflater = getLayoutInflater();
