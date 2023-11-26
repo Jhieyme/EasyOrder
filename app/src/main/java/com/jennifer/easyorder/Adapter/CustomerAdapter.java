@@ -24,6 +24,7 @@ import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.utils.ShowAlertCustom;
 import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,6 +46,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
 
     public void updateCustomers(List<Customer> newCustomers) {
         customersList = newCustomers;
+        notifyDataSetChanged();
+    }
+
+    public void setFilterListCustomer(List<Customer> filterListCustomer) {
+        customersList = new ArrayList<>(filterListCustomer);
         notifyDataSetChanged();
     }
 

@@ -14,6 +14,7 @@ import com.jennifer.easyorder.model.Worker;
 import com.jennifer.easyorder.utils.ShowAlertCustom;
 import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +31,11 @@ public class    WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowVie
         this.paymentViewModel = paymentViewModel;
         this.workerFragment = workerFragment;
 
+    }
+
+    public void setFilterListWorker(List<Worker> filterListWorker) {
+        workersList = new ArrayList<>(filterListWorker);
+        notifyDataSetChanged();
     }
 
     @NonNull

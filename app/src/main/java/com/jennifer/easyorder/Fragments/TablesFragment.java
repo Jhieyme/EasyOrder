@@ -4,14 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jennifer.easyorder.Adapter.TableAdapter;
 import com.jennifer.easyorder.R;
@@ -21,6 +22,7 @@ import com.jennifer.easyorder.databinding.FragmentTablesBinding;
 import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -32,15 +34,12 @@ public class TablesFragment extends Fragment {
 
     private FragmentTablesBinding binding;
     private RecyclerView recyclerView;
-
     private TableViewModel tableViewModel;
-    private SwipeRefreshLayout swipeRefreshLayout;
-
+    private List<Table> itemsTable;
+    private TableAdapter rvTableAdapter;
     private Table tableSelected;
-
     private HashSet<Table> listTablesAassigned;
-
-    private int idTable;
+    private SearchView searchViewTable;
 
 
     @Override
@@ -56,9 +55,6 @@ public class TablesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        swipeRefreshLayout = view.findViewById(R.id.swipe);
-//        swipeRefreshLayout.setColorSchemeResources(R.color.teal_200, R.color.black);
-
         recyclerView = view.findViewById(R.id.rv_table);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         binding.rvTable.setLayoutManager(layoutManager);
@@ -71,34 +67,33 @@ public class TablesFragment extends Fragment {
             listTablesAassigned = tables;
         });
 
+        // Validación de SearchView ---
 
-        listTables();
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        refreshTables();
-//                        binding.swipe.setRefreshing(false);
-//                    }
-//                }, 1000);
-//            }
-//        });
+        searchViewTable = view.findViewById(R.id.sv_searchTable);
+        searchViewTable.clearFocus();
+        searchViewTable.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterListTable(newText);
+                return true;
+            }
+        });
 
-    }
-
-    private void listTables() {
+        //Lista de mesas --
         RestaurantInterface tableInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Table>> call = tableInterface.getShowTable();
 
         call.enqueue(new Callback<List<Table>>() {
             @Override
             public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Table> items = response.body();
-                    TableAdapter rvTableAdapter = new TableAdapter(items, tableViewModel, tableSelected, listTablesAassigned);
+                if (response.isSuccessful()) {
+                    itemsTable = response.body();
+                    rvTableAdapter = new TableAdapter(itemsTable, tableViewModel, tableSelected, listTablesAassigned);
                     recyclerView.setAdapter(rvTableAdapter);
                 }
             }
@@ -107,11 +102,21 @@ public class TablesFragment extends Fragment {
             public void onFailure(Call<List<Table>> call, Throwable t) {
             }
         });
+
     }
 
-    private void refreshTables() {
-        listTables();
+    private void filterListTable(String text) {
+        List<Table> filterList = new ArrayList<>();
+        for (Table item : itemsTable) {
+            Integer numTable = item.getNroMesa();
+            if (numTable.toString().contains(text)) {
+                filterList.add(item);
+            }
+        }
+        if (filterList.isEmpty()) {
+            Toast.makeText(getContext(), "Mesa no encontrada", Toast.LENGTH_SHORT).show();
+        } else {
+            rvTableAdapter.setFilterListTable(filterList);
+        }
     }
-
-
 }

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,6 +35,7 @@ import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.CustomerRENIEC;
 import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,7 +47,10 @@ public class CustomerFragment extends Fragment {
     private FragmentCustomerBinding binding;
     private RecyclerView recyclerView;
     private PaymentViewModel paymentViewModel;
-    //private ConstraintLayout constraintLayout;
+    private List<Customer> itemsCustomer;
+    private CustomerAdapter rvCustomerAdapter;
+    private SearchView searchViewCustomer;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,10 +62,7 @@ public class CustomerFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-
         super.onViewCreated(view, savedInstanceState);
-
 
         recyclerView = view.findViewById(R.id.rv_customer);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
@@ -69,6 +71,22 @@ public class CustomerFragment extends Fragment {
         RestaurantInterface customerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         RestaurantInterface dniInterface = RetrofitReniec.getInstance().create(RestaurantInterface.class);
         Call<List<Customer>> call = customerInterface.getShowCustomer();
+
+        // Validación de SearchView ---
+        searchViewCustomer = view.findViewById(R.id.sv_searchCustomer);
+        searchViewCustomer.clearFocus();
+        searchViewCustomer.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterListCustomer(newText);
+                return true;
+            }
+        });
 
         // Buscar dni desde la api - Reniec
 
@@ -144,8 +162,8 @@ public class CustomerFragment extends Fragment {
 
             @Override
             public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
-                List<Customer> items = response.body();
-                CustomerAdapter rvCustomerAdapter = new CustomerAdapter(items, paymentViewModel, CustomerFragment.this);
+                itemsCustomer = response.body();
+                rvCustomerAdapter = new CustomerAdapter(itemsCustomer, paymentViewModel, CustomerFragment.this);
                 recyclerView.setAdapter(rvCustomerAdapter);
 
                 //Aqui hago la solicitud POST
@@ -155,7 +173,7 @@ public class CustomerFragment extends Fragment {
                     String nombres = binding.txtName.getText().toString();
                     String apellidos = binding.txtApellido.getText().toString();
                     String dni = binding.txtDni.getText().toString();
-                    boolean dniExists = dniExist(items, dni);
+                    boolean dniExists = dniExist(itemsCustomer, dni);
 
                     if (dniExists) {
                         clearCustomer();
@@ -212,7 +230,21 @@ public class CustomerFragment extends Fragment {
 
     }
 
- 
+    private void filterListCustomer(String text) {
+        List<Customer> filterList = new ArrayList<>();
+        for (Customer item : itemsCustomer) {
+            String dni = item.getDni();
+            if (dni.contains(text)) {
+                filterList.add(item);
+            }
+        }
+        if (filterList.isEmpty()) {
+            Toast.makeText(getContext(), "Cliente no encontrado", Toast.LENGTH_SHORT).show();
+        } else {
+            rvCustomerAdapter.setFilterListCustomer(filterList);
+        }
+    }
+
 
     public void printToCocina() {
 
@@ -235,20 +267,6 @@ public class CustomerFragment extends Fragment {
 
     // Métodos para mostrar mensaje de exito
 
-//    public void showSnackbarDelete(){
-//        Snackbar snackbar = Snackbar.make(constraintLayout, "Selecciona una mesa!",Snackbar.LENGTH_LONG);
-//        View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_warning, null);
-//
-//        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
-//        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-//        snackbarLayout.setPadding(0,0,0,0);
-//        (custom.findViewById(R.id.txtOk)).setOnClickListener(v -> {
-//            snackbar.dismiss();
-//        });
-//
-//        snackbarLayout.addView(custom, 0);
-//        snackbar.show();
-//    }
 
     public void showNotifyPut() {
         LayoutInflater inflater = getLayoutInflater();

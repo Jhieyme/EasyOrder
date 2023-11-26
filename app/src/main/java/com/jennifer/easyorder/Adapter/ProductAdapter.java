@@ -15,6 +15,7 @@ import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Product;
 import com.jennifer.easyorder.viewmodel.ProductViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowViewHolder> {
@@ -28,6 +29,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
     public ProductAdapter(List<Product> productsList, ProductViewModel productViewModel) {
         this.productsList = productsList;
         this.productViewModel = productViewModel;
+    }
+
+    public void setFilterListProduct(List<Product> filterListProduct) {
+        productsList = new ArrayList<>(filterListProduct);
+        notifyDataSetChanged();
     }
 
 

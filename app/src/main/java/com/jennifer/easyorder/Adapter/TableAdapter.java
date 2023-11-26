@@ -11,6 +11,7 @@ import com.jennifer.easyorder.databinding.ItemTableBinding;
 import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -24,11 +25,18 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
     private HashSet<Table> listTableAssigned;
 
 
+
     public TableAdapter(List<Table> tablesList, TableViewModel tableViewModel, Table tableSelected, HashSet<Table> listTableAssigned) {
         this.tablesList = tablesList;
         this.tableViewModel = tableViewModel;
         this.tableSelected = tableSelected;
         this.listTableAssigned = listTableAssigned;
+    }
+
+    // Método para actualizar el List de SearchView
+    public void setFilterListTable(List<Table> filterListTable) {
+        tablesList = new ArrayList<>(filterListTable);
+        notifyDataSetChanged();
     }
 
 
@@ -63,15 +71,6 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
             binding.clothingCard.setOnClickListener(v -> {
                 tableViewModel.setSelectedTable(table);
             });
-//            if (tableSelected != null) {
-//                if (table.getNroMesa() == tableSelected.getNroMesa()) {
-//                    binding.imgTableState.setImageResource(R.drawable.mesaocupada);
-//                    binding.clothingCard.setEnabled(false);
-//
-//                }
-//
-//            }
-
             if (listTableAssigned != null) {
                 for (Table table1 : listTableAssigned) {
                     if (table1.getNroMesa() == table.getNroMesa()) {
@@ -80,8 +79,6 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
                     }
                 }
             }
-
-
         }
     }
 }

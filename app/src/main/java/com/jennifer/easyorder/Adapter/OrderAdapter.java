@@ -24,6 +24,7 @@ import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ItemOrderBinding;
+import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
@@ -60,6 +61,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
         this.orderFragment = orderFragment;
         this.paymentViewModel = paymentViewModel;
         this.tableViewModel = tableViewModel;
+    }
+
+    public void setFilterListOrder(List<Order> filterListOrder) {
+        orderList = new ArrayList<>(filterListOrder);
+        notifyDataSetChanged();
     }
 
 

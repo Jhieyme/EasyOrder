@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,8 +23,10 @@ import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentOrderBinding;
+import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
+import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
@@ -36,10 +40,12 @@ import retrofit2.Response;
 public class OrderFragment extends Fragment {
     private FragmentOrderBinding binding;
     private RecyclerView recyclerView;
-    private OrderAdapter orderAdapter;
-
     private PaymentViewModel paymentViewModel;
     private TableViewModel tableViewModel;
+
+    private List<Order> itemsOrder;
+    private OrderAdapter rvOrderAdapter;
+    private SearchView searchViewOrder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,8 +64,24 @@ public class OrderFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
+        searchViewOrder = view.findViewById(R.id.sv_searchOrder);
+        searchViewOrder.clearFocus();
+        searchViewOrder.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterListOrder(newText);
+                return true;
+            }
+        });
+
         showOrders();
     }
+
 
     private void showOrders() {
 
@@ -69,8 +91,8 @@ public class OrderFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Order> itemsOrders = response.body(); // Lista de comandas
-                    showFilteredOrders(itemsOrders, orderInterface);
+                    itemsOrder = response.body(); // Lista de comandas
+                    showFilteredOrders(itemsOrder, orderInterface);
                 }
             }
 
@@ -97,9 +119,9 @@ public class OrderFragment extends Fragment {
                         ordersFiltered.add(order);
                     }
                 }
-                orderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel, tableViewModel);
+                rvOrderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel, tableViewModel);
                 recyclerView.setNestedScrollingEnabled(false);
-                recyclerView.setAdapter(orderAdapter);
+                recyclerView.setAdapter(rvOrderAdapter);
             }
 
             @Override
@@ -107,6 +129,21 @@ public class OrderFragment extends Fragment {
 
             }
         });
+    }
+
+    private void filterListOrder(String text) {
+        List<Order> filterList = new ArrayList<>();
+        for (Order item : itemsOrder) {
+            Integer numTable = item.getIdMesaNavigation().getNroMesa();
+            if (numTable.toString().contains(text) && item.getEstado().equals("En Proceso")) {
+                filterList.add(item);
+            }
+        }
+        if (filterList.isEmpty()) {
+            Toast.makeText(getContext(), "Comanda no encontrada", Toast.LENGTH_SHORT).show();
+        } else {
+            rvOrderAdapter.setFilterListOrder(filterList);
+        }
     }
 
     // Método para mostrar mensaje de exito

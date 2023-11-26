@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +20,7 @@ import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentProductBinding;
 import com.jennifer.easyorder.model.Product;
+import com.jennifer.easyorder.model.Worker;
 import com.jennifer.easyorder.viewmodel.ProductViewModel;
 
 import java.util.ArrayList;
@@ -32,6 +35,9 @@ public class ProductFragment extends Fragment {
     private FragmentProductBinding binding;
     private RecyclerView recyclerView;
     private ProductViewModel productViewModel;
+    private List<Product> itemsProduct;
+    private ProductAdapter rvProductAdapter;
+    private SearchView searchViewProduct;
 
 
     @Override
@@ -50,28 +56,41 @@ public class ProductFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
+        searchViewProduct = view.findViewById(R.id.sv_searchProduct);
+        searchViewProduct.clearFocus();
+
+        searchViewProduct.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterListProduct(newText);
+                return true;
+            }
+        });
+
         showProducts();
-
-
     }
 
     private void showProducts() {
         RestaurantInterface productInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Product>> call = productInterface.getShowProduct();
-
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Product> items = response.body();
+                    itemsProduct = response.body();
                     List<Product> itemsToAdapter = new ArrayList<>();
-                    for (Product product : items) {
+                    for (Product product : itemsProduct) {
                         if (product.isActivo()) {
                             itemsToAdapter.add(product);
                         }
                     }
-                    ProductAdapter adapter = new ProductAdapter(itemsToAdapter, productViewModel);
-                    recyclerView.setAdapter(adapter);
+                    rvProductAdapter= new ProductAdapter(itemsToAdapter, productViewModel);
+                    recyclerView.setAdapter(rvProductAdapter);
                 }
             }
 
@@ -79,6 +98,21 @@ public class ProductFragment extends Fragment {
             public void onFailure(Call<List<Product>> call, Throwable t) {
             }
         });
+    }
+
+    private void filterListProduct(String text) {
+        List<Product> filterList = new ArrayList<>();
+        for (Product item : itemsProduct) {
+            String nomProduct = item.getNombre();
+            if (nomProduct.toLowerCase().contains(text.toLowerCase())) {
+                filterList.add(item);
+            }
+        }
+        if (filterList.isEmpty()) {
+            Toast.makeText(getContext(), "Producto no encontrado", Toast.LENGTH_SHORT).show();
+        } else {
+            rvProductAdapter.setFilterListProduct(filterList);
+        }
     }
 }
 

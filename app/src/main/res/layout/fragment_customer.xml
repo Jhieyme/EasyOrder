@@ -177,28 +177,39 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
 
-            <EditText
-                android:layout_width="220dp"
-                android:layout_height="43dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="Buscar"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+<!--            <EditText-->
+<!--                android:layout_width="220dp"-->
+<!--                android:layout_height="43dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@null"-->
+<!--                android:hint="Buscar"-->
+<!--                android:imeOptions="actionSearch"-->
+<!--                android:inputType="text"-->
+<!--                android:paddingStart="15dp"-->
+<!--                android:paddingEnd="15dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="16sp" />-->
 
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="42dp"
-                android:background="@drawable/ic_search_background"
-                android:padding="6dp"
-                android:src="@drawable/ic_search"
-                app:tint="#909090"
-                tools:layout_editor_absoluteX="353dp"
-                tools:layout_editor_absoluteY="97dp" />
+<!--            <ImageButton-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="42dp"-->
+<!--                android:background="@drawable/ic_search_background"-->
+<!--                android:padding="6dp"-->
+<!--                android:src="@drawable/ic_search"-->
+<!--                app:tint="#909090"-->
+<!--                tools:layout_editor_absoluteX="353dp"-->
+<!--                tools:layout_editor_absoluteY="97dp" />-->
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/sv_searchCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:inputType="number"
+                android:gravity="center"
+                app:queryBackground="@android:color/transparent"
+                app:queryHint="Buscar"
+                app:iconifiedByDefault="false" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -220,9 +231,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="2dp"
-            android:orientation="vertical"
-
-            />
+            android:orientation="vertical" />
 
     </FrameLayout>
 
