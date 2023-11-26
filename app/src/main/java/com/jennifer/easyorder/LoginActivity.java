@@ -78,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                             snackbarValid();
                             binding.txtCodigo.setText("");
                             binding.txtContra.setText("");
+
+                            binding.txtCodigo.requestFocus();
                         }
                     }
                 }
