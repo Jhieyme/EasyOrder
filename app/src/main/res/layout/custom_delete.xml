@@ -1,78 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="220dp"
-    android:background="@color/white">
+    android:layout_height="175dp"
+    android:padding="20dp">
 
-    <LinearLayout
-        android:id="@+id/customDialog"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:orientation="horizontal"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="413dp"
+        android:layout_height="171dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/dialog_title"
+        <LinearLayout
+            android:id="@+id/linearLayout10"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:gravity="center"
-            android:text="¿Desea eliminar al cliente?"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:textAlignment="center"
-            android:textColor="#8C8C8C"
-            android:textSize="21sp"
-            android:textStyle="bold" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Eliminar Cliente"
+                android:textAlignment="center"
+                android:textColor="@color/lavender"
+                android:textSize="21sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="¿Esta seguro que desea eliminar al cliente?"
+                android:textAlignment="center"
+                android:textColor="#8F8F8F"
+                android:textSize="14dp" />
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:alpha="0.3"
-        android:background="#2B2B2B"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customDialog"
-        app:layout_constraintVertical_bias="0.0" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout18"
-        android:layout_width="match_parent"
-        android:layout_height="144dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.0">
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:alpha="0.3"
+            android:background="#2B2B2B"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout10" />
 
-        <Button
-            android:id="@+id/btn_yes"
-            android:layout_width="110dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="#99CD7E"
-            android:text="SI"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view">
 
-        <Button
-            android:id="@+id/btn_no"
-            android:layout_width="110dp"
-            android:layout_height="60dp"
-            android:backgroundTint="#CD7575"
-            android:text="NO"
-            android:textSize="18sp" />
+            <Button
+                android:id="@+id/btn_noremove"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="#D80D0D"
+                android:outlineProvider="none"
+                android:text="No"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_yesremove"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#4D8E3D"
+                android:outlineProvider="none"
+                android:text="Si"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

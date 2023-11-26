@@ -1,5 +1,6 @@
 package com.jennifer.easyorder.Adapter;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -54,6 +55,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
         notifyDataSetChanged();
     }
 
+//    public void updateCustomerStatus(int position, boolean isActive) {
+//        customersList.get(position).setActivo(isActive);
+//        notifyItemChanged(position);
+//    }
+
     @NonNull
     @Override
     public ShowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,7 +70,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
         holder.bind(customersList.get(position));
-
     }
 
     @Override
@@ -106,21 +111,16 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                 return false;
             });
 
-
             binding.imgCustomer.setOnClickListener(v -> {
 
                 String nombreUPPER = customer.getNombres();
                 String[] nombresList = nombreUPPER.split("\\s+");
                 StringBuilder result = new StringBuilder();
 
-
                 for (String word : nombresList) {
-
                     result.append(Character.toUpperCase(word.charAt(0)));
                     result.append(word.substring(1).toLowerCase());
                     result.append(" ");
-
-
                 }
 
                 String strCustom = result.toString();
@@ -167,6 +167,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                     @Override
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
                         if (response.isSuccessful()){
+//                            int position = getAdapterPosition();
+//                            updateCustomerStatus(position, response.body().isActivo());
                             System.out.println(response.code());
                         }
                     }
@@ -208,15 +210,14 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
             View customDialogView = inflater.inflate(R.layout.custom_delete, null);
             builder.setView(customDialogView);
 
-            Button btnSi = customDialogView.findViewById(R.id.btn_yes);
-            Button btnNo = customDialogView.findViewById(R.id.btn_no);
+            Button btnSi = customDialogView.findViewById(R.id.btn_yesremove);
+            Button btnNo = customDialogView.findViewById(R.id.btn_noremove);
 
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
 
             btnSi.setOnClickListener(v -> {
                 RestaurantInterface customerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
-
                 Call<Customer> delete = customerInterface.deleteCustomer(customer.getIdCliente());
                 delete.enqueue(new Callback<Customer>() {
                     @Override
@@ -251,11 +252,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
         canvas.drawColor(Color.TRANSPARENT);
         Paint paint = new Paint();
         paint.setColor(Color.LTGRAY);
-        //paint.setColor(Color.rgb(153, 162, 173));
         paint.setAntiAlias(true);
         canvas.drawCircle(width / 2f, height / 2f, width / 2f, paint);
         paint.setColor(Color.WHITE);
-        //paint.setColor(Color.rgb(153, 162, 173));
         paint.setTextSize(40);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawText(text.substring(0, 1), 40, 60, paint);

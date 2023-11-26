@@ -10,17 +10,18 @@
     android:layout_gravity="end">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:cardBackgroundColor="#F8F8F8"
+        app:cardCornerRadius="6dp"
+        app:cardBackgroundColor="#FFFFFF"
         android:layout_gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/cardview_shadow_end_color"
+            android:background="@color/white"
             android:padding="10dp">
 
             <TextView
@@ -30,7 +31,7 @@
                 android:layout_gravity="center"
                 android:text="Seleccionaste una opción"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:textStyle="bold" />
 
             <ImageView
