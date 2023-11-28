@@ -115,7 +115,7 @@ public class VoucherFragment extends Fragment {
                         int idMesa = order.getIdMesa();
                         double total = order.getTotal();
                         String fechaHora = order.getFechaHora();
-                        String estado = "Completada";
+                        String estado = "Completado";
 
 
                         Order updatedOrder = new Order(idOrder, idMesa, total, estado, fechaHora);

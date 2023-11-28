@@ -72,7 +72,7 @@ public class TableViewModel extends ViewModel {
             }
         }
         listTableAssigned.setValue(tables);
-        System.out.println("quitao");
+       
     }
 
 

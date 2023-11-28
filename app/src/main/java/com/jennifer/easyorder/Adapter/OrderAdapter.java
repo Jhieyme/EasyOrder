@@ -3,6 +3,7 @@ package com.jennifer.easyorder.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.print.PrintManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,6 @@ import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.ItemOrderBinding;
-import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
@@ -53,14 +53,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
     private TableViewModel tableViewModel;
 
+    private View content;
+
     private boolean selectedMethodPay = false;
 
-    public OrderAdapter(List<Order> orderList, List<DetailOrder> detailOrderList, OrderFragment orderFragment, PaymentViewModel paymentViewModel, TableViewModel tableViewModel) {
+    public OrderAdapter(List<Order> orderList, List<DetailOrder> detailOrderList, OrderFragment orderFragment, PaymentViewModel paymentViewModel, TableViewModel tableViewModel, View content) {
         this.orderList = orderList;
         this.detailOrderList = detailOrderList;
         this.orderFragment = orderFragment;
         this.paymentViewModel = paymentViewModel;
         this.tableViewModel = tableViewModel;
+        this.content = content;
+
     }
 
     public void setFilterListOrder(List<Order> filterListOrder) {
@@ -79,6 +83,55 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
     @Override
     public void onBindViewHolder(@NonNull ShowViewHolder holder, int position) {
         holder.bind(orderList.get(position), holder);
+
+//        int idComanda = orderList.get(position).getIdComanda();
+//
+//        holder.binding.btnViewModelDetail.setOnClickListener(v -> {
+//            RestaurantInterface productDetailInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+//            Call<List<DetailOrder>> callDetail = productDetailInterface.getShowDetail(idComanda);
+//            callDetail.enqueue(new Callback<List<DetailOrder>>() {
+//                @Override
+//                public void onResponse(Call<List<DetailOrder>> call, Response<List<DetailOrder>> response) {
+//                    if (response.isSuccessful()) {
+//                        List<DetailOrder> item= response.body();
+//                        List<DetailOrder> orderDetailsList = new ArrayList<>();
+//
+//                        for (DetailOrder detailOrder : item) {
+//                            int idComandaD = detailOrder.getIdComandaNavigation().getIdComanda();
+//
+//                            if (idComandaD == idComanda ) {
+//                                orderDetailsList.add(detailOrder);
+//                            }
+//                        }
+//
+////                        DetailProductAdapter detailProductAdapter = new DetailProductAdapter(orderDetailsList);
+////                        RecyclerView rvDetailProduct = holder.itemView.findViewById(R.id.rvDetailProduct);
+////                        LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
+////                        System.out.println(layoutManager);
+////                        rvDetailProduct.setLayoutManager(layoutManager);
+////                        rvDetailProduct.setAdapter(detailProductAdapter);
+//
+//                        View customDialogView = LayoutInflater.from(orderFragment.getContext()).inflate(R.layout.custom_modal_order_detail, null);
+//                        RecyclerView rvDetailProduct = customDialogView.findViewById(R.id.rvDetailProduct);
+//                        LinearLayoutManager layoutManager = new LinearLayoutManager(orderFragment.getContext(), LinearLayoutManager.VERTICAL, false);
+//                        rvDetailProduct.setLayoutManager(layoutManager);
+//
+//                        DetailProductAdapter detailProductAdapter = new DetailProductAdapter(orderDetailsList);
+//                        rvDetailProduct.setAdapter(detailProductAdapter);
+//
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(orderFragment.requireContext());
+//                        builder.setView(customDialogView);
+//
+//                        AlertDialog alertDialog = builder.create();
+//                        alertDialog.show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<List<DetailOrder>> call, Throwable t) {
+//                }
+//            });
+//        });
     }
 
     @Override
@@ -107,6 +160,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             try {
                 SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 Date fecha = inputFormat.parse(dateTime);
+                //SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 SimpleDateFormat outputFormat = new SimpleDateFormat("E, dd HH:mm a", new Locale("es", "PE"));
                 String dateTimeFormat = outputFormat.format(fecha);
 
@@ -142,7 +196,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
             binding.btnPrint.setOnClickListener(v -> {
 
-                // TODO
+                printToCocina(order);
 
             });
 
@@ -182,25 +236,36 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             btnConfirmar.setOnClickListener(v -> {
                 int idOrder = order.getIdComanda();
                 int idMesa = order.getIdMesa();
-                double total = order.getTotal();
-                String fechaHora = order.getFechaHora();
-                String estado = "Cancelado";
-                Order updateOrder = new Order(idOrder, idMesa, total, estado, fechaHora);
                 RestaurantInterface comandaInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
-                Call<Order> deleteOrder = comandaInterface.updateOrder(updateOrder, idOrder);
+                Call<Order> deleteOrder = comandaInterface.deleteOrder(idOrder);
+                Call<DetailOrder> deleteDetails = comandaInterface.deleteDetailOrders(idOrder);
+
+                deleteDetails.enqueue(new Callback<DetailOrder>() {
+                    @Override
+                    public void onResponse(Call<DetailOrder> call, Response<DetailOrder> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<DetailOrder> call, Throwable t) {
+
+                    }
+                });
+
 
                 deleteOrder.enqueue(new Callback<Order>() {
                     @Override
                     public void onResponse(Call<Order> call, Response<Order> response) {
-                        
+
                     }
 
                     @Override
                     public void onFailure(Call<Order> call, Throwable t) {
-                        System.out.println(t.getMessage());
-                    }
-                });
 
+                    }
+
+                });
+                // cambias esto chama  por tu snackbar exotico
                 Toast.makeText(context, "¡Se cancelo la comanda N°" + order.getIdComanda(), Toast.LENGTH_SHORT).show();
                 alertDialog.dismiss();
 
@@ -217,6 +282,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             });
 
         }
+
 
         // Método que muestra el alert del tipo de pago
         public void showMethodPay(Order order, List<DetailOrder> detailOrders) {
@@ -272,5 +338,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             transaction.addToBackStack(null);
             transaction.commit();
         }
+
+        public void printToCocina(Order order) {
+            PrintManager printManager = (PrintManager) orderFragment.getContext().getSystemService(Context.PRINT_SERVICE);
+
+//            String jobName = orderFragment.getContext().getString(R.string.app_name) + " Document";
+//            printManager.print(jobName, new MyPrintDocumentAdapter(orderFragment.getActivity().getApplicationContext(), content), null);
+
+
+        }
+
+
     }
 }

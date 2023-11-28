@@ -47,12 +47,15 @@ public class OrderFragment extends Fragment {
     private OrderAdapter rvOrderAdapter;
     private SearchView searchViewOrder;
 
+    private View content;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentOrderBinding.inflate(inflater, container, false);
         paymentViewModel = new ViewModelProvider(requireActivity()).get(PaymentViewModel.class);
         tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
+        content = inflater.inflate(R.layout.print_layout_cocina, container, false);
         return binding.getRoot();
     }
 
@@ -119,7 +122,7 @@ public class OrderFragment extends Fragment {
                         ordersFiltered.add(order);
                     }
                 }
-                rvOrderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel, tableViewModel);
+                rvOrderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel, tableViewModel, content);
                 recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(rvOrderAdapter);
             }

@@ -46,17 +46,20 @@ public interface RestaurantInterface {
     @PUT("Comanda/{id}")
     Call<Order> updateOrder(@Body Order orderBody, @Path("id") int id);
 
+    @DELETE("Comanda/{id}")
+    Call<Order> deleteOrder(@Path("id") int id);
+
 
     // ------------------ Detalle Comanda ------------ //
-    @GET("DetalleComanda/PorComanda/{id}")
-    Call<List<DetailOrder>> getShowDetail(@Path("id") int id);
-
     @GET("DetalleComanda")
     Call<List<DetailOrder>> getDetail();
 
 
     @POST("DetalleComanda")
     Call<DetailOrder> addDetailOrder(@Body DetailOrder detailOrder);
+
+    @DELETE("DetalleComanda/EliminarPorComanda/{id}")
+    Call<DetailOrder> deleteDetailOrders(@Path("id") int id);
 
 
     // ------------------ Mesas ------------------ //
