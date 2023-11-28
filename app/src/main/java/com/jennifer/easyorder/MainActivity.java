@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 binding.toolbar.setTitle("Menú");
             } else if (itemId == R.id.bottom_order) {
                 openFragment(new OrderFragment());
+                binding.toolbar.setTitle("Comandas");
             }
             return true;
         });
