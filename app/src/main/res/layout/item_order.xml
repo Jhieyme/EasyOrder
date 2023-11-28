@@ -96,10 +96,7 @@
                         android:textAllCaps="true"
                         android:textColor="#D1D1D1"
                         android:textSize="8sp" />
-
-
                 </LinearLayout>
-
 
                 <View
                     android:id="@+id/view2"
@@ -115,30 +112,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout14"
                     app:layout_constraintVertical_bias="0.052" />
 
-                <!--                <LinearLayout-->
-                <!--                    android:id="@+id/linearLayout17"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="50dp"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:orientation="horizontal"-->
-                <!--                    app:layout_constraintBottom_toTopOf="@+id/btn_pagar"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@+id/view2">-->
-
-                <!--                    <TextView-->
-                <!--                        android:layout_width="100dp"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:gravity="center"-->
-                <!--                        android:text="Ver resumen" />-->
-
-                <!--                    <ImageButton-->
-                <!--                        android:layout_width="50dp"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_gravity="center"-->
-                <!--                        android:backgroundTint="@color/white"-->
-                <!--                        android:src="@drawable/ic_eye" />-->
-
-                <!--                </LinearLayout>-->
-
                 <LinearLayout
                     android:id="@+id/linearLayout19"
                     android:layout_width="162dp"
@@ -148,17 +121,6 @@
                     app:layout_constraintBottom_toTopOf="@+id/btn_print"
                     app:layout_constraintTop_toBottomOf="@+id/view2"
                     tools:layout_editor_absoluteX="1dp">
-
-                    <ScrollView
-                        android:id="@+id/scroll_product"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/customDialog"
-                        app:layout_constraintVertical_bias="0.002">
 
                         <LinearLayout
                             android:id="@+id/layoutDetailProduct"
@@ -173,22 +135,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:orientation="vertical" />
-
                         </LinearLayout>
-
-                    </ScrollView>
-
-                    <!--                    <Button-->
-                    <!--                        android:id="@+id/btn_viewModelDetail"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_gravity="center"-->
-                    <!--                        android:backgroundTint="@color/white"-->
-                    <!--                        android:drawableRight="@drawable/ic_eye"-->
-                    <!--                        android:gravity="center"-->
-                    <!--                        android:text="Ver resumen..."-->
-                    <!--                        android:textColor="@color/lavender"-->
-                    <!--                        android:textSize="8sp" />-->
 
                 </LinearLayout>
 
