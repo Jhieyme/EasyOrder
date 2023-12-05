@@ -19,8 +19,9 @@ import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentProductBinding;
+import com.jennifer.easyorder.model.Category;
 import com.jennifer.easyorder.model.Product;
-import com.jennifer.easyorder.model.Worker;
+import com.jennifer.easyorder.viewmodel.CategoryViewModel;
 import com.jennifer.easyorder.viewmodel.ProductViewModel;
 
 import java.util.ArrayList;
@@ -35,7 +36,9 @@ public class ProductFragment extends Fragment {
     private FragmentProductBinding binding;
     private RecyclerView recyclerView;
     private ProductViewModel productViewModel;
+    private CategoryViewModel categoryViewModel;
     private List<Product> itemsProduct;
+    private List<Product> itemsProductCategory;
     private ProductAdapter rvProductAdapter;
     private SearchView searchViewProduct;
 
@@ -45,6 +48,7 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProductBinding.inflate(inflater, container, false);
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
+        categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
         return binding.getRoot();
     }
 
@@ -72,7 +76,18 @@ public class ProductFragment extends Fragment {
             }
         });
 
-        showProducts();
+        String texCategory = null;
+        Category category = categoryViewModel.getCategoryObject().getValue();
+        if (category != null && category.getDescripcion() != null) {
+            texCategory = category.getDescripcion();
+        }
+
+        if (texCategory == null) {
+            showProducts();
+        } else {
+            showProductsCategory(texCategory);
+            categoryViewModel.setCategoryObject(null);
+        }
     }
 
     private void showProducts() {
@@ -89,7 +104,7 @@ public class ProductFragment extends Fragment {
                             itemsToAdapter.add(product);
                         }
                     }
-                    rvProductAdapter= new ProductAdapter(itemsToAdapter, productViewModel);
+                    rvProductAdapter = new ProductAdapter(itemsToAdapter, productViewModel);
                     recyclerView.setAdapter(rvProductAdapter);
                 }
             }
@@ -112,6 +127,51 @@ public class ProductFragment extends Fragment {
             Toast.makeText(getContext(), "Producto no encontrado", Toast.LENGTH_SHORT).show();
         } else {
             rvProductAdapter.setFilterListProduct(filterList);
+        }
+    }
+
+
+    private void showProductsCategory(String texCategory) {
+        RestaurantInterface productInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+        Call<List<Product>> call = productInterface.getShowProduct();
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    itemsProductCategory = response.body();
+                    List<Product> itemsToAdapter = new ArrayList<>();
+                    for (Product product : itemsProductCategory) {
+                        if (product.isActivo()) {
+                            itemsToAdapter.add(product);
+                        }
+                    }
+
+                    filterListProductCategory(texCategory, itemsToAdapter);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+            }
+        });
+
+    }
+
+    private void filterListProductCategory(String text, List<Product> filterListCategory) {
+        List<Product> filterList = new ArrayList<>();
+        for (Product item : filterListCategory) {
+            String catProduct = item.getIdCategoriaNavigation().getDescripcion();
+            if (catProduct.contains(text)) {
+                filterList.add(item);
+            }
+        }
+        if (filterList.isEmpty()) {
+            Toast.makeText(getContext(), "Producto no encontrado", Toast.LENGTH_SHORT).show();
+        } else {
+
+            rvProductAdapter = new ProductAdapter(filterList, productViewModel);
+            recyclerView.setAdapter(rvProductAdapter);
         }
     }
 }

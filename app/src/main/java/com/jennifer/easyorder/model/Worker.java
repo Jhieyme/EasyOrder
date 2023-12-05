@@ -13,6 +13,7 @@ public class Worker {
         this.idGeneroNavigation = idGeneroNavigation;
     }
 
+
     public int getIdPersonal() {
         return idPersonal;
     }

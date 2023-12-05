@@ -17,14 +17,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -215,51 +213,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerViewModal.setAdapter(modalDetailOrderAdapter);
 
 
-//        // Listar productos en el modal del activity
-//        LinearLayout linearProduct = dialog.findViewById(R.id.linearProduct);
-//        for (NewProduct np : listProduct) {
-//            View productView = getLayoutInflater().inflate(R.layout.view_product, null);
-//            TextView txtNameProduct = productView.findViewById(R.id.txtNameProduct);
-//            TextView txtQuantity = productView.findViewById(R.id.txtQuantity);
-//            ImageButton removeProduct = productView.findViewById(R.id.btnRemoveProduct);
-//            ImageButton addQuantity = productView.findViewById(R.id.btnAddQt);
-//            ImageButton minusQuantity = productView.findViewById(R.id.btnMinusQt);
-//
-//            removeProduct.setOnClickListener(view -> {
-//                listProduct.remove(np);
-//                linearProduct.removeView(productView);
-//                showNotify();
-//            });
-//
-//            addQuantity.setOnClickListener(view -> {
-//                String currentQuantity = (String) txtQuantity.getText().toString();
-//                int newQnt = Integer.parseInt(currentQuantity) + 1;
-//                if (newQnt > 10) {
-//                    Toast.makeText(view.getContext(), "¡No puedes seleccionar más de 10 platillos", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    np.setQuantity(newQnt);
-//                    txtQuantity.setText(String.valueOf(newQnt));
-//                }
-//            });
-//
-//            minusQuantity.setOnClickListener(view -> {
-//                String currentQuantity = (String) txtQuantity.getText().toString();
-//                int newQnt = Integer.parseInt(currentQuantity) - 1;
-//                if (newQnt <= 0) {
-//                    np.setQuantity(1);
-//                    txtQuantity.setText(String.valueOf(1));
-//                    Toast.makeText(view.getContext(), "¡No puedes seleccionaar 0 en todo caso eliminalo xd", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    np.setQuantity(newQnt);
-//                    txtQuantity.setText(String.valueOf(newQnt));
-//                }
-//            });
-//            txtNameProduct.setText(np.getProduct().getNombre());
-//            txtQuantity.setText(String.valueOf(np.getQuantity()));
-//            linearProduct.addView(productView);
-//        }
-
-
         // Generar Comanda;
         Button btnComanda = dialog.findViewById(R.id.btnGenerarComanda);
         btnComanda.setOnClickListener(v -> {
@@ -268,11 +221,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Bundle data = new Bundle();
             data.putSerializable("LIST", (Serializable) listProduct);
             data.putSerializable("MESA", (Serializable) tableSelected);
-            if (listProduct.size() != 0 ) {
-                if (tableSelected != null){
+            if (listProduct.size() != 0) {
+                if (tableSelected != null) {
                     detailOrderFragment.putArgs(data);
                     openFragment(detailOrderFragment);
-                }else {
+                } else {
                     snackbarWarningTable();
                 }
             } else {
@@ -290,9 +243,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
-    private void snackbarWarningTable(){
+    private void snackbarWarningTable() {
         RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
-        Snackbar snackbar = Snackbar.make(relativeLayout, "",Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(relativeLayout, "", Snackbar.LENGTH_LONG);
         View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_warning, null);
 
         TextView txtTitle = custom.findViewById(R.id.txtTitle);
@@ -300,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
         Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-        snackbarLayout.setPadding(0,0,0,0);
+        snackbarLayout.setPadding(0, 0, 0, 0);
 
         (custom.findViewById(R.id.txtOk)).setOnClickListener(v -> {
             snackbar.dismiss();
@@ -309,9 +262,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         snackbar.show();
     }
 
-    private void snackbarWarningProduct(){
+    private void snackbarWarningProduct() {
         RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
-        Snackbar snackbar = Snackbar.make(relativeLayout, "",Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(relativeLayout, "", Snackbar.LENGTH_LONG);
         View custom = getLayoutInflater().inflate(R.layout.custom_snackbar_warning, null);
 
         TextView txtTitle = custom.findViewById(R.id.txtTitle);
@@ -319,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
         Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-        snackbarLayout.setPadding(0,0,0,0);
+        snackbarLayout.setPadding(0, 0, 0, 0);
 
         (custom.findViewById(R.id.txtOk)).setOnClickListener(v -> {
             snackbar.dismiss();

@@ -92,7 +92,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ShowView
     public void addProductToList(ShowViewHolder holder, int position, View view) {
 
         Product product = productsList.get(position);
-        NewProduct newProduct = new NewProduct(product, 1);
+        String txQnt = (String) holder.binding.txtCnt.getText();
+        int qnt = Integer.parseInt(txQnt);
+        if (qnt == 0) {
+            qnt = 1;
+        }
+        NewProduct newProduct = new NewProduct(product, qnt);
         productViewModel.addProduct(newProduct, view);
 
     }

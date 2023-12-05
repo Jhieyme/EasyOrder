@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
+
             android:padding="8dp"
             android:text="Detalle Orden"
             android:textAlignment="viewStart"
@@ -54,7 +54,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvModal"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:orientation="vertical" />
         </LinearLayout>
@@ -66,25 +66,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
-            android:padding="8dp"
-            android:text="Mesa seleccionada"
-            android:textAlignment="viewStart"
-            android:textColor="@color/lavender"
-            android:textSize="25dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"

@@ -20,8 +20,6 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
     private List<Table> tablesList;
     private TableViewModel tableViewModel;
     private Table tableSelected;
-    private int idTable;
-
     private HashSet<Table> listTableAssigned;
 
 

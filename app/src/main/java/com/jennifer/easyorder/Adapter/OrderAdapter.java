@@ -3,7 +3,6 @@ package com.jennifer.easyorder.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.print.PrintManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ import com.jennifer.easyorder.databinding.ItemOrderBinding;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
+import com.jennifer.easyorder.utils.PDFPrinter;
 import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
@@ -196,8 +196,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
             binding.btnPrint.setOnClickListener(v -> {
 
-                printToCocina(order);
-
+                printToCocina(order, detailOrders);
             });
 
 
@@ -210,6 +209,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
 
 
             });
+
+
+        }
+
+        private void printToCocina(Order order, List<DetailOrder> detailOrders) {
+
+            PDFPrinter adapter = new PDFPrinter();
+            adapter.printToCocina(order, content, orderFragment.getContext(), detailOrders);
 
 
         }
@@ -337,17 +344,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ShowViewHold
             transaction.replace(R.id.fcv_main, workerFragment);
             transaction.addToBackStack(null);
             transaction.commit();
-        }
-
-        public void printToCocina(Order order) {
-            PrintManager printManager = (PrintManager) orderFragment.getContext().getSystemService(Context.PRINT_SERVICE);
-
-//            String jobName = orderFragment.getContext().getString(R.string.app_name) + " Document";
-//            printManager.print(jobName, new MyPrintDocumentAdapter(orderFragment.getActivity().getApplicationContext(), content), null);
 
 
         }
 
 
     }
+
+
 }
+

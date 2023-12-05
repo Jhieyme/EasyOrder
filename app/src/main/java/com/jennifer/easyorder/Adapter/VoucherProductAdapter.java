@@ -60,6 +60,8 @@ public class VoucherProductAdapter extends RecyclerView.Adapter<VoucherProductAd
             binding.tvCantidad.setText("x" + cantidad);
             binding.tvPrecio.setText("S/. " + precio);
             binding.tvImporte.setText("S/. " + importe);
+
+
         }
     }
 

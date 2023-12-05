@@ -54,11 +54,11 @@ public class TableViewModel extends ViewModel {
     public void addTableAssigned(Table tableAsssigned) {
         HashSet<Table> tables = new HashSet<>(listTableAssigned.getValue());
         if (tables.contains(tableAsssigned)) {
-            System.out.println("aaasda");
+
         } else {
             tables.add(tableAsssigned);
             listTableAssigned.setValue(tables);
-            System.out.println("agregado");
+
         }
 
     }
@@ -72,7 +72,7 @@ public class TableViewModel extends ViewModel {
             }
         }
         listTableAssigned.setValue(tables);
-       
+
     }
 
 

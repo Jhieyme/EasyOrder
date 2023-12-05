@@ -30,32 +30,32 @@
                 android:elevation="2dp"
                 tools:layout_editor_absoluteX="16dp" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="250dp"
-                android:layout_height="160dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="60dp"
-                android:layout_weight="1"
-                android:alpha="0.8"
-                android:elevation="4dp"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="250dp"-->
+<!--                android:layout_height="160dp"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_marginStart="28dp"-->
+<!--                android:layout_marginTop="60dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:alpha="0.8"-->
+<!--                android:elevation="4dp"-->
+<!--                app:cardBackgroundColor="@android:color/white"-->
+<!--                app:cardCornerRadius="20dp"-->
 
-                tools:ignore="MissingConstraints">
+<!--                tools:ignore="MissingConstraints">-->
 
-                <TextView
-                    android:id="@+id/txtNroBoleta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:padding="10dp"
-                    android:text="Nro de Boleta: #B00001"
-                    android:textColor="#565151"
-                    android:textStyle="bold" />
+<!--                <TextView-->
+<!--                    android:id="@+id/txtNroBoleta"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:text="Nro de Boleta: #B00001"-->
+<!--                    android:textColor="#565151"-->
+<!--                    android:textStyle="bold" />-->
 
-            </androidx.cardview.widget.CardView>
+<!--            </androidx.cardview.widget.CardView>-->
 
         </RelativeLayout>
 
@@ -70,7 +70,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/linearLayout5">
+            app:layout_constraintTop_toTopOf="@+id/linearLayout5"
+            app:layout_constraintVertical_bias="0.36">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -144,7 +145,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_marginTop="8dp"
-                        android:text="RUC: 12345674232"
+                        android:text="RUC: 10444185304"
                         android:textColor="#4E4E4E"
                         android:textSize="14dp"
                         android:textStyle="bold" />
@@ -372,37 +373,37 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="vertical"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/linearLayout13">-->
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Son: DOS CIENTOS DIEZ CON 00 CENTIMOS"
-                        android:textColor="#4E4E4E"
-                        android:textSize="13dp"
-                        android:textStyle="bold" />
+                <!--                    <TextView-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginHorizontal="10dp"-->
+                <!--                        android:layout_marginStart="30dp"-->
+                <!--                        android:layout_marginTop="10dp"-->
+                <!--                        android:text="Son: DOS CIENTOS DIEZ CON 00 CENTIMOS"-->
+                <!--                        android:textColor="#4E4E4E"-->
+                <!--                        android:textSize="13dp"-->
+                <!--                        android:textStyle="bold" />-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="10dp"
-                        android:text="En Efectivo: S/ 120.20"
-                        android:textColor="#4E4E4E"
-                        android:textSize="13dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                <!--                    <TextView-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginHorizontal="10dp"-->
+                <!--                        android:layout_marginStart="30dp"-->
+                <!--                        android:layout_marginTop="10dp"-->
+                <!--                        android:text="En Efectivo: S/ 120.20"-->
+                <!--                        android:textColor="#4E4E4E"-->
+                <!--                        android:textSize="13dp"-->
+                <!--                        android:textStyle="bold" />-->
+                <!--                </LinearLayout>-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -20,20 +20,16 @@ import com.jennifer.easyorder.databinding.FragmentVoucherBinding;
 import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
-import com.jennifer.easyorder.model.Voucher;
 import com.jennifer.easyorder.model.Worker;
 import com.jennifer.easyorder.utils.ShowAlertCustom;
 import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
+import com.jennifer.easyorder.viewmodel.VoucherViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class VoucherFragment extends Fragment {
@@ -44,6 +40,8 @@ public class VoucherFragment extends Fragment {
     private RecyclerView recyclerView;
     private TableViewModel tableViewModel;
 
+    private VoucherViewModel voucherViewModel;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +49,7 @@ public class VoucherFragment extends Fragment {
         binding = FragmentVoucherBinding.inflate(inflater, container, false);
         paymentViewModel = new ViewModelProvider(requireActivity()).get(PaymentViewModel.class);
         tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
+        voucherViewModel = new ViewModelProvider(requireActivity()).get(VoucherViewModel.class);
         return binding.getRoot();
     }
 
@@ -63,16 +62,13 @@ public class VoucherFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+
         Order order = paymentViewModel.getSelectedOrder().getValue();
-
-
         List<DetailOrder> detailOrderList = paymentViewModel.getSelectedDetailOrder().getValue();
-
 
         Customer customer = paymentViewModel.getSelectedCustomer().getValue();
         binding.txtCliente.setText(customer.getNombres() + " " + customer.getApellidos());
         binding.txtDni.setText(customer.getDni());
-
 
         Worker worker = paymentViewModel.getWorkerLiveData().getValue();
         binding.txtCajero.setText(worker.getNombres() + " " + worker.getApellidos());
@@ -98,59 +94,18 @@ public class VoucherFragment extends Fragment {
         String parseHora = horaFormato.format(horaActual);
         binding.txtHora.setText(parseHora);
 
+
+        int total = 0;
+        for (DetailOrder detailOrder : detailOrderList) {
+            total += detailOrder.getImporte();
+        }
+
+        binding.tvTotal.setText(String.valueOf("TOTAL: S/." + total));
+
+
         binding.btnImprimir.setOnClickListener(v -> {
-            Date fechaActual2 = new Date();
-            SimpleDateFormat fechaFormato2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            String parseFecha2 = fechaFormato2.format(fechaActual2);
-            Voucher voucher = new Voucher(codCustomer, codOrder, codWorker, codMethodPay, parseFecha2);
-
-            Call<Voucher> add = voucherInterface.addBoleta(voucher);
-
-            add.enqueue(new Callback<Voucher>() {
-                @Override
-                public void onResponse(Call<Voucher> call, Response<Voucher> response) {
-                    if (response.isSuccessful()) {
-
-                        int idOrder = order.getIdComanda();
-                        int idMesa = order.getIdMesa();
-                        double total = order.getTotal();
-                        String fechaHora = order.getFechaHora();
-                        String estado = "Completado";
-
-
-                        Order updatedOrder = new Order(idOrder, idMesa, total, estado, fechaHora);
-                        Call<Order> put = voucherInterface.updateOrder(updatedOrder, order.getIdComanda());
-                        put.enqueue(new Callback<Order>() {
-                            @Override
-                            public void onResponse(Call<Order> call, Response<Order> response) {
-
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<Order> call, Throwable t) {
-
-                            }
-                        });
-
-                        ShowAlertCustom alertCustom = new ShowAlertCustom();
-                        alertCustom.showSuccesAlert(binding.getRoot().getContext(), VoucherFragment.this);
-
-
-                        // Aqui debo actualizar la mesa
-                        tableViewModel.deleteTableAssigned(idMesa);
-
-
-//
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Voucher> call, Throwable t) {
-                    System.out.println(t.getMessage());
-                }
-            });
-
+            ShowAlertCustom alertCustom = new ShowAlertCustom();
+            alertCustom.showSuccesAlert(binding.getRoot().getContext(), VoucherFragment.this, codMethodPay, codOrder, codWorker, codCustomer, tableViewModel, voucherInterface, order, detailOrderList, voucherViewModel);
 
         });
     }

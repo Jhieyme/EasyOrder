@@ -1,27 +1,35 @@
 package com.jennifer.easyorder.Adapter;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.jennifer.easyorder.Fragments.ProductFragment;
+import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.databinding.ItemCategoryBinding;
 import com.jennifer.easyorder.model.Category;
+import com.jennifer.easyorder.viewmodel.CategoryViewModel;
 
 import java.util.List;
 
-public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.ShowViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ShowViewHolder> {
     private List<Category> categoryList;
-    public CategoryAdapter(List<Category> categoryList) {
+
+    private FragmentManager fragmentManager;
+
+
+    private CategoryViewModel categoryViewModel;
+
+    public CategoryAdapter(List<Category> categoryList, FragmentManager fragmentManager, CategoryViewModel categoryViewModel) {
         this.categoryList = categoryList;
+        this.fragmentManager = fragmentManager;
+        this.categoryViewModel = categoryViewModel;
     }
 
     @NonNull
@@ -43,6 +51,7 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.ShowV
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {
         private ItemCategoryBinding binding;
+
         public ShowViewHolder(@NonNull ItemCategoryBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -51,6 +60,21 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.ShowV
         public void bind(Category category) {
             binding.txtDescription.setText(category.getDescripcion());
             Glide.with(itemView.getContext()).load(category.getUrlImagen()).into(binding.imgCategory);
+
+
+            binding.imgCategory.setOnClickListener(v -> {
+
+                categoryViewModel.setCategoryObject(category);
+                ProductFragment productFragment = new ProductFragment();
+                openFragment(productFragment);
+
+            });
+        }
+
+        private void openFragment(Fragment fragment) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fcv_main, fragment);
+            fragmentTransaction.commit();
         }
     }
 }

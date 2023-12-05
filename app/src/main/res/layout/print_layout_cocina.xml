@@ -2,16 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="400dp"
-    android:layout_height="500dp"
-    android:background="@color/white"
-    android:paddingHorizontal="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <LinearLayout
-        android:layout_width="400dp"
-        android:layout_height="500dp"
-        android:background="@color/lavender"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,8 +19,10 @@
 
 
         <LinearLayout
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:orientation="vertical"
             android:paddingVertical="10dp">
 
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:text="Restaurante"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="31dp"
                 android:textStyle="bold" />
 
@@ -41,16 +41,17 @@
                 android:layout_marginVertical="10dp"
                 android:text="Comanda"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tvNroComanda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="6dp"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 tools:text="N° COMANDA: C01" />
@@ -65,18 +66,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="6dp"
                     android:text="ATENCION:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvNumMesa"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="6dp"
-
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="19dp"
 
                     tools:text="MESA 1" />
             </LinearLayout>
@@ -90,19 +90,19 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="6dp"
-                    android:text="CLIENTE:"
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
+                    android:text="FECHA:"
+                    android:textColor="@color/black"
+                    android:textSize="19dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvNameClient"
+                    android:id="@+id/tvFecha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="6dp"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    tools:text="DIEGO ARMANDO TORRE MACETAS" />
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="19dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -110,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginVertical="10dp"
-            android:background="@color/white" />
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -122,9 +122,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="CANT"
+                android:text="Producto"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -132,9 +132,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="DETALLE"
+                android:text="Cantidad"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -145,7 +145,40 @@
             android:id="@+id/lnCocinaProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="vertical" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total de platillos:"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTotalQnt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </LinearLayout>
 

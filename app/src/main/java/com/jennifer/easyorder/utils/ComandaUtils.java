@@ -24,27 +24,7 @@ public class ComandaUtils {
 
     public void postComanda(Order comanda) {
 
-        Call<Order> callApi = comandaInterface.addOrder(comanda);
-        callApi.enqueue(new Callback<Order>() {
-            @Override
-            public void onResponse(Call<Order> call, Response<Order> response) {
-                if (response.isSuccessful()) {
-                    //Mensaje de exito
-                    Order orderResponse = response.body();
 
-                    orderViewModel.setOrderResponseBody(orderResponse);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Order> call, Throwable t) {
-                try {
-                    throw new Throwable(t.getCause());
-                } catch (Throwable e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
 
     }
 

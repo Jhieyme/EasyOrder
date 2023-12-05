@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifer.easyorder.Adapter.DetailOrderAdapter;
 import com.jennifer.easyorder.R;
+import com.jennifer.easyorder.data.RestaurantInterface;
+import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentDetailOrderBinding;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.NewProduct;
@@ -37,6 +39,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailOrderFragment extends Fragment {
 
@@ -57,8 +63,6 @@ public class DetailOrderFragment extends Fragment {
         tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
         return binding.getRoot();
-
-
     }
 
     @Override
@@ -109,23 +113,41 @@ public class DetailOrderFragment extends Fragment {
 
             // Instancia de clase Utils para los metodos CRUD
             ComandaUtils utils = new ComandaUtils(orderViewModel);
-            utils.postComanda(newOrder);
 
-            // Función para obtener el response body de la solicitud POST
-            orderViewModel.getSettedOrder().observe(getViewLifecycleOwner(), order -> {
-                // Bucle para realizar un post por cada PRODUCTO (Detalle Comanda)
-                for (NewProduct np : listFragment) {
-                    double price = np.getProduct().getPrecio();
-                    int quantity = np.getQuantity();
-                    double pricexQuantity = price * quantity;
+            RestaurantInterface comandaInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+            Call<Order> callApi = comandaInterface.addOrder(newOrder);
+            callApi.enqueue(new Callback<Order>() {
+                @Override
+                public void onResponse(Call<Order> call, Response<Order> response) {
+                    if (response.isSuccessful()) {
+                        //Mensaje de exito
+                        Order orderResponse = response.body();
 
-                    // Aqui creo la cantidad de detalles comanda (Producto) tiene la orden
-                    DetailOrder newDetailOrder = new DetailOrder(np.getQuantity(), pricexQuantity, pricexQuantity, order.getIdComanda(), np.getProduct().getIdProducto());
-                    utils.postDetailOrder(newDetailOrder);
+                        for (NewProduct np : listFragment) {
+                            double price = np.getProduct().getPrecio();
+                            int quantity = np.getQuantity();
+                            double pricexQuantity = price * quantity;
+
+                            // Aqui creo la cantidad de detalles comanda (Producto) tiene la orden
+                            DetailOrder newDetailOrder = new DetailOrder(np.getQuantity(), pricexQuantity, pricexQuantity, orderResponse.getIdComanda(), np.getProduct().getIdProducto());
+                            utils.postDetailOrder(newDetailOrder);
+                        }
+                    }
                 }
 
-
+                @Override
+                public void onFailure(Call<Order> call, Throwable t) {
+                    try {
+                        throw new Throwable(t.getCause());
+                    } catch (Throwable e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             });
+
+            // Función para obtener el response body de la solicitud POST
+
+
             // Aqui setteo mediante ViewModel la mesa seleccionada
             tableViewModel.setSelectedTableImg(tableSelected);
             showSuccessAlert(DetailOrderFragment.this);
@@ -135,14 +157,12 @@ public class DetailOrderFragment extends Fragment {
             productViewModel.selectedListNewProduct(emptyList);
             tableViewModel.setSelectedTable(null);
 
-
             //Testeo de marcar ocupado más de una mesa!
 
             tableViewModel.addTableAssigned(tableSelected);
 
+
         });
-
-
     }
 
     private void showSuccessAlert(Fragment fragmentCurrent) {

@@ -26,6 +26,8 @@ public class Voucher {
         this.fechaHora = fechaHora;
     }
 
+
+
     public int getIdBoleta() {
         return idBoleta;
     }

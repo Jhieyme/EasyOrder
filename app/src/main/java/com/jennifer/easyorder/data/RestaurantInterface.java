@@ -3,6 +3,7 @@ package com.jennifer.easyorder.data;
 import com.jennifer.easyorder.model.Category;
 import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.CustomerRENIEC;
+import com.jennifer.easyorder.model.CustomerWorker;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.MethodPay;
 import com.jennifer.easyorder.model.Order;
@@ -70,12 +71,18 @@ public interface RestaurantInterface {
     @GET("Personal")
     Call<List<Worker>> getShowWorker();
 
+    @GET("Personal/{id}")
+    Call<Worker> getByIdWorker(@Path("id") int id);
+
     // ------------------ Cliente ---------------  //
     @GET("Cliente")
     Call<List<Customer>> getShowCustomer();
 
     @GET("{dni}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFuZHJlc3BhcmphdEBnbWFpbC5jb20ifQ.A4kk76bROCy44OoQZZqfLo27rG3rqg1HK6GXZUcjvuI")
     Call<CustomerRENIEC> getCustomer(@Path("dni") String dni);
+
+    @GET("Cliente/{id}")
+    Call<Customer> getById(@Path("id") int id);
 
     @POST("Cliente")
     Call<Customer> addCustomer(@Body Customer customerBody);
@@ -98,4 +105,7 @@ public interface RestaurantInterface {
 
     @POST("Boleta")
     Call<Voucher> addBoleta(@Body Voucher voucherBody);
+
+    @GET("Boleta/Info-IdBoleta/{idBoleta}")
+    Call<CustomerWorker> getByIdBoleta(@Path("idBoleta") int id);
 }
