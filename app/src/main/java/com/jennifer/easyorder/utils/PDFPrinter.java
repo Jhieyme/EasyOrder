@@ -11,7 +11,6 @@ import android.print.PageRange;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
-import android.print.PrintJob;
 import android.print.PrintManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -45,13 +44,11 @@ public class PDFPrinter {
 
     private static final String TAG = "PDFPrinter";
 
-    private PrintJob printJob;
-
 
     public void printToCocina(Order order, View content, Context context, List<DetailOrder> listDetail) {
         PdfDocument document = createPdfDocument();
         drawContentOnCanvas(document, content, order, context, listDetail);
-        showPrintOptions(document, context);
+        showPrintOptions(document, context, order);
     }
 
     public void printToVoucher(Order order, View content, Context context, List<DetailOrder> listDetail, Voucher voucherResponse) {
@@ -76,15 +73,16 @@ public class PDFPrinter {
         int viewWidth = displayMetrics.widthPixels;
         int viewHeight = displayMetrics.heightPixels;
 
-        // Ajustar el ancho de la vista para que coincida con el ancho del papel del PDF
+
         int pdfWidth = viewWidth;
         int pdfHeight = viewHeight;
 
-        // Obtener el contenedor LinearLayout
+        //Contenedor LinearLayout
         LinearLayout lnAdd = content.findViewById(R.id.lnCocinaProduct);
         LayoutInflater inflater = LayoutInflater.from(context.getApplicationContext());
 
 
+        // Bucle para calcular total y añadir los Views al LinearLayout
         int totalQnt = 0;
         for (DetailOrder detailOrder : listDetail) {
             View detailView = inflater.inflate(R.layout.print_product_row, null);
@@ -98,10 +96,12 @@ public class PDFPrinter {
             lnAdd.addView(detailView);
         }
 
+
         String nroMesa = String.valueOf(order.getIdMesaNavigation().getNroMesa());
         String nroComanda = String.valueOf(order.getIdComanda());
         String totalQntView = String.valueOf(totalQnt);
 
+        // Inicializamos los widgtes de la vista xml
         TextView nroMesaView = content.findViewById(R.id.tvNumMesa);
         TextView nroComandaView = content.findViewById(R.id.tvNroComanda);
         TextView nroFecha = content.findViewById(R.id.tvFecha);
@@ -118,6 +118,7 @@ public class PDFPrinter {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+
         SimpleDateFormat outputFormat = new SimpleDateFormat("E, dd HH:mm a", new Locale("es", "PE"));
         String dateTimeFormat = outputFormat.format(fecha);
         nroFecha.setText(dateTimeFormat);
@@ -157,11 +158,11 @@ public class PDFPrinter {
         int viewWidth = displayMetrics.widthPixels;
         int viewHeight = displayMetrics.heightPixels;
 
-        // Ajustar el ancho de la vista para que coincida con el ancho del papel del PDF
+
         int pdfWidth = viewWidth;
         int pdfHeight = viewHeight;
 
-        // Obtener el contenedor LinearLayout
+        // Contenedor LinearLayout
         LinearLayout lnAdd = content.findViewById(R.id.lnVoucherProduct);
         LayoutInflater inflater = LayoutInflater.from(context.getApplicationContext());
         double total = 0;
@@ -210,39 +211,41 @@ public class PDFPrinter {
         test.enqueue(new Callback<CustomerWorker>() {
             @Override
             public void onResponse(Call<CustomerWorker> call, Response<CustomerWorker> response) {
-                CustomerWorker item = response.body();
+                if (response.isSuccessful() && response.body() != null) {
+                    CustomerWorker item = response.body();
 
 
-                TextView tvNameCliente = content.findViewById(R.id.tvCliente);
-                tvNameCliente.setText(item.getCliente().getNombres() + " " + item.getCliente().getApellidos());
+                    TextView tvNameCliente = content.findViewById(R.id.tvCliente);
+                    tvNameCliente.setText(item.getCliente().getNombres() + " " + item.getCliente().getApellidos());
 
-                TextView tvDni = content.findViewById(R.id.tvDNI);
-                tvDni.setText(item.getCliente().getDni());
+                    TextView tvDni = content.findViewById(R.id.tvDNI);
+                    tvDni.setText(item.getCliente().getDni());
 
 
-                TextView tvCajero = content.findViewById(R.id.tvCajero);
-                tvCajero.setText(item.getPersonal().getNombre() + " " + item.getPersonal().getApellidos());
+                    TextView tvCajero = content.findViewById(R.id.tvCajero);
+                    tvCajero.setText(item.getPersonal().getNombre() + " " + item.getPersonal().getApellidos());
 
-                // Medir y disponer la vista después de agregar elementos dinámicos
-                int measuredWidth = View.MeasureSpec.makeMeasureSpec(pdfWidth, View.MeasureSpec.EXACTLY);
-                int measuredHeight = View.MeasureSpec.makeMeasureSpec(pdfHeight, View.MeasureSpec.EXACTLY);
-                content.measure(measuredWidth, measuredHeight);
+                    // Medir y disponer la vista después de agregar elementos dinámicos
+                    int measuredWidth = View.MeasureSpec.makeMeasureSpec(pdfWidth, View.MeasureSpec.EXACTLY);
+                    int measuredHeight = View.MeasureSpec.makeMeasureSpec(pdfHeight, View.MeasureSpec.EXACTLY);
+                    content.measure(measuredWidth, measuredHeight);
 
-                // Asegurarse de que la vista tenga los márgenes y paddings necesarios
-                content.layout(0, 0, content.getMeasuredWidth(), content.getMeasuredHeight());
+                    // Asegurarse de que la vista tenga los márgenes y paddings necesarios
+                    content.layout(0, 0, content.getMeasuredWidth(), content.getMeasuredHeight());
 
-                // Crear el lienzo y dibujar la vista
-                PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pdfWidth, pdfHeight, 1).create();
-                PdfDocument.Page page = document.startPage(pageInfo);
-                Canvas canvas = page.getCanvas();
+                    // Crear el lienzo y dibujar la vista
+                    PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pdfWidth, pdfHeight, 1).create();
+                    PdfDocument.Page page = document.startPage(pageInfo);
+                    Canvas canvas = page.getCanvas();
 
-                // Dibujar la vista en el lienzo
-                content.draw(canvas);
+                    // Dibujar la vista en el lienzo
+                    content.draw(canvas);
 
-                document.finishPage(page);
-                lnAdd.removeAllViews();
+                    document.finishPage(page);
+                    lnAdd.removeAllViews();
 
-                showPrintOptions(document, context);
+                    showPrintOptions(document, context, order);
+                }
 
 
             }
@@ -255,7 +258,7 @@ public class PDFPrinter {
 
     }
 
-    private void showPrintOptions(PdfDocument document, Context context) {
+    private void showPrintOptions(PdfDocument document, Context context, Order order) {
         // Show print options
         PrintManager printManager = (PrintManager) context.getSystemService(Context.PRINT_SERVICE);
         String jobName = "Print Job";
@@ -286,10 +289,8 @@ public class PDFPrinter {
                         return;
                     }
 
-                    // Implementar el código necesario para el diseño (si es necesario)
-                    // ...
 
-                    PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("document.pdf").setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT).build();
+                    PrintDocumentInfo pdi = new PrintDocumentInfo.Builder("comanda" + order.getIdComanda() + ".pdf").setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT).build();
                     callback.onLayoutFinished(pdi, true);
                 }
             };

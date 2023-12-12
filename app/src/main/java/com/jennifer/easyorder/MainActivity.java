@@ -225,6 +225,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (tableSelected != null) {
                     detailOrderFragment.putArgs(data);
                     openFragment(detailOrderFragment);
+
+                    binding.toolbar.setTitle("Detalle Orden");
                 } else {
                     snackbarWarningTable();
                 }

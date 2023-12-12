@@ -8,9 +8,6 @@ public class CustomerVoucher {
     private String dni;
 
 
-
-
-
     public CustomerVoucher(int idCliente, String nombre, String apellidos, String dni) {
         this.idCliente = idCliente;
         this.nombre = nombre;

@@ -6,7 +6,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,10 +24,8 @@ import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.databinding.FragmentOrderBinding;
-import com.jennifer.easyorder.model.Customer;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
-import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
@@ -49,6 +47,7 @@ public class OrderFragment extends Fragment {
     private SearchView searchViewOrder;
 
     private View content;
+    private Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +66,8 @@ public class OrderFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_order);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
+
+        toolbar = getActivity().findViewById(R.id.toolbar);
 
         searchViewOrder = view.findViewById(R.id.sv_searchOrder);
         searchViewOrder.clearFocus();
@@ -123,8 +124,8 @@ public class OrderFragment extends Fragment {
                         ordersFiltered.add(order);
                     }
                 }
-                rvOrderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel, tableViewModel, content);
-                recyclerView.setNestedScrollingEnabled(false);
+                rvOrderAdapter = new OrderAdapter(ordersFiltered, itemsDetailsOrders, OrderFragment.this, paymentViewModel, tableViewModel, content, toolbar);
+
                 recyclerView.setAdapter(rvOrderAdapter);
             }
 

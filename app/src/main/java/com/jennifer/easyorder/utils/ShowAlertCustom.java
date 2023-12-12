@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -37,11 +39,7 @@ import retrofit2.Response;
 public class ShowAlertCustom {
 
 
-    public interface CallFunction {
-        void execute();
-    }
-
-    public void showCustomAlert(Context context, String strTitle, String strCustom, Object object, PaymentViewModel paymentViewModel, Fragment fragmentCurrent) {
+    public void showCustomAlert(Context context, String strTitle, String strCustom, Object object, PaymentViewModel paymentViewModel, Fragment fragmentCurrent, Toolbar toolbar) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View customDialogView = inflater.inflate(R.layout.custom_alert_select, null);
@@ -67,18 +65,27 @@ public class ShowAlertCustom {
                 Customer customer = (Customer) object;
                 paymentViewModel.selectedCustomer(customer);
                 alertDialog.dismiss();
-                FragmentManager fragmentManager = fragmentCurrent.getFragmentManager();
-                VoucherFragment voucherFragment = new VoucherFragment();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.fcv_main, voucherFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                toolbar.setTitle("Boleta");
+
+
+                Integer idMethodPay = paymentViewModel.getMethodPayLiveData().getValue();
+                if (idMethodPay != null) {
+                    FragmentManager fragmentManager = fragmentCurrent.getFragmentManager();
+                    VoucherFragment voucherFragment = new VoucherFragment();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.fcv_main, voucherFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                } else {
+                    Toast.makeText(context, "que fue", Toast.LENGTH_SHORT).show();
+                }
 
 
             } else if (object instanceof Worker) {
                 Worker worker = (Worker) object;
                 paymentViewModel.setWorker(worker);
                 alertDialog.dismiss();
+                toolbar.setTitle("Cliente");
                 FragmentManager fragmentManager = fragmentCurrent.getFragmentManager();
                 CustomerFragment customerFragment = new CustomerFragment();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -110,19 +117,9 @@ public class ShowAlertCustom {
             payOrder(codCustomer, codOrder, codWorker, codMethodPay, voucherInterface, order, tableViewModel, voucherViewModel);
             alertDialog.dismiss();
             View voucherLayout = inflater.inflate(R.layout.print_layout_voucher, null);
-
-
-//            FragmentManager fragmentManager = fragmentCurrent.getFragmentManager();
-//            CategoryFragment categoryFragment = new CategoryFragment();
-//            FragmentTransaction transaction = fragmentManager.beginTransaction();
-//            transaction.replace(R.id.fcv_main, categoryFragment);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-
             PDFPrinter pdfPrinter = new PDFPrinter();
 
             voucherViewModel.getSettedVoucher().observe(fragmentCurrent.getViewLifecycleOwner(), voucherResponse -> {
-
 
                 pdfPrinter.printToVoucher(order, voucherLayout, context, detailOrderList, voucherResponse);
             });
@@ -153,10 +150,7 @@ public class ShowAlertCustom {
                     String estado = "Completado";
 
 
-
                     voucherViewModel.setVoucherResponseBody(response.body());
-
-
 
 
                     Order updatedOrder = new Order(idOrder, idMesa, total, estado, fechaHora);

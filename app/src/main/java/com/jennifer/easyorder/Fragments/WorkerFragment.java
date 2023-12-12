@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ public class WorkerFragment extends Fragment {
     private List<Worker> itemsWorker;
     private WorkerAdapter rvWorkerAdapter;
     private SearchView searchViewWorker;
+    private Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,13 +54,9 @@ public class WorkerFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.rv_worker);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
+        toolbar = getActivity().findViewById(R.id.toolbar);
         binding.rvWorker.setLayoutManager(layoutManager);
 
-//        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.et_search);
-//        List<String> suggestions = Arrays.asList("Luis", "Banana", "Cereza", "Dátil", "Uva"); // Lista de sugerencias
-
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
-//        autoCompleteTextView.setAdapter(adapter);
 
         searchViewWorker = view.findViewById(R.id.sv_searchWorker);
         searchViewWorker.clearFocus();
@@ -76,16 +74,21 @@ public class WorkerFragment extends Fragment {
             }
         });
 
+        showWorkers();
+    }
+
+    private void showWorkers() {
         RestaurantInterface workerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Worker>> call = workerInterface.getShowWorker();
-
         call.enqueue(new Callback<List<Worker>>() {
 
             @Override
             public void onResponse(Call<List<Worker>> call, Response<List<Worker>> response) {
-                itemsWorker = response.body();
-                rvWorkerAdapter = new WorkerAdapter(itemsWorker, paymentViewModel, WorkerFragment.this);
-                recyclerView.setAdapter(rvWorkerAdapter);
+                if (response.isSuccessful() && response.body() != null) {
+                    itemsWorker = response.body();
+                    rvWorkerAdapter = new WorkerAdapter(itemsWorker, paymentViewModel, WorkerFragment.this, toolbar);
+                    recyclerView.setAdapter(rvWorkerAdapter);
+                }
             }
 
             @Override

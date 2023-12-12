@@ -8,41 +8,13 @@
     tools:context=".Fragments.CategoryFragment">
 
 
-    <!--    <FrameLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_marginTop="20dp"-->
-    <!--        android:layout_marginBottom="40dp"-->
-    <!--        android:orientation="vertical"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
 
-    <!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-    <!--            android:id="@+id/swipe"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_gravity="top"-->
-    <!--            android:background="#F4F6FA">-->
-
-    <!--            <androidx.recyclerview.widget.RecyclerView-->
-    <!--                android:id="@+id/rv_category"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-
-    <!--                android:orientation="vertical"-->
-    <!--                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
-    <!--                app:spanCount="2" />-->
-
-    <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-    <!--    </FrameLayout>-->
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="40dp"
         android:orientation="vertical"
         android:paddingHorizontal="30dp"

@@ -8,15 +8,10 @@ import com.jennifer.easyorder.model.Category;
 
 public class CategoryViewModel extends ViewModel {
 
-
     private MutableLiveData<Category> categoryObject = new MutableLiveData<>();
-
-
     public void setCategoryObject(Category category) {
-
         categoryObject.setValue(category);
     }
-
     public LiveData<Category> getCategoryObject() {
         return categoryObject;
     }

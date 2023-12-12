@@ -2,6 +2,7 @@ package com.jennifer.easyorder.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +23,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
     private Table tableSelected;
     private HashSet<Table> listTableAssigned;
 
+    private int selectedPosition = RecyclerView.NO_POSITION; // Default value indicating no selection
 
 
     public TableAdapter(List<Table> tablesList, TableViewModel tableViewModel, Table tableSelected, HashSet<Table> listTableAssigned) {
@@ -63,11 +65,17 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ShowViewHold
             this.binding = binding;
         }
 
+
         public void bind(Table table) {
             int numeroMesa = table.getNroMesa();
             binding.txtNumero.setText("N° " + numeroMesa);
+
             binding.clothingCard.setOnClickListener(v -> {
                 tableViewModel.setSelectedTable(table);
+
+
+                Toast.makeText(v.getContext(), "¡Seleccionaste el N° de Mesa: " + table.getNroMesa(), Toast.LENGTH_SHORT).show();
+
             });
             if (listTableAssigned != null) {
                 for (Table table1 : listTableAssigned) {

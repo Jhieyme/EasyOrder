@@ -121,10 +121,13 @@ public class ProductFragment extends Fragment {
             String nomProduct = item.getNombre();
             if (nomProduct.toLowerCase().contains(text.toLowerCase())) {
                 filterList.add(item);
+            } else {
+
             }
+
         }
-        if (filterList.isEmpty()) {
-            Toast.makeText(getContext(), "Producto no encontrado", Toast.LENGTH_SHORT).show();
+        if (filterList.size() == 0) {
+            Toast.makeText(getContext(), "¡Producto no encontrado!", Toast.LENGTH_SHORT).show();
         } else {
             rvProductAdapter.setFilterListProduct(filterList);
         }

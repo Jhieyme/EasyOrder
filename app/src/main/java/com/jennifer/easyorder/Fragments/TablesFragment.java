@@ -1,5 +1,6 @@
 package com.jennifer.easyorder.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public class TablesFragment extends Fragment {
     private Table tableSelected;
     private HashSet<Table> listTablesAassigned;
     private SearchView searchViewTable;
+    private SharedPreferences sharedPreferences;
 
 
     @Override
@@ -85,6 +87,11 @@ public class TablesFragment extends Fragment {
         });
 
         //Lista de mesas --
+        showTables();
+
+    }
+
+    private void showTables() {
         RestaurantInterface tableInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         Call<List<Table>> call = tableInterface.getShowTable();
 
@@ -102,7 +109,6 @@ public class TablesFragment extends Fragment {
             public void onFailure(Call<List<Table>> call, Throwable t) {
             }
         });
-
     }
 
     private void filterListTable(String text) {

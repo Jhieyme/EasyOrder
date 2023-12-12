@@ -1,6 +1,5 @@
 package com.jennifer.easyorder.Adapter;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +13,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifer.easyorder.Fragments.CustomerFragment;
@@ -38,11 +38,13 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
     private CustomerFragment customerFragment;
     private ShowAlertCustom alertCustom = new ShowAlertCustom();
 
+    private Toolbar toolbar;
 
-    public CustomerAdapter(List<Customer> customersList, PaymentViewModel paymentViewModel, CustomerFragment customerFragment) {
+    public CustomerAdapter(List<Customer> customersList, PaymentViewModel paymentViewModel, CustomerFragment customerFragment, Toolbar toolbar) {
         this.customersList = customersList;
         this.paymentViewModel = paymentViewModel;
         this.customerFragment = customerFragment;
+        this.toolbar = toolbar;
     }
 
     public void updateCustomers(List<Customer> newCustomers) {
@@ -124,7 +126,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                 }
 
                 String strCustom = result.toString();
-                alertCustom.showCustomAlert(customerFragment.getContext(), "Seleccionaste al cliente", strCustom, customer, paymentViewModel, customerFragment);
+                alertCustom.showCustomAlert(customerFragment.getContext(), "Seleccionaste al cliente", strCustom, customer, paymentViewModel, customerFragment, toolbar);
                 ;
             });
 
@@ -166,7 +168,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                 put.enqueue(new Callback<Customer>() {
                     @Override
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
 //                            int position = getAdapterPosition();
 //                            updateCustomerStatus(position, response.body().isActivo());
                             System.out.println(response.code());

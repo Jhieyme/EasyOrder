@@ -15,11 +15,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
@@ -53,6 +53,7 @@ public class CustomerFragment extends Fragment {
     private List<Customer> itemsCustomer;
     private CustomerAdapter rvCustomerAdapter;
     private SearchView searchViewCustomer;
+    private Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +71,7 @@ public class CustomerFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
+        toolbar = getActivity().findViewById(R.id.toolbar);
         RestaurantInterface customerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
         RestaurantInterface dniInterface = RetrofitReniec.getInstance().create(RestaurantInterface.class);
         Call<List<Customer>> call = customerInterface.getShowCustomer();
@@ -111,8 +113,7 @@ public class CustomerFragment extends Fragment {
 
                                 binding.txtName.setText(nombres);
                                 binding.txtApellido.setText(apellidoP + " " + apellidoM);
-                            }
-                            else {
+                            } else {
                                 showSnackbarError("¡Ingrese un DNI valido por favor!");
                                 clearCustomer();
                             }
@@ -176,7 +177,7 @@ public class CustomerFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
                 itemsCustomer = response.body();
-                rvCustomerAdapter = new CustomerAdapter(itemsCustomer, paymentViewModel, CustomerFragment.this);
+                rvCustomerAdapter = new CustomerAdapter(itemsCustomer, paymentViewModel, CustomerFragment.this, toolbar);
                 recyclerView.setAdapter(rvCustomerAdapter);
 
                 //Aqui hago la solicitud POST
@@ -191,8 +192,7 @@ public class CustomerFragment extends Fragment {
                     if (dniExists) {
                         clearCustomer();
                         showSnackbarError("¡El cliente ya esta registrado!");
-                    }
-                    else if (nombres != "" && apellidos != "" && dni != "") {
+                    } else if (nombres != "" && apellidos != "" && dni != "") {
                         Customer newCustomer = new Customer(
                                 dni, nombres, apellidos, true);
 

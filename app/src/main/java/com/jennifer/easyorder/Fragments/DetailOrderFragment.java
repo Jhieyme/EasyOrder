@@ -13,13 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jennifer.easyorder.Adapter.DetailOrderAdapter;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
@@ -30,7 +30,6 @@ import com.jennifer.easyorder.model.NewProduct;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Table;
 import com.jennifer.easyorder.utils.ComandaUtils;
-import com.jennifer.easyorder.viewmodel.OrderViewModel;
 import com.jennifer.easyorder.viewmodel.ProductViewModel;
 import com.jennifer.easyorder.viewmodel.TableViewModel;
 
@@ -50,20 +49,21 @@ public class DetailOrderFragment extends Fragment {
     private List<NewProduct> listFragment = new ArrayList<>();
     private Table tableSelected;
     private RecyclerView recyclerView;
-    private OrderViewModel orderViewModel;
 
     private ProductViewModel productViewModel;
     private TableViewModel tableViewModel;
+    private Toolbar toolbar;
+    private BottomNavigationView bottomNavigationView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentDetailOrderBinding.inflate(inflater, container, false);
-        orderViewModel = new ViewModelProvider(requireActivity()).get(OrderViewModel.class);
-        tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
-        productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
+        initViewModels();
         return binding.getRoot();
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -76,6 +76,10 @@ public class DetailOrderFragment extends Fragment {
         DetailOrderAdapter adapter = new DetailOrderAdapter(listFragment);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+
+        bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
+        toolbar = getActivity().findViewById(R.id.toolbar);
 
 
         double total = 0;
@@ -112,7 +116,7 @@ public class DetailOrderFragment extends Fragment {
             Order newOrder = new Order(parseFecha, "En Proceso", finalTotal, tableSelected.getIdMesa());
 
             // Instancia de clase Utils para los metodos CRUD
-            ComandaUtils utils = new ComandaUtils(orderViewModel);
+            ComandaUtils utils = new ComandaUtils();
 
             RestaurantInterface comandaInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
             Call<Order> callApi = comandaInterface.addOrder(newOrder);
@@ -180,13 +184,10 @@ public class DetailOrderFragment extends Fragment {
         AppCompatButton btnContinue = customDialogView.findViewById(R.id.btnContinue);
 
         btnContinue.setOnClickListener(v -> {
+
+            bottomNavigationView.setSelectedItemId(R.id.bottom_order);
             alertDialog.dismiss();
-            FragmentManager fragmentManager = fragmentCurrent.getFragmentManager();
-            OrderFragment orderFragment = new OrderFragment();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.fcv_main, orderFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            toolbar.setTitle("Comandas");
         });
     }
 
@@ -197,6 +198,12 @@ public class DetailOrderFragment extends Fragment {
         tableSelected = (Table) args.getSerializable("MESA");
 
 
+    }
+
+    private void initViewModels() {
+
+        tableViewModel = new ViewModelProvider(requireActivity()).get(TableViewModel.class);
+        productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
     }
 
 

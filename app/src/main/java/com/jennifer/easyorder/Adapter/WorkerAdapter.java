@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class    WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowViewHolder> {
+public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowViewHolder> {
     private List<Worker> workersList;
 
     private PaymentViewModel paymentViewModel;
@@ -26,10 +27,13 @@ public class    WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowVie
     private WorkerFragment workerFragment;
     private ShowAlertCustom alertCustom = new ShowAlertCustom();
 
-    public WorkerAdapter(List<Worker> workersList, PaymentViewModel paymentViewModel, WorkerFragment workerFragment) {
+    private Toolbar toolbar;
+
+    public WorkerAdapter(List<Worker> workersList, PaymentViewModel paymentViewModel, WorkerFragment workerFragment, Toolbar toolbar) {
         this.workersList = workersList;
         this.paymentViewModel = paymentViewModel;
         this.workerFragment = workerFragment;
+        this.toolbar = toolbar;
 
     }
 
@@ -86,7 +90,7 @@ public class    WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.ShowVie
                     result.append(" ");
                 }
                 String strCustom = result.toString();
-                alertCustom.showCustomAlert(binding.getRoot().getContext(), "Seleccionaste al personal", strCustom, worker, paymentViewModel, workerFragment);
+                alertCustom.showCustomAlert(binding.getRoot().getContext(), "Seleccionaste al personal", strCustom, worker, paymentViewModel, workerFragment, toolbar);
             });
 
 

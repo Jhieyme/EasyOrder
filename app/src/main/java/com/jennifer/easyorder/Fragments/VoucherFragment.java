@@ -84,23 +84,26 @@ public class VoucherFragment extends Fragment {
         recyclerView.setAdapter(voucherProductAdapter);
 
 
+        // Fecha
         Date fechaActual = new Date();
         SimpleDateFormat fechaFormato = new SimpleDateFormat("dd/MM/yyyy");
         String parseFecha = fechaFormato.format(fechaActual);
         binding.txtFecha.setText(parseFecha);
 
+        // Hora
         Date horaActual = new Date();
         SimpleDateFormat horaFormato = new SimpleDateFormat("HH:mm", new Locale("es", "PE"));
         String parseHora = horaFormato.format(horaActual);
         binding.txtHora.setText(parseHora);
 
-
-        int total = 0;
+        // Bucle para definir el total
+        double total = 0;
         for (DetailOrder detailOrder : detailOrderList) {
             total += detailOrder.getImporte();
         }
 
-        binding.tvTotal.setText(String.valueOf("TOTAL: S/." + total));
+        
+        binding.tvTotal.setText(String.valueOf("TOTAL: S/" + total));
 
 
         binding.btnImprimir.setOnClickListener(v -> {

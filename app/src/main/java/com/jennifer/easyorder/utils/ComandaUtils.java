@@ -1,11 +1,8 @@
 package com.jennifer.easyorder.utils;
 
-import com.jennifer.easyorder.MainActivity;
 import com.jennifer.easyorder.data.RestaurantInterface;
 import com.jennifer.easyorder.data.RetrofitHelper;
 import com.jennifer.easyorder.model.DetailOrder;
-import com.jennifer.easyorder.model.Order;
-import com.jennifer.easyorder.viewmodel.OrderViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,18 +12,7 @@ public class ComandaUtils {
 
 
     private RestaurantInterface comandaInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
-    private OrderViewModel orderViewModel;
-    public ComandaUtils(OrderViewModel orderViewModel) {
-        this.orderViewModel = orderViewModel;
 
-    }
-
-
-    public void postComanda(Order comanda) {
-
-
-
-    }
 
     public void postDetailOrder(DetailOrder detailOrder) {
         Call<DetailOrder> callApi = comandaInterface.addDetailOrder(detailOrder);

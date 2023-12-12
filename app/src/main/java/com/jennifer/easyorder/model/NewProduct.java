@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class NewProduct implements Serializable {
 
-
     private Product product;
     private int quantity;
 

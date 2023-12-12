@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jennifer.easyorder.Adapter.CategoryAdapter;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
@@ -33,7 +34,9 @@ public class CategoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private CategoryViewModel categoryViewModel;
 
-    private FragmentManager fragmentManager;
+
+    private Toolbar toolbar;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,8 +49,10 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fragmentManager = getActivity().getSupportFragmentManager();
         recyclerView = view.findViewById(R.id.rv_category);
+
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         binding.rvCategory.setLayoutManager(layoutManager);
 
@@ -65,7 +70,7 @@ public class CategoryFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Category> items = response.body();
 
-                    CategoryAdapter rvCategoryAdapter = new CategoryAdapter(items, fragmentManager, categoryViewModel);
+                    CategoryAdapter rvCategoryAdapter = new CategoryAdapter(items, categoryViewModel, toolbar, bottomNavigationView);
                     recyclerView.setAdapter(rvCategoryAdapter);
                 }
             }

@@ -10,8 +10,7 @@ public class CustomerWorker {
         this.cliente = cliente;
         this.personal = personal;
     }
-
-
+    
     public CustomerVoucher getCliente() {
         return cliente;
     }

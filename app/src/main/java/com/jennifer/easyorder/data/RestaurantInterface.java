@@ -71,8 +71,6 @@ public interface RestaurantInterface {
     @GET("Personal")
     Call<List<Worker>> getShowWorker();
 
-    @GET("Personal/{id}")
-    Call<Worker> getByIdWorker(@Path("id") int id);
 
     // ------------------ Cliente ---------------  //
     @GET("Cliente")
@@ -81,8 +79,6 @@ public interface RestaurantInterface {
     @GET("{dni}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFuZHJlc3BhcmphdEBnbWFpbC5jb20ifQ.A4kk76bROCy44OoQZZqfLo27rG3rqg1HK6GXZUcjvuI")
     Call<CustomerRENIEC> getCustomer(@Path("dni") String dni);
 
-    @GET("Cliente/{id}")
-    Call<Customer> getById(@Path("id") int id);
 
     @POST("Cliente")
     Call<Customer> addCustomer(@Body Customer customerBody);
@@ -95,14 +91,10 @@ public interface RestaurantInterface {
 
 
     // --------------- Metodo de Pago -------------- //
-
     @GET("TipoPago")
     Call<List<MethodPay>> getMethodPay();
 
     // ------------------ Boleta ---------------  //
-    @GET("Boleta/{id}")
-    Call<Voucher> getVoucher(@Path("id") int id);
-
     @POST("Boleta")
     Call<Voucher> addBoleta(@Body Voucher voucherBody);
 

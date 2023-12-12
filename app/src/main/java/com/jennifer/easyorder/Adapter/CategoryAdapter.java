@@ -4,13 +4,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.jennifer.easyorder.Fragments.ProductFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.databinding.ItemCategoryBinding;
 import com.jennifer.easyorder.model.Category;
@@ -19,17 +17,17 @@ import com.jennifer.easyorder.viewmodel.CategoryViewModel;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ShowViewHolder> {
+
     private List<Category> categoryList;
-
-    private FragmentManager fragmentManager;
-
-
     private CategoryViewModel categoryViewModel;
+    private Toolbar toolbar;
+    private BottomNavigationView bottomNavigationView;
 
-    public CategoryAdapter(List<Category> categoryList, FragmentManager fragmentManager, CategoryViewModel categoryViewModel) {
+    public CategoryAdapter(List<Category> categoryList, CategoryViewModel categoryViewModel, Toolbar toolbar, BottomNavigationView bottomNavigationView) {
         this.categoryList = categoryList;
-        this.fragmentManager = fragmentManager;
         this.categoryViewModel = categoryViewModel;
+        this.toolbar = toolbar;
+        this.bottomNavigationView = bottomNavigationView;
     }
 
     @NonNull
@@ -60,21 +58,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ShowVi
         public void bind(Category category) {
             binding.txtDescription.setText(category.getDescripcion());
             Glide.with(itemView.getContext()).load(category.getUrlImagen()).into(binding.imgCategory);
-
-
             binding.imgCategory.setOnClickListener(v -> {
-
                 categoryViewModel.setCategoryObject(category);
-                ProductFragment productFragment = new ProductFragment();
-                openFragment(productFragment);
+                bottomNavigationView.setSelectedItemId(R.id.bottom_menu);
+                toolbar.setTitle("Menú");
 
             });
         }
 
-        private void openFragment(Fragment fragment) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fcv_main, fragment);
-            fragmentTransaction.commit();
-        }
+
     }
 }
