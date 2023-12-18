@@ -27,6 +27,7 @@ import com.jennifer.easyorder.model.CustomerWorker;
 import com.jennifer.easyorder.model.DetailOrder;
 import com.jennifer.easyorder.model.Order;
 import com.jennifer.easyorder.model.Voucher;
+import com.jennifer.easyorder.viewmodel.VoucherViewModel;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,9 +52,9 @@ public class PDFPrinter {
         showPrintOptions(document, context, order);
     }
 
-    public void printToVoucher(Order order, View content, Context context, List<DetailOrder> listDetail, Voucher voucherResponse) {
+    public void printToVoucher(Order order, View content, Context context, List<DetailOrder> listDetail, Voucher voucherResponse, VoucherViewModel voucherViewModel) {
         PdfDocument document = createPdfDocument();
-        drawContentOnCanvasVoucher(document, content, order, context, listDetail, voucherResponse);
+        drawContentOnCanvasVoucher(document, content, order, context, listDetail, voucherResponse, voucherViewModel);
 
     }
 
@@ -147,7 +148,7 @@ public class PDFPrinter {
 
     }
 
-    private void drawContentOnCanvasVoucher(PdfDocument document, View content, Order order, Context context, List<DetailOrder> listDetail, Voucher voucherResponse) {
+    private void drawContentOnCanvasVoucher(PdfDocument document, View content, Order order, Context context, List<DetailOrder> listDetail, Voucher voucherResponse, VoucherViewModel voucherViewModel) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             content.getContext().getDisplay().getRealMetrics(displayMetrics);
@@ -221,7 +222,6 @@ public class PDFPrinter {
                     TextView tvDni = content.findViewById(R.id.tvDNI);
                     tvDni.setText(item.getCliente().getDni());
 
-
                     TextView tvCajero = content.findViewById(R.id.tvCajero);
                     tvCajero.setText(item.getPersonal().getNombre() + " " + item.getPersonal().getApellidos());
 
@@ -242,9 +242,11 @@ public class PDFPrinter {
                     content.draw(canvas);
 
                     document.finishPage(page);
-                    lnAdd.removeAllViews();
-
+                    lnAdd.removeAllViewsInLayout();
+                    voucherViewModel.setVoucherResponseBody(null);
                     showPrintOptions(document, context, order);
+
+
                 }
 
 
@@ -268,7 +270,6 @@ public class PDFPrinter {
             PrintAttributes.Builder printAttributes = new PrintAttributes.Builder().setMediaSize(PrintAttributes.MediaSize.JPN_YOU4);
 
 
-            // Crear un objeto PrintDocumentAdapter
             PrintDocumentAdapter printAdapter = new PrintDocumentAdapter() {
                 @Override
                 public void onWrite(PageRange[] pages, ParcelFileDescriptor destination, CancellationSignal cancellationSignal, WriteResultCallback callback) {

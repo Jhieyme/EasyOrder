@@ -77,7 +77,7 @@ public class ShowAlertCustom {
                     transaction.addToBackStack(null);
                     transaction.commit();
                 } else {
-                    Toast.makeText(context, "que fue", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "¡No selecciono una comanda!", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -117,11 +117,16 @@ public class ShowAlertCustom {
             payOrder(codCustomer, codOrder, codWorker, codMethodPay, voucherInterface, order, tableViewModel, voucherViewModel);
             alertDialog.dismiss();
             View voucherLayout = inflater.inflate(R.layout.print_layout_voucher, null);
-            PDFPrinter pdfPrinter = new PDFPrinter();
+
 
             voucherViewModel.getSettedVoucher().observe(fragmentCurrent.getViewLifecycleOwner(), voucherResponse -> {
 
-                pdfPrinter.printToVoucher(order, voucherLayout, context, detailOrderList, voucherResponse);
+                if (voucherResponse != null) {
+                    PDFPrinter pdfPrinter = new PDFPrinter();
+                    pdfPrinter.printToVoucher(order, voucherLayout, context, detailOrderList, voucherResponse, voucherViewModel);
+                } else {
+                    Toast.makeText(context, "aaa", Toast.LENGTH_SHORT).show();
+                }
             });
 
 
@@ -141,7 +146,7 @@ public class ShowAlertCustom {
         add.enqueue(new Callback<Voucher>() {
             @Override
             public void onResponse(Call<Voucher> call, Response<Voucher> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
 
                     int idOrder = order.getIdComanda();
                     int idMesa = order.getIdMesa();
@@ -151,8 +156,6 @@ public class ShowAlertCustom {
 
 
                     voucherViewModel.setVoucherResponseBody(response.body());
-
-
                     Order updatedOrder = new Order(idOrder, idMesa, total, estado, fechaHora);
                     Call<Order> put = voucherInterface.updateOrder(updatedOrder, order.getIdComanda());
                     put.enqueue(new Callback<Order>() {

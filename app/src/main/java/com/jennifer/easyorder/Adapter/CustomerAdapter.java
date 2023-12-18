@@ -28,6 +28,7 @@ import com.jennifer.easyorder.viewmodel.PaymentViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,10 +58,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
         notifyDataSetChanged();
     }
 
-//    public void updateCustomerStatus(int position, boolean isActive) {
-//        customersList.get(position).setActivo(isActive);
-//        notifyItemChanged(position);
-//    }
 
     @NonNull
     @Override
@@ -164,43 +161,48 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ShowVi
                     updatedCustomer.setActivo(false);
                 }
 
-                Call<Customer> put = customerInterface.updateCustomer(customer.getIdCliente(), updatedCustomer);
-                put.enqueue(new Callback<Customer>() {
+                Call<ResponseBody> put = customerInterface.updateCustomer(customer.getIdCliente(), updatedCustomer);
+
+                put.enqueue(new Callback<ResponseBody>() {
                     @Override
-                    public void onResponse(Call<Customer> call, Response<Customer> response) {
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()) {
-//                            int position = getAdapterPosition();
-//                            updateCustomerStatus(position, response.body().isActivo());
-                            System.out.println(response.code());
+                            getCustomersState(alertDialog);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<Customer> call, Throwable t) {
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
 
                     }
                 });
-//                Call<List<Customer>> callUpdate = customerInterface.getShowCustomer();
-//                callUpdate.enqueue(new Callback<List<Customer>>() {
-//                    @Override
-//                    public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
-//                        List<Customer> updatedCustomers = response.body();
-//                        if (updatedCustomers != null) {
-//                            updateCustomers(updatedCustomers);
-//                            System.out.println(response.body());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<List<Customer>> call, Throwable t) {
-//                    }
-//                });
-                customerFragment.showNotifyPut();
-                alertDialog.dismiss();
+
             });
 
             btnNo.setOnClickListener(v -> {
                 alertDialog.dismiss();
+            });
+        }
+
+        public void getCustomersState(AlertDialog alertDialog) {
+            RestaurantInterface customerInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+            Call<List<Customer>> getCustomerState = customerInterface.getShowCustomer();
+            getCustomerState.enqueue(new Callback<List<Customer>>() {
+                @Override
+                public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        List<Customer> newCustomers = response.body();
+                        updateCustomers(newCustomers);
+                        customerFragment.showNotifyPut();
+                        alertDialog.dismiss();
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Customer>> call, Throwable t) {
+
+                }
             });
         }
 

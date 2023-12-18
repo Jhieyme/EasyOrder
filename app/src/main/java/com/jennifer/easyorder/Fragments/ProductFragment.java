@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,14 +37,12 @@ public class ProductFragment extends Fragment {
     private ProductViewModel productViewModel;
     private CategoryViewModel categoryViewModel;
     private List<Product> itemsProduct;
-    private List<Product> itemsProductCategory;
     private ProductAdapter rvProductAdapter;
     private SearchView searchViewProduct;
-
+    private String texCategory = null;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProductBinding.inflate(inflater, container, false);
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
         categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
@@ -63,6 +60,19 @@ public class ProductFragment extends Fragment {
         searchViewProduct = view.findViewById(R.id.sv_searchProduct);
         searchViewProduct.clearFocus();
 
+
+        Category category = categoryViewModel.getCategoryObject().getValue();
+        if (category != null && category.getDescripcion() != null) {
+            texCategory = category.getDescripcion();
+        }
+
+        if (texCategory == null) {
+            showProducts();
+        } else {
+            showProductByCategory();
+        }
+
+
         searchViewProduct.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -76,18 +86,37 @@ public class ProductFragment extends Fragment {
             }
         });
 
-        String texCategory = null;
-        Category category = categoryViewModel.getCategoryObject().getValue();
-        if (category != null && category.getDescripcion() != null) {
-            texCategory = category.getDescripcion();
-        }
+    }
 
-        if (texCategory == null) {
-            showProducts();
-        } else {
-            showProductsCategory(texCategory);
-            categoryViewModel.setCategoryObject(null);
-        }
+    private void showProductByCategory() {
+        RestaurantInterface productInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
+        Call<List<Product>> call = productInterface.getShowProduct();
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    itemsProduct = response.body();
+                    List<Product> itemsToAdapter = new ArrayList<>();
+                    for (Product product : itemsProduct) {
+                        if (product.isActivo() && product.getIdCategoriaNavigation().getDescripcion().equals(texCategory)) {
+                            itemsToAdapter.add(product);
+                        }
+                    }
+
+                    rvProductAdapter = new ProductAdapter(itemsToAdapter, productViewModel);
+                    recyclerView.setAdapter(rvProductAdapter);
+                    categoryViewModel.setCategoryObject(null);
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
+
     }
 
     private void showProducts() {
@@ -116,66 +145,23 @@ public class ProductFragment extends Fragment {
     }
 
     private void filterListProduct(String text) {
+
         List<Product> filterList = new ArrayList<>();
         for (Product item : itemsProduct) {
             String nomProduct = item.getNombre();
             if (nomProduct.toLowerCase().contains(text.toLowerCase())) {
                 filterList.add(item);
-            } else {
-
             }
+
 
         }
         if (filterList.size() == 0) {
-            Toast.makeText(getContext(), "¡Producto no encontrado!", Toast.LENGTH_SHORT).show();
+            // gay el que lo lea jeje
         } else {
             rvProductAdapter.setFilterListProduct(filterList);
         }
     }
 
 
-    private void showProductsCategory(String texCategory) {
-        RestaurantInterface productInterface = RetrofitHelper.getInstance().create(RestaurantInterface.class);
-        Call<List<Product>> call = productInterface.getShowProduct();
-        call.enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    itemsProductCategory = response.body();
-                    List<Product> itemsToAdapter = new ArrayList<>();
-                    for (Product product : itemsProductCategory) {
-                        if (product.isActivo()) {
-                            itemsToAdapter.add(product);
-                        }
-                    }
-
-                    filterListProductCategory(texCategory, itemsToAdapter);
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-            }
-        });
-
-    }
-
-    private void filterListProductCategory(String text, List<Product> filterListCategory) {
-        List<Product> filterList = new ArrayList<>();
-        for (Product item : filterListCategory) {
-            String catProduct = item.getIdCategoriaNavigation().getDescripcion();
-            if (catProduct.contains(text)) {
-                filterList.add(item);
-            }
-        }
-        if (filterList.isEmpty()) {
-            Toast.makeText(getContext(), "Producto no encontrado", Toast.LENGTH_SHORT).show();
-        } else {
-
-            rvProductAdapter = new ProductAdapter(filterList, productViewModel);
-            recyclerView.setAdapter(rvProductAdapter);
-        }
-    }
 }
 
