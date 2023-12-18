@@ -24,7 +24,7 @@
             android:id="@+id/clothingCard"
             android:layout_width="185dp"
             android:layout_height="186dp"
-
+            android:backgroundTint="@color/white"
             android:layout_weight="1"
             app:cardCornerRadius="20dp">
 

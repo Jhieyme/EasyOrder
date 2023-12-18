@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp"
-
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
                     android:id="@+id/txtNombrePlatillo"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-
+                    android:textColor="#424242"
                     android:text="Ceviche Mixto"
                     android:textStyle="bold"
 
@@ -94,7 +94,7 @@
                     android:id="@+id/txtPrecio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:textColor="#292929"
                     android:text="S/ 20.00"
                     android:textSize="12sp" />
 
@@ -126,8 +126,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3"
-                    android:textAlignment="center
-"
+                    android:textColor="#292929"
+                    android:textAlignment="center"
                     android:textSize="12sp" />
             </LinearLayout>
 

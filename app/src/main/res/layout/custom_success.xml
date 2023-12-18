@@ -10,9 +10,8 @@
         android:id="@+id/cardView4"
         android:layout_width="match_parent"
         android:layout_height="270dp"
-
+        android:backgroundTint="@color/white"
         android:layout_alignParentStart="true"
-
         app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:text="Confirmado"
                     android:textSize="25dp"
                     android:textStyle="bold" />
@@ -70,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:textColor="#4B4B4B"
                     android:text="Por favor, presione para continuar" />
 
                 <androidx.appcompat.widget.AppCompatButton
