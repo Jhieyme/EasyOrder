@@ -7,11 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jennifer.easyorder.Adapter.VoucherProductAdapter;
 import com.jennifer.easyorder.R;
 import com.jennifer.easyorder.data.RestaurantInterface;
@@ -42,6 +44,10 @@ public class VoucherFragment extends Fragment {
 
     private VoucherViewModel voucherViewModel;
 
+    private Toolbar toolbar;
+    private BottomNavigationView bottomNavigationView;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +69,8 @@ public class VoucherFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
+        bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
+        toolbar = getActivity().findViewById(R.id.toolbar);
         Order order = paymentViewModel.getSelectedOrder().getValue();
         List<DetailOrder> detailOrderList = paymentViewModel.getSelectedDetailOrder().getValue();
 
@@ -102,13 +110,13 @@ public class VoucherFragment extends Fragment {
             total += detailOrder.getImporte();
         }
 
-        
-        binding.tvTotal.setText(String.valueOf("TOTAL: S/" + total));
+
+        binding.tvTotal.setText(String.valueOf("TOTAL: S/" + String.format("S/. %.2f", total)));
 
 
         binding.btnImprimir.setOnClickListener(v -> {
             ShowAlertCustom alertCustom = new ShowAlertCustom();
-            alertCustom.showSuccesAlert(binding.getRoot().getContext(), VoucherFragment.this, codMethodPay, codOrder, codWorker, codCustomer, tableViewModel, voucherInterface, order, detailOrderList, voucherViewModel);
+            alertCustom.showSuccesAlert(binding.getRoot().getContext(), VoucherFragment.this, codMethodPay, codOrder, codWorker, codCustomer, tableViewModel, voucherInterface, order, detailOrderList, voucherViewModel, toolbar, bottomNavigationView);
 
         });
     }

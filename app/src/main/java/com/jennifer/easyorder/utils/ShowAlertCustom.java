@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jennifer.easyorder.Fragments.CategoryFragment;
 import com.jennifer.easyorder.Fragments.CustomerFragment;
 import com.jennifer.easyorder.Fragments.VoucherFragment;
 import com.jennifer.easyorder.R;
@@ -100,7 +102,7 @@ public class ShowAlertCustom {
         });
     }
 
-    public void showSuccesAlert(Context context, Fragment fragmentCurrent, int codMethodPay, int codOrder, int codWorker, int codCustomer, TableViewModel tableViewModel, RestaurantInterface voucherInterface, Order order, List<DetailOrder> detailOrderList, VoucherViewModel voucherViewModel) {
+    public void showSuccesAlert(Context context, Fragment fragmentCurrent, int codMethodPay, int codOrder, int codWorker, int codCustomer, TableViewModel tableViewModel, RestaurantInterface voucherInterface, Order order, List<DetailOrder> detailOrderList, VoucherViewModel voucherViewModel, Toolbar toolbar, BottomNavigationView bottomNavigationView) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View customDialogSuccess = inflater.inflate(R.layout.custom_success, null);
@@ -124,8 +126,14 @@ public class ShowAlertCustom {
                 if (voucherResponse != null) {
                     PDFPrinter pdfPrinter = new PDFPrinter();
                     pdfPrinter.printToVoucher(order, voucherLayout, context, detailOrderList, voucherResponse, voucherViewModel);
-                } else {
-                    Toast.makeText(context, "aaa", Toast.LENGTH_SHORT).show();
+                    toolbar.setTitle("Categorias");
+                    bottomNavigationView.setSelectedItemId(R.id.bottom_category);
+                    FragmentManager fragmentManager = fragmentCurrent.getFragmentManager();
+                    CategoryFragment categoryFragment = new CategoryFragment();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.fcv_main, categoryFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             });
 

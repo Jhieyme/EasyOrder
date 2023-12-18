@@ -56,6 +56,7 @@ public class DetailOrderFragment extends Fragment {
     private BottomNavigationView bottomNavigationView;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -82,9 +83,9 @@ public class DetailOrderFragment extends Fragment {
         toolbar = getActivity().findViewById(R.id.toolbar);
 
 
-        double total = 0;
+        double total = 0.00;
         TextView txtTotal = binding.txtTotalDetailOrder.findViewById(R.id.txtTotalDetailOrder);
-        txtTotal.setText("S/. " + String.valueOf(0));
+        txtTotal.setText(String.format("S/. %.2f", total));
 
 
         for (NewProduct newProduct : listFragment) {
@@ -102,7 +103,7 @@ public class DetailOrderFragment extends Fragment {
             binding.txtNumberTable.setText(" :'( ");
         }
 
-        txtTotal.setText("S/. " + String.valueOf(total));
+        txtTotal.setText(String.format("S/. %.2f", total));
 
 
         double finalTotal = total;
