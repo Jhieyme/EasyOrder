@@ -202,7 +202,7 @@ public class PDFPrinter {
 
 
         TextView tvTotal = content.findViewById(R.id.tvTotal);
-        tvTotal.setText("TOTAL: S/" + String.format("S/. %.2f", total));
+        tvTotal.setText("TOTAL: " + String.format("S/. %.2f", total));
 
 
         int idBoleta = voucherResponse.getIdBoleta();

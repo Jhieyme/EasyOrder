@@ -135,7 +135,7 @@
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:singleLine="true"
-                    android:textColor="@color/black"
+                    android:textColorHint="#7D7B7B"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -176,7 +176,7 @@
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:singleLine="true"
-                    android:textColor="@color/black"
+                    android:textColorHint="#7D7B7B"
                     android:textSize="15sp"
                     tools:layout_editor_absoluteX="78dp"
                     tools:layout_editor_absoluteY="519dp" />

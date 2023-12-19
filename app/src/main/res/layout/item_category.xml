@@ -13,6 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
         <androidx.cardview.widget.CardView
@@ -21,6 +22,7 @@
             android:layout_height="154dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:backgroundTint="@color/white"
             app:cardCornerRadius="20dp"
             tools:ignore="MissingConstraints">
 

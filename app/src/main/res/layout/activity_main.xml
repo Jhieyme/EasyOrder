@@ -86,6 +86,7 @@
                         app:itemIconTint="@color/lavender"
                         app:itemTextColor="@color/lavender"
                         app:labelVisibilityMode="labeled"
+                        android:outlineAmbientShadowColor="#6D6C6C"
                         app:menu="@menu/bottom_menu" />
                 </com.google.android.material.bottomappbar.BottomAppBar>
 

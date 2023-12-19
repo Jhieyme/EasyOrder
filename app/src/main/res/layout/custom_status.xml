@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="175dp"
+    android:backgroundTint="@color/white"
     android:padding="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,23 +70,23 @@
                 android:id="@+id/btn_no"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:outlineProvider="none"
-                android:backgroundTint="#D80D0D"
                 android:layout_marginEnd="20dp"
+                android:backgroundTint="#D80D0D"
+                android:outlineProvider="none"
                 android:text="No"
-                android:textSize="15sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
 
 
             <Button
                 android:id="@+id/btn_yes"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:outlineProvider="none"
                 android:backgroundTint="#4D8E3D"
+                android:outlineProvider="none"
                 android:text="Si"
-                android:textSize="15sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
 
 
         </LinearLayout>

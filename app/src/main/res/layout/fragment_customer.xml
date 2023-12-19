@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintCustomer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F4F6FA"
-    android:id="@+id/constraintCustomer"
     tools:context=".Fragments.CustomerFragment">
 
     <ImageView
@@ -176,7 +176,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.895"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
 
@@ -185,11 +184,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:inputType="number"
                 android:gravity="center"
+                android:inputType="number"
+                app:iconifiedByDefault="false"
                 app:queryBackground="@android:color/transparent"
-                app:queryHint="Buscar"
-                app:iconifiedByDefault="false" />
+                app:queryHint="Buscar" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

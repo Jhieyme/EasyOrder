@@ -11,4 +11,7 @@
     <color name="buttonBg">#335387</color>
 
     <color name="selected">#7E7E7F</color>
+    <color name="textNotBlack">#8C8C8C</color>
+
+
 </resources>

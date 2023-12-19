@@ -111,7 +111,7 @@ public class VoucherFragment extends Fragment {
         }
 
 
-        binding.tvTotal.setText(String.valueOf("TOTAL: S/" + String.format("S/. %.2f", total)));
+        binding.tvTotal.setText(String.valueOf("TOTAL: " + String.format("S/. %.2f", total)));
 
 
         binding.btnImprimir.setOnClickListener(v -> {
